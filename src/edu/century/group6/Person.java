@@ -144,11 +144,12 @@ public class Person {
 	}
 
 	/**
-	 * 
+	 * Zip code 
 	 */
 	private String zip;
+	
 	/**
-	 * 
+	 * Phone number
 	 */
 	private String phone;
 	
