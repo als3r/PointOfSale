@@ -44,6 +44,16 @@ public class Person {
 	private String state;
 	
 	/**
+	 * Zip code 
+	 */
+	private String zip;
+	
+	/**
+	 * Phone number
+	 */
+	private String phone;
+	
+	/**
 	 * Get First name
 	 * 
 	 * @return
@@ -142,16 +152,4 @@ public class Person {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
-	/**
-	 * Zip code 
-	 */
-	private String zip;
-	
-	/**
-	 * Phone number
-	 */
-	private String phone;
-	
-	
 }
