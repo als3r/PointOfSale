@@ -4,7 +4,7 @@ package edu.century.group6;
  * PointOfSale
  * 
  * Definition of pizza class
- * Stores information about burger menu item
+ * Stores information about pizza menu item
  * Extends OrderItem class
  * 
  * Class: CSCI 1082-90 - Object Oriented Programming
