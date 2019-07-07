@@ -18,6 +18,6 @@ package edu.century.group6;
  * @author Evelline Samson <cj5673li@my.century.edu> 
  * @author Alexandr Sergeyev <ns1418cz@my.century.edu>
  */
-public class SideItem {
+public class SideItem extends orderItem{
 
 }
