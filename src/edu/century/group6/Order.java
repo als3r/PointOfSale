@@ -129,9 +129,7 @@ public class Order {
 	 * Order Created Format
 	 */
 	public static String orderDatePattern = "H:m:s MM/dd/yyyy";
-	
-	
-	
+
 	
 	
 	/*
@@ -369,33 +367,57 @@ public class Order {
 	 * Construct an instance with default values
 	 */
 	Order(){
+		this.orderItems = new OrderItem[MAX_ORDER_ITEMS];
 		orderStatusReceived();	
 	}
 	
-	public boolean orderStatusReceived() {
-		this.orderItems = new OrderItem[MAX_ORDER_ITEMS];
+	/**
+	 * Updates order status to Received (ORDER_STATUSES.ORDER_STATUS_RECEIEVED)
+	 * Sets time when order was received
+	 * 
+	 * @return this instance of Order class
+	 */
+	public Order orderStatusReceived() {
 		setOrderStatus(ORDER_STATUSES.ORDER_STATUS_RECEIEVED);
 		setOrderReceivedTime();
-		return true;
+		return this;
 	}
 	
-	public boolean orderStatusCooked() {
+	/**
+	 * Updates order status to Received (ORDER_STATUSES.ORDER_STATUS_PREPARED)
+	 * Sets time when order was prepared/cooked
+	 * 
+	 * @return this instance of Order class
+	 */
+	public Order orderStatusCooked() {
 		setOrderStatus(ORDER_STATUSES.ORDER_STATUS_PREPARED);
 		setOrderCookTime();
-		return true;
+		return this;
 	}
 	
-	public boolean orderStatusDelivered() {
+	/**
+	 * Updates order status to Received (ORDER_STATUSES.ORDER_STATUS_DELIVERED)
+	 * Sets time when order was delivered
+	 * 
+	 * @return this instance of Order class
+	 */
+	public Order orderStatusDelivered() {
 		setOrderStatus(ORDER_STATUSES.ORDER_STATUS_DELIVERED);
 		setOrderDeliveryTime();
-		return true;
+		return this;
 	}
 	
-	public boolean orderStatusCompleted() {
+	/**
+	 * Updates order status to Received (ORDER_STATUSES.ORDER_STATUS_COMPLETED)
+	 * Sets time when order was completed
+	 * 
+	 * @return this instance of Order class
+	 */
+	public Order orderStatusCompleted() {
 		setOrderStatus(ORDER_STATUSES.ORDER_STATUS_COMPLETED);
 		setOrderCompletedTime();
 		setOrderTotalTime();
-		return true;
+		return this;
 	}
 	
 	public Order addOrderItem(OrderItem orderItem) {
