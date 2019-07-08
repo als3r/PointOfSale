@@ -20,5 +20,69 @@ package edu.century.group6;
  */
 public class Customer extends Person {
 	
-	private long customerNumber;
+	/**
+	 * Customer identification number
+	 */
+	private String customerNumber;
+	
+	
+	/**
+	 * Get customer identification number
+	 * 
+	 * @return customerNumber
+	 */
+	public String getCustomerNumber() {
+		return customerNumber;
+	}
+
+	
+	/**
+	 * Modify customer identification number
+	 * 
+	 * @param customerNumber
+	 */
+	public void setCustomerNumber(String customerNumber) {
+		this.customerNumber = customerNumber;
+	}
+	
+	
+	/**
+	 * Default Constructor
+	 */
+	Customer(){
+		super();
+	}
+
+	
+	/**
+	 * Constructor creates an instance of Customer
+	 * with provided:
+	 * 
+	 * @param customerNumber
+	 * @param firstName
+	 * @param lastName
+	 * @param address
+	 * @param city
+	 * @param state
+	 * @param zip
+	 * @param phone
+	 */
+	Customer(String customerNumber, String firstName, String lastName, String address, String city, String state, String zip, String phone) {
+		super(firstName, lastName, address, city, state, zip, phone);
+		this.customerNumber = customerNumber;
+	}
+	
+	
+	/**
+	 * Overriding method definition in order to be more verbose in output
+	 * 
+	 * @return the formatted string of reservation data
+	 */
+	@Override
+	public String toString() {
+		String message = "";
+		message += "Customer#: " + getCustomerNumber();
+		message += super.toString();
+		return message;
+	}
 }

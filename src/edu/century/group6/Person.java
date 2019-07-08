@@ -53,16 +53,50 @@ public class Person {
 	 */
 	private String phone;
 	
+	
+	/**
+	 * Default Constructor
+	 */
+	Person() {
+		
+	}
+	
+	
+	/**
+	 * Constructor creates an instance of Person
+	 * with provided:
+	 * 
+	 * @param firstName
+	 * @param lastName
+	 * @param address
+	 * @param city
+	 * @param state
+	 * @param zip
+	 * @param phone
+	 */
+	Person(String firstName, String lastName, String address, String city, String state, String zip, String phone) {
+		this.firstName = firstName;
+		this.lastName  = lastName;
+		this.address   = address;
+		this.city      = city;
+		this.state     = state;
+		this.zip       = zip;
+		this.phone     = phone;
+	}
+	
+	
 	/**
 	 * Get First name
 	 * 
-	 * @return
+	 * @return firstName
 	 */
 	public String getFirstName() {
 		return firstName;
 	}
 
 	/**
+	 * Modify first name
+	 * 
 	 * @param firstName
 	 */
 	public void setFirstName(String firstName) {
@@ -70,13 +104,17 @@ public class Person {
 	}
 
 	/**
-	 * @return
+	 * Get last name
+	 * 
+	 * @return lastName
 	 */
 	public String getLastName() {
 		return lastName;
 	}
 
 	/**
+	 * Modify last name
+	 * 
 	 * @param lastName
 	 */
 	public void setLastName(String lastName) {
@@ -84,13 +122,17 @@ public class Person {
 	}
 
 	/**
-	 * @return
+	 * Get address
+	 * 
+	 * @return address
 	 */
 	public String getAddress() {
 		return address;
 	}
 
 	/**
+	 * Modify address
+	 * 
 	 * @param address
 	 */
 	public void setAddress(String address) {
@@ -98,13 +140,17 @@ public class Person {
 	}
 
 	/**
-	 * @return
+	 * Get city
+	 * 
+	 * @return city
 	 */
 	public String getCity() {
 		return city;
 	}
 
 	/**
+	 * Modify city
+	 * 
 	 * @param city
 	 */
 	public void setCity(String city) {
@@ -112,13 +158,17 @@ public class Person {
 	}
 
 	/**
-	 * @return
+	 * Get state
+	 * 
+	 * @return state
 	 */
 	public String getState() {
 		return state;
 	}
 
 	/**
+	 * Modify State
+	 * 
 	 * @param state
 	 */
 	public void setState(String state) {
@@ -126,13 +176,17 @@ public class Person {
 	}
 
 	/**
-	 * @return
+	 * Get ZIP code
+	 * 
+	 * @return zip
 	 */
 	public String getZip() {
 		return zip;
 	}
 
 	/**
+	 * Modify ZIP code
+	 * 
 	 * @param zip
 	 */
 	public void setZip(String zip) {
@@ -140,6 +194,8 @@ public class Person {
 	}
 
 	/**
+	 * Get phone number
+	 * 
 	 * @return
 	 */
 	public String getPhone() {
@@ -147,9 +203,30 @@ public class Person {
 	}
 
 	/**
+	 * Modify phone number
+	 * 
 	 * @param phone
 	 */
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	
+	/**
+	 * Overriding method definition in order to be more verbose in output
+	 * 
+	 * @return the formatted string of reservation data
+	 */
+	@Override
+	public String toString() {
+		String message = "";
+		message += "Phone#: "     + getPhone();
+		message += "First Name: " + getFirstName();
+		message += "Last Name: "  + getLastName();
+		message += "Address: "    + getAddress();
+		message += "City: "       + getCity();
+		message += "State: "      + getState();
+		message += "Zip: "        + getZip();
+		
+		return message;
 	}
 }

@@ -20,5 +20,73 @@ package edu.century.group6;
  */
 public class Employee extends Person {
 	
-	private long employeeNumber;
+	/**
+	 * Employee identification number
+	 */
+	private String employeeNumber;
+	
+	
+	/**
+	 * Get employee identification number
+	 * 
+	 * @return
+	 */
+	public String getEmployeeNumber() {
+		return employeeNumber;
+	}
+
+	
+	/**
+	 * Modify employee identification number
+	 * 
+	 * @param employeeNumber
+	 */
+	public void setEmployeeNumber(String employeeNumber) {
+		this.employeeNumber = employeeNumber;
+	}
+	
+	
+	/**
+	 * Default Constructor
+	 */
+	Employee(){
+		super();
+	}
+	
+	
+	/**
+	 * Constructor creates an instance of Employee
+	 * with provided:
+	 * 
+	 * @param employeeNumber
+	 * @param firstName
+	 * @param lastName
+	 * @param address
+	 * @param city
+	 * @param state
+	 * @param zip
+	 * @param phone
+	 */
+	Employee(String employeeNumber, String firstName, String lastName, String address, String city, String state, String zip, String phone) {
+		super(firstName, lastName, address, city, state, zip, phone);
+		setEmployeeNumber(employeeNumber);
+	}
+	
+	
+	/**
+	 * Overriding method definition in order to be more verbose in output
+	 * 
+	 * @return the formatted string of reservation data
+	 */
+	@Override
+	public String toString() {
+		String message = "";
+		message += "Employee#: " + getEmployeeNumber();
+		message += super.toString();
+		return message;
+	}
+
+	
+	
+	
 }
