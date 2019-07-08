@@ -10,7 +10,7 @@ package edu.century.group6;
 */
 public class OrderItem {
 
-  private Price price;
+  private double price;
   String id;
   
   /**
@@ -19,11 +19,11 @@ public class OrderItem {
   *and id
   *
   */
-  Public void setPrice(Price price){
+  Public void setPrice(double price){
     this.price=price;
   }
   
-  public Price getPrice(){
+  public double getPrice(){
     return price;
   }
   
