@@ -219,13 +219,13 @@ public class Person {
 	@Override
 	public String toString() {
 		String message = "";
-		message += "Phone#: "     + getPhone();
-		message += "First Name: " + getFirstName();
-		message += "Last Name: "  + getLastName();
-		message += "Address: "    + getAddress();
-		message += "City: "       + getCity();
-		message += "State: "      + getState();
-		message += "Zip: "        + getZip();
+		message += "Phone#: "     + getPhone()     + "\n";
+		message += "First Name: " + getFirstName() + "\n";
+		message += "Last Name: "  + getLastName()  + "\n";
+		message += "Address: "    + getAddress()   + "\n";
+		message += "City: "       + getCity()      + "\n";
+		message += "State: "      + getState()     + "\n";
+		message += "Zip: "        + getZip()       + "\n";
 		
 		return message;
 	}

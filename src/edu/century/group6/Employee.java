@@ -81,7 +81,7 @@ public class Employee extends Person {
 	@Override
 	public String toString() {
 		String message = "";
-		message += "Employee#: " + getEmployeeNumber();
+		message += "Employee#: " + getEmployeeNumber() + "\n";
 		message += super.toString();
 		return message;
 	}

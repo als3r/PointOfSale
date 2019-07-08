@@ -81,7 +81,7 @@ public class Customer extends Person {
 	@Override
 	public String toString() {
 		String message = "";
-		message += "Customer#: " + getCustomerNumber();
+		message += "Customer#: " + getCustomerNumber() + "\n";
 		message += super.toString();
 		return message;
 	}
