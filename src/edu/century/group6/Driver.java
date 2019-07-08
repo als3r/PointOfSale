@@ -80,7 +80,7 @@ public class Driver {
 		Pizza pizza9 = new Pizza("small", 1, 2, 2); 
 		Pizza pizza10 = new Pizza("small", 1, 1, 3); 		
 		echo(pizza1.toString());
-		echo("***** // END Test Pizza Class *****");
+		echo("***** // END Test Create Pizzas *****");
 		echo("");
 		
 		
@@ -111,24 +111,27 @@ public class Driver {
 
 		
 		
-		echo("***** Test Adding Pizza To Order *****");
+		echo("***** Test Add/Remove Pizzas To Order *****");
 		echo("Order#1 NumItems: " + order1.getNumItems());
 		echo("Order#2 NumItems: " + order2.getNumItems());
 		echo("Order#3 NumItems: " + order3.getNumItems());
 		echo("Order#4 NumItems: " + order4.getNumItems());
 		echo("Order#5 NumItems: " + order5.getNumItems());
 		echo("Add pizzas");
-		order1.addOrderItem(pizza1).addOrderItem(pizza2).addOrderItem(pizza3);
-		order2.addOrderItem(pizza1).addOrderItem(pizza8).addOrderItem(pizza9);
+		order1.addOrderItem(pizza1).addOrderItem(pizza2).addOrderItem(pizza3).addOrderItem(pizza4);
+		order2.addOrderItem(pizza1).addOrderItem(pizza8).addOrderItem(pizza9).addOrderItem(pizza2).addOrderItem(pizza3);
 		order3.addOrderItem(pizza4).addOrderItem(pizza5);
 		order4.addOrderItem(pizza8).addOrderItem(pizza6).addOrderItem(pizza7);
-		order5.addOrderItem(pizza10);
+		order5.addOrderItem(pizza10).addOrderItem(pizza8).addOrderItem(pizza9).addOrderItem(pizza2);
 		echo("Order#1 NumItems: " + order1.getNumItems());
 		echo("Order#2 NumItems: " + order2.getNumItems());
 		echo("Order#3 NumItems: " + order3.getNumItems());
 		echo("Order#4 NumItems: " + order4.getNumItems());
 		echo("Order#5 NumItems: " + order5.getNumItems());
-		echo("***** // END Adding Pizza To Order *****");
+		echo("Remove 1 pizza from order#5");
+		order5.removeOrderItem(3);
+		echo("Order#5 NumItems: " + order5.getNumItems());
+		echo("***** // END Add/Remove Pizzas To Order *****");
 		echo("");
 		
 		
@@ -140,45 +143,46 @@ public class Driver {
 		echo(order3.toString());
 		echo(order4.toString());
 		echo(order5.toString());
-		echo("***** // END Test Pizza Class *****");
+		echo("***** // END Test Printing Orders *****");
 		echo("");
 		
 		
 		
 		// test order track time functions
-//		Order order1 = new Order();
-//		echo("***** Test Order Track Time *****");
-//		echo("Create empty order1");
-//		
-//		try {
-//			// change order status to order received
-//			order1.orderStatusReceived();
-//			echo("Order Received Time: " + order1.getOrderReceivedTimeFormatted());
-//			
-//			// wait and change to cooked
-//			Thread.sleep(1500);
-//			order1.orderStatusCooked();
-//			echo("Order Cooked Time: " + order1.getOrderCookTimeFormatted());
-//			
-//			// wait and change to delivered
-//			Thread.sleep(2300);
-//			order1.orderStatusDelivered();
-//			echo("Order Delivered Time: " + order1.getOrderDeliveryTimeFormatted());
-//			
-//			// wait and change to completed
-//			Thread.sleep(4500);
-//			order1.orderStatusCompleted();
-//			echo("Order Completed Time: " + order1.getOrderCompletedTimeFormatted());
-//			
-//			// get total order time
-//			echo("Total Order Time (full): " + order1.getOrderTotalTimeFormatted());
-//			echo("Total Order Time (in sec): " + order1.getOrderTotalTimeSeconds());
-//		
-//		} catch (InterruptedException ie) {
-//			echo("Error. Cannot use wait");
-//		}
-//		echo("***** // END Test Order Track Time *****");
-//		echo("");
+		echo("***** Test Order Track Time *****");
+		echo("Create empty order1");
+		int sleepTime1 = 0 * 1000; // in milliseconds
+		int sleepTime2 = 0 * 1000; // in milliseconds
+		int sleepTime3 = 0 * 1000; // in milliseconds
+		
+		try {
+			// change order status to order received
+			echo("Order Received Time: " + order1.getOrderReceivedTimeFormatted());
+			
+			// wait and change to cooked
+			Thread.sleep(sleepTime1);
+			order1.orderStatusCooked();
+			echo("Order Cooked Time: " + order1.getOrderCookTimeFormatted());
+			
+			// wait and change to delivered
+			Thread.sleep(sleepTime2);
+			order1.orderStatusDelivered();
+			echo("Order Delivered Time: " + order1.getOrderDeliveryTimeFormatted());
+			
+			// wait and change to completed
+			Thread.sleep(sleepTime3);
+			order1.orderStatusCompleted();
+			echo("Order Completed Time: " + order1.getOrderCompletedTimeFormatted());
+			
+			// get total order time
+			echo("Total Order Time (full): " + order1.getOrderTotalTimeFormatted());
+			echo("Total Order Time (in sec): " + order1.getOrderTotalTimeSeconds());
+		
+		} catch (InterruptedException ie) {
+			echo("Error. Cannot use wait");
+		}
+		echo("***** // END Test Order Track Time *****");
+		echo("");
 		
 		
 		
