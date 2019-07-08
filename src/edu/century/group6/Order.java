@@ -1,9 +1,9 @@
 package edu.century.group6;
 
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.text.NumberFormat;
 
 /**
  * PointOfSale
@@ -43,6 +43,11 @@ public class Order {
 	 * Max Items in Order
 	 */
 	private static final int MAX_ORDER_ITEMS = 100;
+	
+	/**
+	 * Tax constant, in percents
+	 */
+	private static final double TAX = 9;
 	
 	/**
 	 * Stores order Items
@@ -129,12 +134,30 @@ public class Order {
 	 * Order Created Format
 	 */
 	public static String orderDatePattern = "H:m:s MM/dd/yyyy";
+	
+	/**
+	 * Whether order delivered or not
+	 * Default: false
+	 */
+	private boolean isDelivered = false;
+	
+	/**
+	 * Order sub total
+	 */
+	private double subTotal = 0;
+	
+	/**
+	 * Order Tax
+	 */
+	private double tax = 0;
+	
+	/**
+	 * Total
+	 */
+	private double total = 0;
 
 	
-	
-	/*
-	 * Getter and Setters
-	 */
+
 	
 	public String getOrderNumber() {
 		return orderNumber;
@@ -184,6 +207,44 @@ public class Order {
 		this.deliveryAddress = deliveryAddress;
 	}
 	
+	public boolean isDelivered() {
+		return isDelivered;
+	}
+
+	public void setDelivered(boolean isDelivered) {
+		this.isDelivered = isDelivered;
+	}
+
+	public double getSubTotal() {
+		return subTotal;
+	}
+
+	private void setSubTotal() {
+		this.subTotal = calcSubTotal();
+	}
+
+	public double getTax() {
+		return tax;
+	}
+
+	private void setTax() {
+		tax = getSubTotal() * (TAX / 100);
+	}
+
+	public double getTotal() {
+		return total;
+	}
+
+	private void setTotal() {
+		total = getSubTotal() * (1 + (TAX / 100));
+	}
+	
+	public void calcOrderPrice() {
+		setSubTotal();
+		setTax();
+		setTotal();
+	}
+
 	/**
 	 * Return order received time (Step 1)
 	 * @return Date orderReceivedTime
@@ -361,7 +422,7 @@ public class Order {
 
 
 
-	/*
+	/**
 	 * Default constructor for order
 	 * 
 	 * Construct an instance with default values
@@ -369,7 +430,41 @@ public class Order {
 	Order(){
 		this.orderItems = new OrderItem[MAX_ORDER_ITEMS];
 		orderStatusReceived();	
+		calcOrderPrice();
 	}
+	
+	
+	/**
+	 * Construct instance of order class
+	 * with provided:
+	 * order number 
+	 * 
+	 * @param orderNumber
+	 */
+	Order(String orderNumber){
+		this.orderNumber = orderNumber;
+		this.orderItems = new OrderItem[MAX_ORDER_ITEMS];
+		orderStatusReceived();	
+		calcOrderPrice();
+	}
+	
+	
+	/**
+	 * Construct instance of order class
+	 * with provided:
+	 * order number and whether order has delivery 
+	 * 
+	 * @param orderNumber
+	 * @param isDelivered
+	 */
+	Order(String orderNumber, boolean isDelivered){
+		setOrderNumber(orderNumber);
+		setDelivered(isDelivered);
+		this.orderItems = new OrderItem[MAX_ORDER_ITEMS];
+		orderStatusReceived();	
+		calcOrderPrice();
+	}
+	
 	
 	/**
 	 * Updates order status to Received (ORDER_STATUSES.ORDER_STATUS_RECEIEVED)
@@ -383,6 +478,7 @@ public class Order {
 		return this;
 	}
 	
+	
 	/**
 	 * Updates order status to Received (ORDER_STATUSES.ORDER_STATUS_PREPARED)
 	 * Sets time when order was prepared/cooked
@@ -395,6 +491,7 @@ public class Order {
 		return this;
 	}
 	
+	
 	/**
 	 * Updates order status to Received (ORDER_STATUSES.ORDER_STATUS_DELIVERED)
 	 * Sets time when order was delivered
@@ -406,6 +503,7 @@ public class Order {
 		setOrderDeliveryTime();
 		return this;
 	}
+	
 	
 	/**
 	 * Updates order status to Received (ORDER_STATUSES.ORDER_STATUS_COMPLETED)
@@ -420,75 +518,81 @@ public class Order {
 		return this;
 	}
 	
+	
+	/**
+	 * Adds order item to order
+	 * 
+	 * @param orderItem
+	 * @return this order
+	 */
 	public Order addOrderItem(OrderItem orderItem) {
 		for (int i = 0; i < orderItems.length; i++) {
 			if (orderItems[i] == null) {
 				orderItems[i] = orderItem;
+				calcOrderPrice();
 				break;
 			}
 		}
 		return this;
 	}
 	
-	public void removeOrderItem() {
-		
+	
+	/**
+	 * Remove order item from order by index
+	 * 
+	 * @param index
+	 * @return this order
+	 */
+	public Order removeOrderItem(int index) {
+		if (orderItems[index] != null && orderItems[index] instanceof OrderItem) {
+			orderItems[index] = null;
+			calcOrderPrice();
+		}
+		return this;
+	}
+	
+	
+	/**
+	 * Calculate subtotal of all order items
+	 * 
+	 * @return subTotal
+	 */
+	public double calcSubTotal() {
+		double subTotal = 0;
+		for (int i = 0; i < orderItems.length; i++) {
+			if (orderItems[i] != null && orderItems[i] instanceof OrderItem) {
+				subTotal += orderItems[i].getPrice();
+			}
+		}
+		return subTotal;
 	}
 
 
-
-	public OrderItem[] getOrderItems() {
-		return orderItems;
-	}
-
-
-
-	public void setOrderItems(OrderItem[] orderItems) {
-		this.orderItems = orderItems;
-	}
-
-
-
+	/**
+	 * Returns number of items in the order
+	 * 
+	 * @return numItems
+	 */
 	public int getNumItems() {
+		int numItems = 0;
+		for (int i = 0; i < orderItems.length; i++) {
+			if (orderItems[i] != null && orderItems[i] instanceof OrderItem) {
+				numItems++;
+			}
+		}
 		return numItems;
 	}
-
-
-
-	public void setNumItems(int numItems) {
-		this.numItems = numItems;
+	
+	
+	/**
+	 * Return formatted order information
+	 * 
+	 * @return String
+	 */
+	public String printOrder() {
+		return toString();
 	}
 	
-	
-	public void calcSubTotal() {
-		
-	}
-	
-	public void calcTax() {
-		
-	}
-	
-	public void calcTotal() {
-		
-	}
-	
-	
-	public void printOrder() {
-		
-	}
-	
-	
-	public void sendOrder() {
-		
-	}
-	
-	
-	public void calcOrderTime() {
-		
-	}
-	
-	public void calcWaitTime() {
-		
-	}
 	
 	/**
 	 * Overriding method definition in order to be more verbose in output
@@ -498,6 +602,23 @@ public class Order {
 	@Override
 	public String toString() {
 		String message = "";
+		message += "========================================" + "\n";
+		message += "Order Number# " + getOrderNumber() + "\n";
+		message += "Date: " + getOrderReceivedTimeFormatted() + "\n";
+		message += "Items: " + getNumItems() + "\n";
+		message += "----------------------------------------" + "\n";
+		
+		for (int i = 0; i < orderItems.length; i++) {
+			if (orderItems[i] != null && orderItems[i] instanceof OrderItem) {
+				message += orderItems[i].toString();
+			}
+		}
+		
+		message += "----------------------------------------" + "\n";
+		message += String.format("%-20s%5.2f\n", "SubTotal:", getSubTotal());
+		message += String.format("%-20s%5.2f\n", "Tax:"     , getTax()); 
+		message += String.format("%-20s%5.2f\n", "Total:"   , getTotal());
+		message += "========================================" + "\n";
 		return message;
 	}
 }
