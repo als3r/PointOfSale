@@ -35,6 +35,7 @@ public class Pizza extends OrderItem {
     this.cheeseCount = 0;
     this.pepperoniCount = 0;
     this.hamCount = 0;
+    setPrice(calcCost());
  }
   
  public Pizza (String pizzaSize, int cheeseCount, int pepperoniCount, int hamCount){
@@ -43,7 +44,7 @@ public class Pizza extends OrderItem {
     this.cheeseCount = cheeseCount;
     this.pepperoniCount = pepperoniCount;
     this.hamCount = hamCount;
-   
+    setPrice(calcCost());
  }
   
   
