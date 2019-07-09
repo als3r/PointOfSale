@@ -603,15 +603,30 @@ public class Order {
 	public String toString() {
 		String message = "";
 		String itemMessage = "";
+		String customerMessage = "";
+		
 		message += "========================================" + "\n";
 		message += "Order Number# " + getOrderNumber() + "\n";
 		message += "Date: " + getOrderReceivedTimeFormatted() + "\n";
+		if(getCustomer() != null && getCustomer() instanceof Customer) {
+			customerMessage += "Customer#: " + getCustomer().getCustomerNumber() + "\n";
+			customerMessage += "Name: " + getCustomer().getFirstName() + " " + getCustomer().getLastName() + "\n";
+		}
+		message += customerMessage;
+		
+		if(isDelivered) {
+			message += "Delivery requested" + "\n";
+			message += "Address: " + getDeliveryAddress() + "\n";
+		}
+		
+		
 		message += "Items: " + getNumItems() + "\n";
+		
 		message += "----------------------------------------" + "\n";
 		
 		for (int i = 0; i < orderItems.length; i++) {
 			if (orderItems[i] != null && orderItems[i] instanceof OrderItem) {
-				if(! itemMessage.equals("")) {					
+				if(! itemMessage.isEmpty()) {					
 					itemMessage += "----------------------------------------" + "\n";
 				}
 				itemMessage += "Item #" + (i+1) + "\n";
@@ -619,8 +634,10 @@ public class Order {
 				
 			}
 		}
-		message += itemMessage;
-		message += "----------------------------------------" + "\n";
+		if(! itemMessage.isEmpty()) {
+			message += itemMessage;
+			message += "----------------------------------------" + "\n";
+		}
 		message += String.format("%-20s%5.2f\n", "SubTotal:", getSubTotal());
 		message += String.format("%-20s%5.2f\n", "Tax:"     , getTax()); 
 		message += String.format("%-20s%5.2f\n", "Total:"   , getTotal());
