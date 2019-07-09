@@ -21,11 +21,10 @@ package edu.century.group6;
 public class Burger {
 
   private String burgerType;
-  private int bacon;
-  private int pickel;
+  private int cheese;
   private int tomato;
   private int onion;
-  private int lettus;
+ 
   
   /**
   * Default constractor initialized to null and 0
@@ -34,22 +33,18 @@ public class Burger {
   public Burger(){
     
     this.burgerType = "";
-    this.bacon = 1.85;
-    this.pickel = 0;
+    this.cheese = 0;
     this.tomato = 0;
     this.onion = 0;
-    this.lettus = 0;
     setPrice(calcCost());
  }
   
- public Burger (String burgerType, int bacon, int pickel, int tomato, int onion, int lettus){
+ public Burger (String burgerType, int cheese, int tomato, int onion ){
     
     this.burgerType = burgerType;
-    this.bacon = bacon;
-    this.pickel = pickel;
-    this.tomato = tomato;
-    this.onion = onion;
-    this.lettus = lettus;
+    this.bacon = cheese;
+    this.pickel = tomato;
+    this.tomato = onion;
     setPrice(calcCost());
  }
   
@@ -70,24 +65,14 @@ public class Burger {
 		this.burgerType = burgerType;
 	}
 
-	public int getBacon()
+	public int getCheese()
 	{
-		return bacon;
+		return cheese;
 	}
 
-	public void setBacon(int bacon)
+	public void setCheese(int cheese)
 	{
-		this.bacon = bacon;
-	}
-
-	public int getPickel()
-	{
-		return pickel;
-	}
-
-	public void setPickel(int pickel)
-	{
-		this.pickel = pickel;
+		this.cheese = cheese;
 	}
 
 	public int getTomato()
@@ -99,8 +84,7 @@ public class Burger {
 	{
 		this.tomato = tomato;
 	}
-	
-	
+
         public int getOnion()
 	{
 		return onion;
@@ -109,26 +93,6 @@ public class Burger {
 	public void setOnion(int onion)
 	{
 		this.onion = onion;
-	}
-       
-	public int getTomato()
-	{
-		return tomato;
-	}
-
-	public void setTomato(int tomato)
-	{
-		this.tomato = tomato;
-	}
-     
-	public int getLettus()
-	{
-		return lettus;
-	}
-
-	public void setLettus(int lettus)
-	{
-		this.lettus = lettus;
 	}
   
   
@@ -139,21 +103,17 @@ public class Burger {
   *
   *
   */
-  
-  
-  
-  
 public double calcCost()
 	{		
-		if(burgerType.equalsIgnoreCase("cheese"))
+		if(burgerType.equalsIgnoreCase("Small"))
 		{
 			return 4.99 + (bacon + pickel + tomato + onion + lattus)
 		}
-		else if(pizzaSize.equalsIgnoreCase("turkey"))
+		else if(pizzaSize.equalsIgnoreCase("Medium"))
 		{
 			return 5.99 + (bacon + pickel + tomato + onion + lattus);
 		}
-		else if(pizzaSize.equalsIgnoreCase("veggie"))
+		else if(pizzaSize.equalsIgnoreCase("Large"))
 		{
 			return 6.99 + (bacon + pickel + tomato + onion + lattus);
 		}
@@ -167,13 +127,11 @@ public double calcCost()
   * @overide
   *
   */
-
-	public String toString()
+public String toString()
 	{
-		return "Burger: " + burgerType + "\n Bacon: " 
-				+ bacon + "\n Pickel: "
-				+ pickel + "\n Tomato: " + tomato + "\n Onions: " + onion 
-			        + "\n Lettus: " + lettus
-				+ "\n Total Cost: $" + calcCost() + "\n";
+	return "Burger: " + burgerType + "\n Cheese: " 
+		+ cheese + "\n Tomato: "
+		+ tomato + "\n Onions: " + onions + 
+		+ "\n Total Cost: $" + calcCost() + "\n";
 	}
 }
