@@ -19,7 +19,7 @@ public class OrderItem {
   *and id
   *
   */
-  Public void setPrice(double price){
+  public void setPrice(double price){
     this.price=price;
   }
   
@@ -42,7 +42,7 @@ public class OrderItem {
   */
   public String toString(){
     
-    return 
+    return "";
     
   }
   
