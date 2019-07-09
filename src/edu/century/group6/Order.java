@@ -602,6 +602,7 @@ public class Order {
 	@Override
 	public String toString() {
 		String message = "";
+		String itemMessage = "";
 		message += "========================================" + "\n";
 		message += "Order Number# " + getOrderNumber() + "\n";
 		message += "Date: " + getOrderReceivedTimeFormatted() + "\n";
@@ -610,10 +611,15 @@ public class Order {
 		
 		for (int i = 0; i < orderItems.length; i++) {
 			if (orderItems[i] != null && orderItems[i] instanceof OrderItem) {
-				message += orderItems[i].toString();
+				if(! itemMessage.equals("")) {					
+					itemMessage += "----------------------------------------" + "\n";
+				}
+				itemMessage += "Item #" + (i+1) + "\n";
+				itemMessage += orderItems[i].toString();
+				
 			}
 		}
-		
+		message += itemMessage;
 		message += "----------------------------------------" + "\n";
 		message += String.format("%-20s%5.2f\n", "SubTotal:", getSubTotal());
 		message += String.format("%-20s%5.2f\n", "Tax:"     , getTax()); 

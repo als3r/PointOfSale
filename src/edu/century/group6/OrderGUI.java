@@ -193,6 +193,11 @@ public class OrderGUI extends JFrame implements ActionListener {
      */
     private JComboBox  drinkQuantitySelector = new JComboBox(QUANTITY_ARRAY);
     
+    /**
+     * JTextField remove item index
+     */
+    private JTextField removeItemIndexTextField = new JTextField(NUMBER_OF_CHAR_INPUT);
+    
     
     /**
 	 * Button Captions
@@ -208,6 +213,8 @@ public class OrderGUI extends JFrame implements ActionListener {
 	public static final String BUTTON_CAPTION_RESET_FRENCH_FRIES = "Reset French Fries";
 	public static final String BUTTON_CAPTION_RESET_ONION_RINGS  = "Reset Onion Rings";
 	public static final String BUTTON_CAPTION_RESET_DRINK        = "Reset Drink";
+	
+	public static final String BUTTON_REMOVE_ITEM                = "Remove Item";
     
     
 	
@@ -288,6 +295,8 @@ public class OrderGUI extends JFrame implements ActionListener {
         JLabel DrinkSizeLabel           = new JLabel("Size");
         JLabel DrinkQuantityLabel       = new JLabel("Quantity");
         
+        JLabel RemoveItemLabel          = new JLabel("Remove Item By Item Number: ");
+        
         // Define buttons
         JButton actionAddPizzaButton = new JButton(BUTTON_CAPTION_ADD_PIZZA);
         actionAddPizzaButton.addActionListener(this);
@@ -319,6 +328,9 @@ public class OrderGUI extends JFrame implements ActionListener {
         
         JButton actionResetDrinkButton = new JButton(BUTTON_CAPTION_RESET_DRINK);
         actionResetDrinkButton.addActionListener(this);
+        
+        JButton actionRemoveItemButton = new JButton(BUTTON_REMOVE_ITEM);
+        actionRemoveItemButton.addActionListener(this);
         
         
         // Layout
@@ -355,6 +367,8 @@ public class OrderGUI extends JFrame implements ActionListener {
         mainPanel.add(DrinkSizeLabel);
         mainPanel.add(DrinkQuantityLabel);
         
+        mainPanel.add(RemoveItemLabel);
+        
         // Add selectboxes
         mainPanel.add(pizzaSizeSelector);
         mainPanel.add(pizzaCheeseToppingQuantitySelector);
@@ -371,6 +385,9 @@ public class OrderGUI extends JFrame implements ActionListener {
         mainPanel.add(drinkSizeSelector);
         mainPanel.add(drinkQuantitySelector);
         
+        // add text Fields
+        mainPanel.add(removeItemIndexTextField);
+        
         // add buttons
         mainPanel.add(actionAddPizzaButton);
         mainPanel.add(actionAddBurgerButton);
@@ -382,12 +399,15 @@ public class OrderGUI extends JFrame implements ActionListener {
         mainPanel.add(actionResetFrenchFriesButton);
         mainPanel.add(actionResetOnionRingsButton);
         mainPanel.add(actionResetDrinkButton);
+        mainPanel.add(actionRemoveItemButton);
+        
+        
         
         
         
         
         // Padding from side of the window
-        int leftPadding1 = 10; 
+        int basePadding1 = 10; 
         int leftPadding2 = 80;
         int leftPadding3 = 250;
         int leftPadding4 = 320;
@@ -399,10 +419,17 @@ public class OrderGUI extends JFrame implements ActionListener {
         int leftPadding600 = 600;
         
         // Order Console Panel
-        layout.putConstraint(SpringLayout.EAST,  consolePanel, -leftPadding1, SpringLayout.EAST, mainPanel);
-        layout.putConstraint(SpringLayout.NORTH, consolePanel, leftPadding1, SpringLayout.NORTH, mainPanel);
-        layout.putConstraint(SpringLayout.EAST,  orderConsoleTextArea, -leftPadding1, SpringLayout.EAST, mainPanel);
+        layout.putConstraint(SpringLayout.EAST,  consolePanel, -basePadding1, SpringLayout.EAST, mainPanel);
+        layout.putConstraint(SpringLayout.NORTH, consolePanel, basePadding1, SpringLayout.NORTH, mainPanel);
+        layout.putConstraint(SpringLayout.EAST,  orderConsoleTextArea, -basePadding1, SpringLayout.EAST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, orderConsoleTextArea, 5, SpringLayout.NORTH, mainPanel);
+        
+        layout.putConstraint(SpringLayout.EAST,  actionRemoveItemButton, -basePadding1, SpringLayout.EAST, mainPanel);
+        layout.putConstraint(SpringLayout.NORTH, actionRemoveItemButton, basePadding1, SpringLayout.SOUTH, consolePanel);
+        layout.putConstraint(SpringLayout.EAST,  removeItemIndexTextField, -basePadding1, SpringLayout.WEST, actionRemoveItemButton);
+        layout.putConstraint(SpringLayout.NORTH, removeItemIndexTextField, basePadding1, SpringLayout.SOUTH, consolePanel);
+        layout.putConstraint(SpringLayout.EAST,  RemoveItemLabel, -basePadding1, SpringLayout.WEST, removeItemIndexTextField);
+        layout.putConstraint(SpringLayout.NORTH, RemoveItemLabel, basePadding1, SpringLayout.SOUTH, consolePanel);
         
         // MENU Label
         layout.putConstraint(SpringLayout.WEST,  MenuLabel, leftPadding300, SpringLayout.WEST, mainPanel);
@@ -413,13 +440,13 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, PizzaLabel, 40, SpringLayout.NORTH, mainPanel);
         
         // Pizza Row2 Col1 - Size
-        layout.putConstraint(SpringLayout.WEST,  PizzaSizeLabel, leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  PizzaSizeLabel, basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, PizzaSizeLabel, 70, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  pizzaSizeSelector,  leftPadding100, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, pizzaSizeSelector,  70, SpringLayout.NORTH, mainPanel);
         
         // Pizza Row3 Col1 - Quantity
-        layout.putConstraint(SpringLayout.WEST,  PizzaQuantity, leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  PizzaQuantity, basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, PizzaQuantity, 100, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  pizzaQuantitySelector,  leftPadding100, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, pizzaQuantitySelector,  100, SpringLayout.NORTH, mainPanel);
@@ -429,27 +456,27 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, PizzaToppingsLabel, 140, SpringLayout.NORTH, mainPanel);
        
         // Pizza Row5 Col1 - Cheese Topping
-        layout.putConstraint(SpringLayout.WEST,  PizzaCheeseTopping, leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  PizzaCheeseTopping, basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, PizzaCheeseTopping, 170, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  pizzaCheeseToppingQuantitySelector,  leftPadding100, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, pizzaCheeseToppingQuantitySelector,  170, SpringLayout.NORTH, mainPanel);
         
         // Pizza Row6 Col1 - Pepperoi Topping
-        layout.putConstraint(SpringLayout.WEST,  PizzaPeperoniTopping, leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  PizzaPeperoniTopping, basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, PizzaPeperoniTopping, 200, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  pizzaPepperoniToppingQuantitySelector,  leftPadding100, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, pizzaPepperoniToppingQuantitySelector,  200, SpringLayout.NORTH, mainPanel);
        
         // Pizza Row7 Col1 - Ham Topping
-        layout.putConstraint(SpringLayout.WEST,  PizzaHamTopping, leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  PizzaHamTopping, basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, PizzaHamTopping, 230, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  pizzaHamToppingQuantitySelector,  leftPadding100, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, pizzaHamToppingQuantitySelector,  230, SpringLayout.NORTH, mainPanel);
         
         // Pizza Row8 Col1 - Add Pizza Button
-        layout.putConstraint(SpringLayout.WEST,  actionAddPizzaButton, leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  actionAddPizzaButton, basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, actionAddPizzaButton, 270, SpringLayout.NORTH, mainPanel);
-        layout.putConstraint(SpringLayout.WEST,  actionResetPizzaButton, leftPadding1, SpringLayout.EAST, actionAddPizzaButton);
+        layout.putConstraint(SpringLayout.WEST,  actionResetPizzaButton, basePadding1, SpringLayout.EAST, actionAddPizzaButton);
         layout.putConstraint(SpringLayout.NORTH, actionResetPizzaButton, 270, SpringLayout.NORTH, mainPanel);
         
         
@@ -462,39 +489,39 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, BurgerLabel, 330, SpringLayout.NORTH, mainPanel);
         
         // Burger Row2 - Burger Size
-        layout.putConstraint(SpringLayout.WEST,  BurgerSizeLabel, leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  BurgerSizeLabel, basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, BurgerSizeLabel, 360, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  burgerSizeSelector, leftPadding100, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, burgerSizeSelector, 360, SpringLayout.NORTH, mainPanel);
         
         // Burger Row3 - Burger Cheese
-        layout.putConstraint(SpringLayout.WEST,  BurgerCheeseLabel, leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  BurgerCheeseLabel, basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, BurgerCheeseLabel, 390, SpringLayout.NORTH, mainPanel);
 //        layout.putConstraint(SpringLayout.WEST,  departureCityTextField,  leftPadding100, SpringLayout.WEST, mainPanel);
 //        layout.putConstraint(SpringLayout.NORTH, departureCityTextField,  390, SpringLayout.NORTH, mainPanel);
        
         // Burger Row4 - Burger Tomato
-        layout.putConstraint(SpringLayout.WEST,  BurderTomatoLabel, leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  BurderTomatoLabel, basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, BurderTomatoLabel, 420, SpringLayout.NORTH, mainPanel);
 //        layout.putConstraint(SpringLayout.WEST,  destinationCityTextField,  leftPadding100, SpringLayout.WEST, mainPanel);
 //        layout.putConstraint(SpringLayout.NORTH, destinationCityTextField,  420, SpringLayout.NORTH, mainPanel);
         
         // Burger Row5 - Burger Onion
-        layout.putConstraint(SpringLayout.WEST,  BurgerOnionLabel, leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  BurgerOnionLabel, basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, BurgerOnionLabel, 450, SpringLayout.NORTH, mainPanel);
 //        layout.putConstraint(SpringLayout.WEST,  destinationCityTextField,  leftPadding100, SpringLayout.WEST, mainPanel);
 //        layout.putConstraint(SpringLayout.NORTH, destinationCityTextField,  450, SpringLayout.NORTH, mainPanel);
        
         // Burger Row6 - Burger Quantity
-        layout.putConstraint(SpringLayout.WEST,  BurgerQuantityLabel, leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  BurgerQuantityLabel, basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, BurgerQuantityLabel, 480, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  burgerQuantitySelector, leftPadding100, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, burgerQuantitySelector, 480, SpringLayout.NORTH, mainPanel);
        
         // Burger Row7 - Buttons
-        layout.putConstraint(SpringLayout.WEST,  actionAddBurgerButton, leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  actionAddBurgerButton, basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, actionAddBurgerButton, 520, SpringLayout.NORTH, mainPanel);
-        layout.putConstraint(SpringLayout.WEST,  actionResetBurgerButton, leftPadding1, SpringLayout.EAST, actionAddBurgerButton);
+        layout.putConstraint(SpringLayout.WEST,  actionResetBurgerButton, basePadding1, SpringLayout.EAST, actionAddBurgerButton);
         layout.putConstraint(SpringLayout.NORTH, actionResetBurgerButton, 520, SpringLayout.NORTH, mainPanel);
         
         
@@ -504,13 +531,13 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, FrenchFriesLabel, 40, SpringLayout.NORTH, mainPanel);
         
         // French Fries Row2 - Quantity
-        layout.putConstraint(SpringLayout.WEST,  FrenchFriesSizeLabel, leftPadding400 + leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  FrenchFriesSizeLabel, leftPadding400 + basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, FrenchFriesSizeLabel, 70, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  frenchFriesSizeSelector,  leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, frenchFriesSizeSelector,  70, SpringLayout.NORTH, mainPanel);
         
         // French Fries Row3 - Quantity
-        layout.putConstraint(SpringLayout.WEST,  FrenchFriesQuantityLabel, leftPadding400 + leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  FrenchFriesQuantityLabel, leftPadding400 + basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, FrenchFriesQuantityLabel, 100, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  frenchFriesQuantitySelector,  leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, frenchFriesQuantitySelector,  100, SpringLayout.NORTH, mainPanel);
@@ -519,7 +546,7 @@ public class OrderGUI extends JFrame implements ActionListener {
         // French Fries Row4 - Buttons
         layout.putConstraint(SpringLayout.WEST,  actionAddFrenchFriesButton, leftPadding400, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, actionAddFrenchFriesButton, 140, SpringLayout.NORTH, mainPanel);
-        layout.putConstraint(SpringLayout.WEST,  actionResetFrenchFriesButton, leftPadding1, SpringLayout.EAST, actionAddFrenchFriesButton);
+        layout.putConstraint(SpringLayout.WEST,  actionResetFrenchFriesButton, basePadding1, SpringLayout.EAST, actionAddFrenchFriesButton);
         layout.putConstraint(SpringLayout.NORTH, actionResetFrenchFriesButton, 140, SpringLayout.NORTH, mainPanel);
         
 
@@ -530,13 +557,13 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, OnionsLabel, 200, SpringLayout.NORTH, mainPanel);
         
         // Onion Rings Row2 - Size
-        layout.putConstraint(SpringLayout.WEST,  OnionsSizeLabel,        leftPadding400 + leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  OnionsSizeLabel,        leftPadding400 + basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, OnionsSizeLabel,        230, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  onionRingsSizeSelector, leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, onionRingsSizeSelector, 230, SpringLayout.NORTH, mainPanel);
         
         // Onion Rings Row3 - Quantity
-        layout.putConstraint(SpringLayout.WEST,  OnionsQuantityLabel,         leftPadding400 + leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  OnionsQuantityLabel,         leftPadding400 + basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, OnionsQuantityLabel,         270, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  onionRingsQuantitySelector,  leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, onionRingsQuantitySelector,  270, SpringLayout.NORTH, mainPanel);
@@ -544,7 +571,7 @@ public class OrderGUI extends JFrame implements ActionListener {
         // Onion Rings Row4 - Buttons
         layout.putConstraint(SpringLayout.WEST,  actionAddOnionRingsButton, leftPadding400, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, actionAddOnionRingsButton, 310, SpringLayout.NORTH, mainPanel);
-        layout.putConstraint(SpringLayout.WEST,  actionResetOnionRingsButton, leftPadding1, SpringLayout.EAST, actionAddOnionRingsButton);
+        layout.putConstraint(SpringLayout.WEST,  actionResetOnionRingsButton, basePadding1, SpringLayout.EAST, actionAddOnionRingsButton);
         layout.putConstraint(SpringLayout.NORTH, actionResetOnionRingsButton, 310, SpringLayout.NORTH, mainPanel);
         
         
@@ -556,19 +583,19 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, DrinksLabel, 370, SpringLayout.NORTH, mainPanel);
         
         // Drink Row2 - Type
-        layout.putConstraint(SpringLayout.WEST,  DrinkTypeLabel,        leftPadding400 + leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  DrinkTypeLabel,        leftPadding400 + basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, DrinkTypeLabel,        400, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  drinkTypeSelector,     leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, drinkTypeSelector,     400, SpringLayout.NORTH, mainPanel);
         
         // Drink Row3 - Size
-        layout.putConstraint(SpringLayout.WEST,  DrinkSizeLabel,         leftPadding400 + leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  DrinkSizeLabel,         leftPadding400 + basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, DrinkSizeLabel,         430, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  drinkSizeSelector,      leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, drinkSizeSelector,      430, SpringLayout.NORTH, mainPanel);
         
         // Drink Row4 - Quantity
-        layout.putConstraint(SpringLayout.WEST,  DrinkQuantityLabel,     leftPadding400 + leftPadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  DrinkQuantityLabel,     leftPadding400 + basePadding1, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, DrinkQuantityLabel,     460, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  drinkQuantitySelector,  leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, drinkQuantitySelector,  460, SpringLayout.NORTH, mainPanel);
@@ -576,7 +603,7 @@ public class OrderGUI extends JFrame implements ActionListener {
         // Drink Row5 - Buttons
         layout.putConstraint(SpringLayout.WEST,  actionAddDrinkButton,   leftPadding400, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, actionAddDrinkButton,   500, SpringLayout.NORTH, mainPanel);
-        layout.putConstraint(SpringLayout.WEST,  actionResetDrinkButton, leftPadding1, SpringLayout.EAST, actionAddDrinkButton);
+        layout.putConstraint(SpringLayout.WEST,  actionResetDrinkButton, basePadding1, SpringLayout.EAST, actionAddDrinkButton);
         layout.putConstraint(SpringLayout.NORTH, actionResetDrinkButton, 500, SpringLayout.NORTH, mainPanel);
         
         add(mainPanel);
@@ -653,7 +680,15 @@ public class OrderGUI extends JFrame implements ActionListener {
 	    	
 	    	// Reset onion rings to order
     		orderConsoleTextArea.setText(BUTTON_CAPTION_RESET_DRINK);
+    		
+    	} else if (actionCommand.equals(BUTTON_REMOVE_ITEM)) {
 	    	
+	    	// Reset onion rings to order
+    		int index = Integer.parseInt(removeItemIndexTextField.getText());
+    		order.removeOrderItem(index-1);
+    		orderConsoleTextArea.setText(order.printOrder());
+    		return;
+    		
 	    } else {
 	    	
 	    	// Could not find action
