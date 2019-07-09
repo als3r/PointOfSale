@@ -816,6 +816,9 @@ public class OrderGUI extends JFrame implements ActionListener {
     		if(customerDeliveryNeededJCheckBox.isSelected()) {
     			order.setDelivered(customerDeliveryNeededJCheckBox.isSelected());
     			order.setDeliveryAddress(customerAddressTextField.getText());
+    		} else {
+    			order.setDelivered(customerDeliveryNeededJCheckBox.isSelected());
+    			order.setDeliveryAddress("");
     		}
     		
     		customerDeliveryNeededJCheckBox.setSelected(false);
