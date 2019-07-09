@@ -21,10 +21,11 @@ package edu.century.group6;
 public class Burger extends MenuItem {
 
   private String burgerType;
-  private int bacon;
-  private int pickel;
+  private int cheese;
   private int tomato;
-  private int onion;
+  private int bacon;
+  private int onions;
+  private int pickel;
   private int lettuce;
   
   public static final String[] TYPE_ARRAY = {
@@ -38,11 +39,10 @@ public class Burger extends MenuItem {
   public Burger(){
     
     this.burgerType = "";
-    this.bacon = 0; //1.85;
-    this.pickel = 0;
+    this.cheese = 0;
     this.tomato = 0;
-    this.onion = 0;
     this.lettuce = 0;
+
     setPrice(calcCost());
  }
   
@@ -52,14 +52,13 @@ public class Burger extends MenuItem {
 	    setPrice(calcCost());
 	 }
   
- public Burger (String burgerType, int bacon, int pickel, int tomato, int onion, int lettus){
-    
+
+ public Burger (String burgerType, int cheese, int tomato, int onion ){    
     this.burgerType = burgerType;
-    this.bacon = bacon;
-    this.pickel = pickel;
-    this.tomato = tomato;
-    this.onion = onion;
-    this.lettuce = lettus;
+    this.bacon = cheese;
+    this.pickel = tomato;
+    this.tomato = onion;
+
     setPrice(calcCost());
  }
   
@@ -80,24 +79,14 @@ public class Burger extends MenuItem {
 		this.burgerType = burgerType;
 	}
 
-	public int getBacon()
+	public int getCheese()
 	{
-		return bacon;
+		return cheese;
 	}
 
-	public void setBacon(int bacon)
+	public void setCheese(int cheese)
 	{
-		this.bacon = bacon;
-	}
-
-	public int getPickel()
-	{
-		return pickel;
-	}
-
-	public void setPickel(int pickel)
-	{
-		this.pickel = pickel;
+		this.cheese = cheese;
 	}
 
 	public int getTomato()
@@ -109,28 +98,27 @@ public class Burger extends MenuItem {
 	{
 		this.tomato = tomato;
 	}
-	
-	
+
         public int getOnion()
 	{
-		return onion;
+		return onions;
 	}
 
 	public void setOnion(int onion)
 	{
-		this.onion = onion;
+		this.onions = onion;
 	}
-      
      
 	public int getLettus()
 	{
 		return lettuce;
 	}
 
-	public void setLettus(int lettus)
+	public void setLettus(int lettuce)
 	{
-		this.lettuce = lettus;
+		this.lettuce = lettuce;
 	}
+
   
   
   
@@ -140,27 +128,23 @@ public class Burger extends MenuItem {
   *
   *
   */
-  
-  
-  
-  
 public double calcCost()
 	{		
 		if(burgerType.equalsIgnoreCase("hamburger"))
 		{
-			return 4.99 + (bacon + pickel + tomato + onion + lettuce);
+			return 4.99 + (bacon + pickel + tomato + onions + lettuce);
 		}
 		else if(burgerType.equalsIgnoreCase("cheeseburger"))
 		{
-			return 5.99 + (bacon + pickel + tomato + onion + lettuce);
+			return 5.99 + (bacon + pickel + tomato + onions + lettuce);
 		}
 		else if(burgerType.equalsIgnoreCase("turkeyburger"))
 		{
-			return 5.99 + (bacon + pickel + tomato + onion + lettuce);
+			return 5.99 + (bacon + pickel + tomato + onions + lettuce);
 		}
 		else if(burgerType.equalsIgnoreCase("veggieburger"))
 		{
-			return 6.99 + (bacon + pickel + tomato + onion + lettuce);
+			return 6.99 + (bacon + pickel + tomato + onions + lettuce);
 		}
 		else
 		{
@@ -172,13 +156,11 @@ public double calcCost()
   * @overide
   *
   */
-
 	public String toString()
 	{
-		return "Burger: " + burgerType + "\n Bacon: " 
-				+ bacon + "\n Pickel: "
-				+ pickel + "\n Tomato: " + tomato + "\n Onions: " + onion 
-			        + "\n Lettus: " + lettuce
-				+ "\n Total Cost: $" + calcCost() + "\n";
+	return "Burger: " + burgerType + "\n Cheese: " 
+		+ cheese + "\n Tomato: "
+		+ tomato + "\n Onions: " + onions
+		+ "\n Total Cost: $" + calcCost() + "\n";
 	}
 }
