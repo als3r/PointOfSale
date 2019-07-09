@@ -544,7 +544,7 @@ public class Order {
 	 * @return this order
 	 */
 	public Order removeOrderItem(int index) {
-		if (orderItems[index] != null && orderItems[index] instanceof MenuItem) {
+		if (orderItems[index] != null && orderItems[index] instanceof MenuItem && index > 0 && index < MAX_ORDER_ITEMS) {
 			orderItems[index] = null;
 			calcOrderPrice();
 		}
