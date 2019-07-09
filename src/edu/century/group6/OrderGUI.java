@@ -658,32 +658,41 @@ public class OrderGUI extends JFrame implements ActionListener {
     		
     	} else if (actionCommand.equals(BUTTON_CAPTION_RESET_PIZZA)) {
 	    	
-	    	// Reset pizza to order
-    		orderConsoleTextArea.setText(BUTTON_CAPTION_RESET_PIZZA);
+	    	// Reset pizza
+    		pizzaSizeSelector.setSelectedItem("Small");
+    		pizzaCheeseToppingQuantitySelector.setSelectedItem("0");
+    		pizzaPepperoniToppingQuantitySelector.setSelectedItem("0");
+    		pizzaHamToppingQuantitySelector.setSelectedItem("0");
+    		pizzaQuantitySelector.setSelectedItem("1");
 		    
 	    } else if (actionCommand.equals(BUTTON_CAPTION_RESET_BURGER)) {
 	    	
-	    	// Reset burger to order
-	    	orderConsoleTextArea.setText(BUTTON_CAPTION_RESET_BURGER);
+	    	// Reset burger
+	    	burgerSizeSelector.setSelectedItem("Small");
+	    	burgerQuantitySelector.setSelectedItem("1");
 	    	
 	    } else if (actionCommand.equals(BUTTON_CAPTION_RESET_FRENCH_FRIES)) {
 	    	
-	    	// Reset french fries to order
-	    	orderConsoleTextArea.setText(BUTTON_CAPTION_RESET_FRENCH_FRIES);
+	    	// Reset French fries
+	    	frenchFriesSizeSelector.setSelectedItem("Small");
+	    	frenchFriesQuantitySelector.setSelectedItem("1");
 	    	
 	    } else if (actionCommand.equals(BUTTON_CAPTION_RESET_ONION_RINGS)) {
 	    	
-	    	// Reset onion rings to order
-	    	orderConsoleTextArea.setText(BUTTON_CAPTION_RESET_ONION_RINGS);
+	    	// Reset onion rings
+	    	onionRingsSizeSelector.setSelectedItem("Small");
+	    	onionRingsQuantitySelector.setSelectedItem("1");
 	    	
     	} else if (actionCommand.equals(BUTTON_CAPTION_RESET_DRINK)) {
 	    	
-	    	// Reset onion rings to order
-    		orderConsoleTextArea.setText(BUTTON_CAPTION_RESET_DRINK);
+	    	// Reset drinks
+    		drinkTypeSelector.setSelectedItem("Coke");
+    		drinkSizeSelector.setSelectedItem("Small");
+	    	drinkQuantitySelector.setSelectedItem("1");
     		
     	} else if (actionCommand.equals(BUTTON_REMOVE_ITEM)) {
 	    	
-	    	// Reset onion rings to order
+	    	// Remove item from order by number (index)
     		int index = Integer.parseInt(removeItemIndexTextField.getText());
     		order.removeOrderItem(index-1);
     		orderConsoleTextArea.setText(order.printOrder());
