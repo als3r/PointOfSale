@@ -19,10 +19,11 @@ package edu.century.group6;
  * @author Alexandr Sergeyev <ns1418cz@my.century.edu>
  */
 public class SideItem extends orderItem{
-
-   private String drink;
-  private String fries;
-  
+   
+   private String fries;
+   private double coke;
+   private double water;
+   private double beer;
   
   /**
   * Default constractor initialized to null and 0
@@ -30,15 +31,19 @@ public class SideItem extends orderItem{
   */
   public SideItem(){
     
-    this.drink = "";
-    this.fries = ""'
-    
- }
+    this.fries = "";
+    this.coke = 1.00;
+    this.water = 2.00;
+    this.beer = 3.00;
+
+  }
   
- public SideItem (String drinks, String fries){
+ public SideItem (String fries, int coke, int water, int beer){
     
-    this.drink = drink;
     this.fries = fries;
+    this.coke = coke;
+    this.water = water;
+    this.beer = beer;
    
  }
   
@@ -49,26 +54,43 @@ public class SideItem extends orderItem{
   *
   */
  
-	public String getDrink()
-	{
-		return drink;
-	}
-
-	public void setDrink(String drink)
-	{
-		this.drink = drink;
-	}
-
 	public String getFries()
 	{
 		return fries;
 	}
 
-	public void setFries(int fries)
+	public void setFries(String fries)
 	{
 		this.fries = fries;
 	}
-  
+	
+	public String getCoke()
+	{
+		return coke;
+	}
+
+	public void setCoke(int coke)
+	{
+		this.coke = coke;
+	}
+	
+	public String getWater()
+	{
+		return water;
+	}
+
+	public void setWater(int water)
+	{
+		this.water = water;
+	
+	public String getBeer()
+	{
+		return beer;
+	}
+
+	public void setBeer(int beer)
+	{
+		this.beer = beer;
   
   
   /**
@@ -83,17 +105,17 @@ public class SideItem extends orderItem{
   
 public double calcCost()
 	{		
-		if(drink.equalsIgnoreCase("coke"))
+		if(fries.equalsIgnoreCase("small") )
 		{
-			return 1.00;
+			return 1.00 + (coke + water + beer)
 		}
-		else if(drink.equalsIgnoreCase("water"))
+		else if(fries.equalsIgnoreCase("mediu,"))
 		{
-			return 2.00;
+			return 2.00 + (coke + water + beer);
 		}
-		else if(drink.equalsIgnoreCase("beer"))
+		else if(fries.equalsIgnoreCase("large"))
 		{
-			return 3.99;
+			return 3.00 + (coke + water + beer);
 		}
 		else
 		{
@@ -108,7 +130,9 @@ public double calcCost()
 
 	public String toString()
 	{
-		return "Side item: " + drink + fries; 
+		return "Fries: " + fries + "\n Drink: " + coke + "\n Water: "
+			+ water + "\n Beer: " + beer;
+			
 				
 	}
 }
