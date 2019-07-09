@@ -62,39 +62,31 @@ public class MenuItem {
 	 */
 	MenuItem(){
 		setName("Test");
-		setPrice(1.00);
 		setQuantity(DEFAULT_QUANTITY);
 		setCookTime(DEFAULT_COOK_TIME);
-		setTotalPrice(calcTotalPrice());
 	}
 	
 	/**
 	 * Construct instance of MenuItem 
 	 * with provided:
 	 * @param name
-	 * @param price
 	 */
-	MenuItem(String name, double price){
+	MenuItem(String name){
 		setName(name);
-		setPrice(price);
 		setQuantity(DEFAULT_QUANTITY);
 		setCookTime(DEFAULT_COOK_TIME);
-		setTotalPrice(calcTotalPrice());
 	}
 	
 	/**
 	 * Construct instance of MenuItem 
 	 * with provided:
 	 * @param name
-	 * @param price
 	 * @param quantity
 	 */
-	MenuItem(String name, double price, int quantity){
+	MenuItem(String name, int quantity){
 		setName(name);
-		setPrice(price);
 		setQuantity(quantity);
 		setCookTime(DEFAULT_COOK_TIME);
-		setTotalPrice(calcTotalPrice());
 	}
 	
 	/**
@@ -105,12 +97,10 @@ public class MenuItem {
 	 * @param quantity
 	 * @param cookTime
 	 */
-	MenuItem(String name, double price, int quantity, int cookTime){
+	MenuItem(String name, int quantity, int cookTime){
 		setName(name);
-		setPrice(price);
 		setQuantity(quantity);
 		setCookTime(cookTime);
-		setTotalPrice(calcTotalPrice());
 	}
 	
 	
@@ -223,7 +213,7 @@ public class MenuItem {
 	 */
 	@Override
 	public String toString() {
-		return "MenuItem [name=" + name + ", price=" + price + ", quantity=" + quantity + ", cookTime=" + cookTime
+		return name + ", quantity=" + quantity + ", cookTime=" + cookTime
 				+ "]";
 	}
 	

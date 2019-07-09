@@ -15,6 +15,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 import java.text.ParsePosition;
 import java.util.Date;
 
@@ -65,12 +66,12 @@ public class OrderGUI extends JFrame implements ActionListener {
 	/**
 	 * Console text area's "width" in number of characters
 	 */
-	private static final int TEXTARE_NUMBER_OF_CHAR = 40;
+	private static final int TEXTAREA_NUMBER_OF_CHAR = 60;
 	
 	/**
 	 * Console text area's "height" in number of lines
 	 */
-	private static final int TEXTAREA_NUMBER_OF_LINES = 40;
+	private static final int TEXTAREA_NUMBER_OF_LINES = 36;
 	
 	/**
 	 * Number of character for input text fields
@@ -108,20 +109,6 @@ public class OrderGUI extends JFrame implements ActionListener {
 	public static final String[] QUANTITY_ARRAY = {
 		"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"
 	};
-	
-	/**
-	 * Array of quantity options
-	 */
-	public static final String[] QUANTITY_OPTIONS_ARRAY = {
-		"0", "1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"
-	};
-	
-	/**
-	 * Array of quantity options
-	 */
-	public static final String[] DRINK_OPTIONS_ARRAY = {
-		"Coke", "Diet Coke"
-	};
     
     
 	/**
@@ -137,17 +124,17 @@ public class OrderGUI extends JFrame implements ActionListener {
     /**
      * JComboBox for pizza quantity (0-20)
      */
-    private JComboBox  pizzaCheeseToppingQuantitySelector = new JComboBox(QUANTITY_OPTIONS_ARRAY);
+    private JComboBox  pizzaCheeseToppingQuantitySelector = new JComboBox(Pizza.QUANTITY_TOPPINGS_CHEESE);
     
     /**
      * JComboBox for pizza quantity (0-20)
      */
-    private JComboBox  pizzaPepperoniToppingQuantitySelector = new JComboBox(QUANTITY_OPTIONS_ARRAY);
+    private JComboBox  pizzaPepperoniToppingQuantitySelector = new JComboBox(Pizza.QUANTITY_TOPPINGS_OTHER);
     
     /**
      * JComboBox for pizza quantity (0-20)
      */
-    private JComboBox  pizzaHamToppingQuantitySelector = new JComboBox(QUANTITY_OPTIONS_ARRAY);
+    private JComboBox  pizzaHamToppingQuantitySelector = new JComboBox(Pizza.QUANTITY_TOPPINGS_OTHER);
     
     
     
@@ -189,12 +176,12 @@ public class OrderGUI extends JFrame implements ActionListener {
     /**
      * JComboBox for onion rings size
      */
-    private JComboBox  drinkTypeSelector = new JComboBox(DRINK_OPTIONS_ARRAY);
+    private JComboBox  drinkTypeSelector = new JComboBox(Drink.TYPE_ARRAY);
     
     /**
      * JComboBox for onion rings size
      */
-    private JComboBox  drinkSizeSelector = new JComboBox(SIZE_ARRAY);
+    private JComboBox  drinkSizeSelector = new JComboBox(Drink.SIZE_ARRAY);
     
     /**
      * JComboBox for onion rings quantity (0-20)
@@ -237,7 +224,9 @@ public class OrderGUI extends JFrame implements ActionListener {
 	public static final String BUTTON_CAPTION_RESET_DRINK        = "Reset Drink";
 	public static final String BUTTON_CAPTION_RESET_CUSTOMER     = "Reset Customer";
 	
-	public static final String BUTTON_REMOVE_ITEM                = "Remove Item";
+	public static final String BUTTON_CAPTION_REMOVE_ITEM        = "Remove Item";
+	public static final String BUTTON_CAPTION_PLACE_ORDER        = "Order";
+	public static final String BUTTON_CAPTION_CLEAR_ORDER_ITEMS  = "Clear Order";
     
     
 	
@@ -276,7 +265,8 @@ public class OrderGUI extends JFrame implements ActionListener {
         JPanel consolePanel = new JPanel ();
         consolePanel.setBorder ( new TitledBorder ( new EtchedBorder (), "ORDER RECEIPT" ) );
         // text area
-        orderConsoleTextArea = new JTextArea(TEXTAREA_NUMBER_OF_LINES, TEXTARE_NUMBER_OF_CHAR);
+        orderConsoleTextArea = new JTextArea(TEXTAREA_NUMBER_OF_LINES, TEXTAREA_NUMBER_OF_CHAR);
+        orderConsoleTextArea.setFont(new Font("monospaced", Font.PLAIN, 14));
         // add scroll to text area
         JScrollPane scrollPanel = new JScrollPane(orderConsoleTextArea);
         scrollPanel.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
@@ -286,7 +276,7 @@ public class OrderGUI extends JFrame implements ActionListener {
         
         //define form labels
         JLabel MenuLabel                = new JLabel(BUSINESS_NAME + " MENU");
-        JLabel PizzaLabel               = new JLabel("PIZZA $10 Small, $12 Medium, $14 Large");
+        JLabel PizzaLabel               = new JLabel("PIZZA  FROM $10 Small; $12 Medium; $14 Large");
         
         JLabel PizzaSizeLabel           = new JLabel("Size");
         JLabel PizzaToppingsLabel       = new JLabel("PIZZA TOPPINGS");
@@ -305,15 +295,15 @@ public class OrderGUI extends JFrame implements ActionListener {
         
         
         //        JLabel SideItemLabel            = new JLabel("SIDES");
-        JLabel FrenchFriesLabel         = new JLabel("FRENCH FRIES");
+        JLabel FrenchFriesLabel         = new JLabel("FRENCH FRIES  $2.00 Small; $2.50 Medium; $3.20 Large");
         JLabel FrenchFriesSizeLabel     = new JLabel("Size");
         JLabel FrenchFriesQuantityLabel = new JLabel("Quantity");
         
-        JLabel OnionsLabel              = new JLabel("ONION RINGS");
+        JLabel OnionsLabel              = new JLabel("ONION RINGS  $3.00 Small; $3.75 Medium; $4.80 Large");
         JLabel OnionsSizeLabel          = new JLabel("Size");
         JLabel OnionsQuantityLabel      = new JLabel("Quantity");
         
-        JLabel DrinksLabel              = new JLabel("DRINKS");
+        JLabel DrinksLabel              = new JLabel("DRINKS  FROM $1.00 Small; $1.25 Medium; $1.60 Large");
         JLabel DrinkTypeLabel           = new JLabel("Drink");
         JLabel DrinkSizeLabel           = new JLabel("Size");
         JLabel DrinkQuantityLabel       = new JLabel("Quantity");
@@ -369,8 +359,14 @@ public class OrderGUI extends JFrame implements ActionListener {
         JButton actionResetCustomerButton = new JButton(BUTTON_CAPTION_RESET_CUSTOMER);
         actionResetCustomerButton.addActionListener(this);
         
-        JButton actionRemoveItemButton = new JButton(BUTTON_REMOVE_ITEM);
+        JButton actionRemoveItemButton = new JButton(BUTTON_CAPTION_REMOVE_ITEM);
         actionRemoveItemButton.addActionListener(this);
+        
+        JButton actionPlaceOrderButton = new JButton(BUTTON_CAPTION_PLACE_ORDER);
+        actionPlaceOrderButton.addActionListener(this);
+        
+        JButton actionClearOrderButton = new JButton(BUTTON_CAPTION_CLEAR_ORDER_ITEMS);
+        actionClearOrderButton.addActionListener(this);
         
         
         // Layout
@@ -465,7 +461,10 @@ public class OrderGUI extends JFrame implements ActionListener {
         mainPanel.add(actionResetOnionRingsButton);
         mainPanel.add(actionResetDrinkButton);
         mainPanel.add(actionResetCustomerButton);
+        
         mainPanel.add(actionRemoveItemButton);
+        mainPanel.add(actionPlaceOrderButton);
+        mainPanel.add(actionClearOrderButton);
         
         
         
@@ -584,17 +583,17 @@ public class OrderGUI extends JFrame implements ActionListener {
         
         
         // French Fries Row1 - Label
-        layout.putConstraint(SpringLayout.WEST,  FrenchFriesLabel, leftPadding500, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  FrenchFriesLabel, leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, FrenchFriesLabel, 40, SpringLayout.NORTH, mainPanel);
         
         // French Fries Row2 - Quantity
-        layout.putConstraint(SpringLayout.WEST,  FrenchFriesSizeLabel, leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  FrenchFriesSizeLabel, leftPadding400, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, FrenchFriesSizeLabel, 70, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  frenchFriesSizeSelector,  leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, frenchFriesSizeSelector,  70, SpringLayout.NORTH, mainPanel);
         
         // French Fries Row3 - Quantity
-        layout.putConstraint(SpringLayout.WEST,  FrenchFriesQuantityLabel, leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  FrenchFriesQuantityLabel, leftPadding400, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, FrenchFriesQuantityLabel, 100, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  frenchFriesQuantitySelector,  leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, frenchFriesQuantitySelector,  100, SpringLayout.NORTH, mainPanel);
@@ -610,17 +609,17 @@ public class OrderGUI extends JFrame implements ActionListener {
 
         
         // Onion Rings Row1 - Label
-        layout.putConstraint(SpringLayout.WEST,  OnionsLabel, leftPadding500, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  OnionsLabel, leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, OnionsLabel, 200, SpringLayout.NORTH, mainPanel);
         
         // Onion Rings Row2 - Size
-        layout.putConstraint(SpringLayout.WEST,  OnionsSizeLabel,        leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  OnionsSizeLabel,        leftPadding400, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, OnionsSizeLabel,        230, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  onionRingsSizeSelector, leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, onionRingsSizeSelector, 230, SpringLayout.NORTH, mainPanel);
         
         // Onion Rings Row3 - Quantity
-        layout.putConstraint(SpringLayout.WEST,  OnionsQuantityLabel,         leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  OnionsQuantityLabel,         leftPadding400, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, OnionsQuantityLabel,         270, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  onionRingsQuantitySelector,  leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, onionRingsQuantitySelector,  270, SpringLayout.NORTH, mainPanel);
@@ -636,23 +635,23 @@ public class OrderGUI extends JFrame implements ActionListener {
         
         
         // Drink Row1 - Label
-        layout.putConstraint(SpringLayout.WEST,  DrinksLabel, leftPadding500, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  DrinksLabel, leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, DrinksLabel, 370, SpringLayout.NORTH, mainPanel);
         
         // Drink Row2 - Type
-        layout.putConstraint(SpringLayout.WEST,  DrinkTypeLabel,        leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  DrinkTypeLabel,        leftPadding400, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, DrinkTypeLabel,        400, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  drinkTypeSelector,     leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, drinkTypeSelector,     400, SpringLayout.NORTH, mainPanel);
         
         // Drink Row3 - Size
-        layout.putConstraint(SpringLayout.WEST,  DrinkSizeLabel,         leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  DrinkSizeLabel,         leftPadding400, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, DrinkSizeLabel,         430, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  drinkSizeSelector,      leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, drinkSizeSelector,      430, SpringLayout.NORTH, mainPanel);
         
         // Drink Row4 - Quantity
-        layout.putConstraint(SpringLayout.WEST,  DrinkQuantityLabel,     leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  DrinkQuantityLabel,     leftPadding400, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, DrinkQuantityLabel,     460, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  drinkQuantitySelector,  leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, drinkQuantitySelector,  460, SpringLayout.NORTH, mainPanel);
@@ -726,6 +725,12 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.WEST,  customerZIPTextField,  leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, customerZIPTextField,  720, SpringLayout.NORTH, mainPanel);
         
+        // Customer Row5 Col2 - Customer ZIP Code
+        layout.putConstraint(SpringLayout.WEST,  actionPlaceOrderButton, leftPadding10, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.NORTH, actionPlaceOrderButton, 750, SpringLayout.NORTH, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  actionClearOrderButton, leftPadding10, SpringLayout.EAST, actionPlaceOrderButton);
+        layout.putConstraint(SpringLayout.NORTH, actionClearOrderButton, 750, SpringLayout.NORTH, mainPanel);
+        
         add(mainPanel);
 	}
 	
@@ -737,20 +742,41 @@ public class OrderGUI extends JFrame implements ActionListener {
 	{
 	    String actionCommand = e.getActionCommand( );
 	    
-	    if (actionCommand.equals("Order")) {
+	    if (actionCommand.equals(BUTTON_CAPTION_PLACE_ORDER)) {
 	    	
 	    	// Place an order
+	    	// show message that order was placed, reset all forms
+	    	orderConsoleTextArea.setText("Order was placed!");
+	    	resetAllForms();
+	    	
+	    	// show final receipt to customer
+	    	order.orderStatusReceived();
+	    	orderConsoleTextArea.setText(order.printOrder() + "\nThank you for your order!");
+	    	
+	    	// set current order to new empty order 
+	    	// for next customer
+	    	ORDER_NUMBER++;
+	    	order = new Order(String.valueOf(ORDER_NUMBER));
+	    	
+	    } else if (actionCommand.equals(BUTTON_CAPTION_CLEAR_ORDER_ITEMS)) {
+	    	
+	    	// Remove all order items from order
+	    	order.removeAllOrderItems();
+	    	order.calcOrderPrice();
+
+	    	// Update order receipt
+	    	orderConsoleTextArea.setText(order.printOrder());
 	    
 	    } else if (actionCommand.equals(BUTTON_CAPTION_ADD_PIZZA)) {
 	    	
 	    	// Create pizza object to add it to order
-	    	String pizzaSize           = String.valueOf(pizzaSizeSelector.getSelectedItem()).toLowerCase();
+	    	String pizzaSize           = String.valueOf(pizzaSizeSelector.getSelectedItem());
 	    	int pizzaCheeseToppings    = Integer.parseInt(String.valueOf(pizzaCheeseToppingQuantitySelector.getSelectedItem()));
 	    	int pizzaPepperoniToppings = Integer.parseInt(String.valueOf(pizzaPepperoniToppingQuantitySelector.getSelectedItem()));
 	    	int pizzaHamToppings       = Integer.parseInt(String.valueOf(pizzaHamToppingQuantitySelector.getSelectedItem()));
 	    	int pizzaQuantity          = Integer.parseInt(String.valueOf(pizzaQuantitySelector.getSelectedItem()));
 	    	
-	    	Pizza pizza = new Pizza(pizzaSize, pizzaCheeseToppings, pizzaPepperoniToppings, pizzaHamToppings);
+	    	Pizza pizza = new Pizza(pizzaSize, pizzaQuantity, pizzaCheeseToppings, pizzaPepperoniToppings, pizzaHamToppings);
 	    	
 	    	// Add pizza to order
 	    	order.addOrderItem(pizza);
@@ -761,7 +787,7 @@ public class OrderGUI extends JFrame implements ActionListener {
 	    } else if (actionCommand.equals(BUTTON_CAPTION_ADD_BURGER)) {
 	    	
 	    	// Create burger object to add it to order
-	    	String burgerType     = String.valueOf(burgerTypeSelector.getSelectedItem()).toLowerCase();
+	    	String burgerType     = String.valueOf(burgerTypeSelector.getSelectedItem());
 	    	int    burgerQuantity = Integer.parseInt(String.valueOf(burgerQuantitySelector.getSelectedItem()));
 	    	
 	    	Burger burger = new Burger(burgerType, burgerQuantity);
@@ -774,18 +800,51 @@ public class OrderGUI extends JFrame implements ActionListener {
 	    	
 	    } else if (actionCommand.equals(BUTTON_CAPTION_ADD_FRENCH_FRIES)) {
 	    	
-	    	// Add french fries to order
-	    	orderConsoleTextArea.setText(BUTTON_CAPTION_ADD_FRENCH_FRIES);
+	    	// Add French fries to order
+    		// Create French fries object to add it to order
+	    	String sideType     = "French Fries";
+	    	String sideSize     = String.valueOf(frenchFriesSizeSelector.getSelectedItem());
+	    	int    sideQuantity = Integer.parseInt(String.valueOf(frenchFriesQuantitySelector.getSelectedItem()));
+	    	
+	    	SideItem sideItem = new SideItem(sideType, sideSize, sideQuantity);
+	    	
+	    	// Add French fries to order
+    		order.addOrderItem(sideItem);
+	    	
+	    	// Update order receipt
+	    	orderConsoleTextArea.setText(order.printOrder());
 	    	
 	    } else if (actionCommand.equals(BUTTON_CAPTION_ADD_ONION_RINGS)) {
 	    	
 	    	// Add onion rings to order
-	    	orderConsoleTextArea.setText(BUTTON_CAPTION_ADD_ONION_RINGS);
+    		// Create onion rings object to add it to order
+	    	String sideType     = "Onion Rings";
+	    	String sideSize     = String.valueOf(onionRingsSizeSelector.getSelectedItem());
+	    	int    sideQuantity = Integer.parseInt(String.valueOf(onionRingsQuantitySelector.getSelectedItem()));
+	    	
+	    	SideItem sideItem = new SideItem(sideType, sideSize, sideQuantity);
+	    	
+	    	// Add onion rings to order
+    		order.addOrderItem(sideItem);
+	    	
+	    	// Update order receipt
+	    	orderConsoleTextArea.setText(order.printOrder());
 	    	
     	} else if (actionCommand.equals(BUTTON_CAPTION_ADD_DRINK)) {
 	    	
-	    	// Add onion rings to order
-    		orderConsoleTextArea.setText(BUTTON_CAPTION_ADD_DRINK);
+	    	// Add drink to order
+    		// Create drink object to add it to order
+	    	String drinkType     = String.valueOf(drinkTypeSelector.getSelectedItem());
+	    	String drinkSize     = String.valueOf(drinkSizeSelector.getSelectedItem());
+	    	int    drinkQuantity = Integer.parseInt(String.valueOf(drinkQuantitySelector.getSelectedItem()));
+	    	
+	    	Drink drink = new Drink(drinkType, drinkSize, drinkQuantity);
+	    	
+	    	// Add drink to order
+    		order.addOrderItem(drink);
+	    	
+	    	// Update order receipt
+	    	orderConsoleTextArea.setText(order.printOrder());
     		
     	} else if (actionCommand.equals(BUTTON_CAPTION_ADD_CUSTOMER)) {
 	    	
@@ -793,7 +852,7 @@ public class OrderGUI extends JFrame implements ActionListener {
     		// Create customer object and assign to order 
     		Customer customer = new Customer();
     		customer.setCustomerNumber(String.valueOf(CUSTOMER_NUMBER));
-    		customer.setFirstName(customerAddressTextField.getText());
+    		customer.setFirstName(customerFirstNameTextField.getText());
     		customer.setLastName(customerLastNameTextField.getText());
     		customer.setPhone(customerPhoneNumberTextField.getText());
     		customer.setAddress(customerAddressTextField.getText());
@@ -816,7 +875,7 @@ public class OrderGUI extends JFrame implements ActionListener {
     		// update order receipt
     		orderConsoleTextArea.setText(order.printOrder());
     		
-    	} else if (actionCommand.equals(BUTTON_REMOVE_ITEM)) {
+    	} else if (actionCommand.equals(BUTTON_CAPTION_REMOVE_ITEM)) {
 	    	
 	    	// Remove item from order by number (index)
     		int index = Integer.parseInt(removeItemIndexTextField.getText());
@@ -867,7 +926,7 @@ public class OrderGUI extends JFrame implements ActionListener {
 	 */
 	public void resetPizzaForm() {
 		pizzaSizeSelector.setSelectedItem("Small");
-		pizzaCheeseToppingQuantitySelector.setSelectedItem("0");
+		pizzaCheeseToppingQuantitySelector.setSelectedItem("1");
 		pizzaPepperoniToppingQuantitySelector.setSelectedItem("0");
 		pizzaHamToppingQuantitySelector.setSelectedItem("0");
 		pizzaQuantitySelector.setSelectedItem("1");
@@ -903,7 +962,7 @@ public class OrderGUI extends JFrame implements ActionListener {
 	 */
 	public void resetDrinksForm() {
 		drinkTypeSelector.setSelectedItem("Coke");
-		drinkSizeSelector.setSelectedItem("Small");
+		drinkSizeSelector.setSelectedItem("12oz");
     	drinkQuantitySelector.setSelectedItem("1");
 	}
 	
@@ -920,5 +979,17 @@ public class OrderGUI extends JFrame implements ActionListener {
 		customerLastNameTextField.setText("");
 		customerPhoneNumberTextField.setText("");
 		customerDeliveryNeededJCheckBox.setSelected(false);
+	}
+	
+	/**
+	 * Reset customer form to default
+	 */
+	public void resetAllForms() {
+		resetPizzaForm();
+		resetBurgerForm();
+		resetFrenchFriesForm();
+		resetOnionRingsForm();
+		resetDrinksForm();
+		resetCustomerForm();
 	}
 }

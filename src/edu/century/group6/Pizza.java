@@ -25,6 +25,20 @@ public class Pizza extends MenuItem {
   private int pepperoniCount;
   private int hamCount;
   
+   /**
+	 * Array of quantity toppings
+	 */
+	public static final String[] QUANTITY_TOPPINGS_CHEESE = {
+		"1","2","3","4","5"
+	};
+	
+	/**
+	 * Array of quantity other toppings
+	 */
+	public static final String[] QUANTITY_TOPPINGS_OTHER = {
+		"0", "1","2","3","4","5"
+	};
+  
   /**
   * Default constructor initialized to null and 0
   *
@@ -52,6 +66,30 @@ public Pizza (String pizzaSize, int cheeseCount, int pepperoniCount, int hamCoun
     this.hamCount = hamCount;
     setPrice(calcCost());
  }
+
+
+/**
+* Constructor
+* Create an instance of Pizza
+* sets item price and calculate total price based on quantity
+* with provided:
+* 
+* @param sideType
+* @param sideSize
+* @param sideQuantity
+*/
+public Pizza(String pizzaSize, int sideQuantity, int cheeseCount, int pepperoniCount, int hamCount) {
+	// using parent constructor
+	super(pizzaSize, sideQuantity);
+	// set type and size
+	setPizzaSize(pizzaSize);
+	this.cheeseCount = cheeseCount;
+    this.pepperoniCount = pepperoniCount;
+    this.hamCount = hamCount;
+	// set cost
+	setPrice(calcCost());
+	setTotalPrice(calcTotalPrice());
+}
   
   
   /**
@@ -131,13 +169,29 @@ public double calcCost()
 			return 0.0;
 		}
 	}
+
+
+	/**
+	 * Overriding method definition in order to be more verbose in output
+	 * 
+	 * @return the formatted string of reservation data
+	 */
+	@Override
+	public String toString()
+	{
+		return "Pizza: " + getName() + ". Qty: " + getQuantity() + "\n" + 
+				"Cheese toppings: " + cheeseCount  + "\n" +
+				"Pepperoni toppings: "+ pepperoniCount + "\n" +
+				"Ham toppings: " + hamCount + "\n" +
+				String.format("$%.2f", getTotalPrice()) + "\n";
+	}
   
   /**
   * @overide
   *
   */
 
-	public String toString()
+	public String toString2()
 	{
 		return "Pizza size: " + pizzaSize + "\n Cheese toppings: " 
 				+ cheeseCount + "\n Pepperoni toppings: "

@@ -553,6 +553,18 @@ public class Order {
 	
 	
 	/**
+	 * Remove all order items from order
+	 * 
+	 * @param index
+	 * @return this order
+	 */
+	public Order removeAllOrderItems() {
+		this.orderItems = new MenuItem[MAX_ORDER_ITEMS];
+		return this;
+	}
+	
+	
+	/**
 	 * Calculate subtotal of all order items
 	 * 
 	 * @return subTotal
@@ -638,9 +650,9 @@ public class Order {
 			message += itemMessage;
 			message += "----------------------------------------" + "\n";
 		}
-		message += String.format("%-20s%5.2f\n", "SubTotal:", getSubTotal());
-		message += String.format("%-20s%5.2f\n", "Tax:"     , getTax()); 
-		message += String.format("%-20s%5.2f\n", "Total:"   , getTotal());
+		message += String.format("%-20s $%.2f%n", "SubTotal:", getSubTotal());
+		message += String.format("%-20s $%.2f%n", "Tax ("+String.format("%.1f", TAX)+"%):"     , getTax()); 
+		message += String.format("%-20s $%.2f%n", "Total:"   , getTotal());
 		message += "========================================" + "\n";
 		return message;
 	}

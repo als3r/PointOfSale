@@ -28,6 +28,9 @@ public class Burger extends MenuItem {
   private int pickel;
   private int lettuce;
   
+  /**
+ * To store burger types
+ */
   public static final String[] TYPE_ARRAY = {
 	  "HamBurger", "CheeseBurger", "TurkeyBurger", "VeggieBurger"	  
   };
@@ -45,13 +48,7 @@ public class Burger extends MenuItem {
 
     setPrice(calcCost());
  }
-  
-  public Burger (String burgerType, int burgerQuantity){
-	    
-	    this.burgerType = burgerType;
-	    setPrice(calcCost());
-	 }
-  
+   
 
  public Burger (String burgerType, int cheese, int tomato, int onion ){    
     this.burgerType = burgerType;
@@ -61,6 +58,27 @@ public class Burger extends MenuItem {
 
     setPrice(calcCost());
  }
+ 
+ 
+ 	/**
+	 * Constructor
+	 * Create an instance of Burger
+	 * sets item price and calculate total price based on quantity
+	 * with provided:
+	 * 
+	 * @param sideType
+	 * @param sideSize
+	 * @param sideQuantity
+	 */
+	public Burger(String burgerType, int sideQuantity) {
+		// using parent constructor
+		super(burgerType, sideQuantity);
+		// set type and size
+		setBurgerType(burgerType);
+		// set cost
+		setPrice(calcCost());
+		setTotalPrice(calcTotalPrice());
+	}
   
   
   /**
@@ -151,12 +169,24 @@ public double calcCost()
 			return 0.0;
 		}
 	}
+
+	/**
+	 * Overriding method definition in order to be more verbose in output
+	 * 
+	 * @return the formatted string of reservation data
+	 */
+	@Override
+	public String toString()
+	{
+		return "Burger: " + getName() + ". Qty: " + getQuantity() + "\n" + 
+				String.format("$%.2f", getTotalPrice()) + "\n";
+	}
   
   /**
   * @overide
   *
   */
-	public String toString()
+	public String toString2()
 	{
 	return "Burger: " + burgerType + "\n Cheese: " 
 		+ cheese + "\n Tomato: "
