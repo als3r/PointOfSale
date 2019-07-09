@@ -40,7 +40,12 @@ public class OrderGUI extends JFrame implements ActionListener {
 	/**
 	 * Program Name
 	 */
-	private static final String PROGRAM_NAME = "PointOfSale";
+	private static final String BUSINESS_NAME = "HOT OVEN & GRILL";
+	
+	/**
+	 * Program Name
+	 */
+	private static final String PROGRAM_NAME = "Point Of Sale - " + BUSINESS_NAME + " - ORDER MENU";
 	
 	/**
 	 * Version
@@ -149,7 +154,7 @@ public class OrderGUI extends JFrame implements ActionListener {
     /**
      * JComboBox for burger size
      */
-    private JComboBox  burgerSizeSelector = new JComboBox(SIZE_ARRAY);
+    private JComboBox  burgerTypeSelector = new JComboBox(Burger.TYPE_ARRAY);
     
     /**
      * JComboBox for burger quantity (0-20)
@@ -199,7 +204,7 @@ public class OrderGUI extends JFrame implements ActionListener {
     /**
      * JTextField remove item index
      */
-    private JTextField removeItemIndexTextField        = new JTextField(NUMBER_OF_CHAR_INPUT_20);
+    private JTextField removeItemIndexTextField        = new JTextField(NUMBER_OF_CHAR_INPUT_10);
     
     /**
      * JTextField customer form
@@ -269,7 +274,7 @@ public class OrderGUI extends JFrame implements ActionListener {
         // Define Console Text Area
         // Label and border around console text area
         JPanel consolePanel = new JPanel ();
-        consolePanel.setBorder ( new TitledBorder ( new EtchedBorder (), "ORDER DETAILS" ) );
+        consolePanel.setBorder ( new TitledBorder ( new EtchedBorder (), "ORDER RECEIPT" ) );
         // text area
         orderConsoleTextArea = new JTextArea(TEXTAREA_NUMBER_OF_LINES, TEXTARE_NUMBER_OF_CHAR);
         // add scroll to text area
@@ -280,7 +285,7 @@ public class OrderGUI extends JFrame implements ActionListener {
         
         
         //define form labels
-        JLabel MenuLabel                = new JLabel("MENU");
+        JLabel MenuLabel                = new JLabel(BUSINESS_NAME + " MENU");
         JLabel PizzaLabel               = new JLabel("PIZZA $10 Small, $12 Medium, $14 Large");
         
         JLabel PizzaSizeLabel           = new JLabel("Size");
@@ -291,15 +296,15 @@ public class OrderGUI extends JFrame implements ActionListener {
         JLabel PizzaQuantity            = new JLabel("Quantity");
         
         
-        JLabel BurgerLabel              = new JLabel("BURGER");
-        JLabel BurgerSizeLabel          = new JLabel("Size");
-        JLabel BurgerCheeseLabel        = new JLabel("Cheese");
-        JLabel BurderTomatoLabel        = new JLabel("Tomato");
-        JLabel BurgerOnionLabel         = new JLabel("Onions");
+        JLabel BurgerLabel              = new JLabel("BURGERS");
+        JLabel BurgerPriceLabel         = new JLabel("$4.99 Hamburger; $5.99 Cheeseburger, Turkey; $6.99 Veggie");
+        JLabel BurgerTypeLabel          = new JLabel("Burger");
+        JLabel BurderIncludeTextLabel   = new JLabel("Includes Tomato, Onion, Lettuce, Pickles");
+    	//        JLabel BurgerOnionLabel         = new JLabel("Onions");
         JLabel BurgerQuantityLabel      = new JLabel("Quantity");
         
         
-//        JLabel SideItemLabel            = new JLabel("SIDES");
+        //        JLabel SideItemLabel            = new JLabel("SIDES");
         JLabel FrenchFriesLabel         = new JLabel("FRENCH FRIES");
         JLabel FrenchFriesSizeLabel     = new JLabel("Size");
         JLabel FrenchFriesQuantityLabel = new JLabel("Quantity");
@@ -313,11 +318,11 @@ public class OrderGUI extends JFrame implements ActionListener {
         JLabel DrinkSizeLabel           = new JLabel("Size");
         JLabel DrinkQuantityLabel       = new JLabel("Quantity");
         
-        JLabel RemoveItemLabel          = new JLabel("Remove Item By Item Number: ");
+        JLabel RemoveItemLabel          = new JLabel("Remove By Item#: ");
         
         JLabel CustomerLabel            = new JLabel("CUSTOMER");
         JLabel DeliveryAddressLabel     = new JLabel("DELIVERY ADDRESS");
-        JLabel CustomerDeliveryNeededLabel = new JLabel("Delivery?");
+        //        JLabel CustomerDeliveryNeededLabel = new JLabel("Delivery?");
         JLabel CustomerFirstNameLabel   = new JLabel("First Name");
         JLabel CustomerLastNameLabel    = new JLabel("Last Name");
         JLabel CustomerPhoneLabel       = new JLabel("Phone");
@@ -383,10 +388,9 @@ public class OrderGUI extends JFrame implements ActionListener {
         
         
         mainPanel.add(BurgerLabel);
-        mainPanel.add(BurgerSizeLabel);
-        mainPanel.add(BurgerCheeseLabel);
-        mainPanel.add(BurderTomatoLabel);
-        mainPanel.add(BurgerOnionLabel);
+        mainPanel.add(BurgerTypeLabel);
+        mainPanel.add(BurgerPriceLabel);
+        mainPanel.add(BurderIncludeTextLabel);
         mainPanel.add(BurgerQuantityLabel);
         
         mainPanel.add(FrenchFriesLabel);
@@ -406,7 +410,7 @@ public class OrderGUI extends JFrame implements ActionListener {
         
         mainPanel.add(CustomerLabel);
         mainPanel.add(DeliveryAddressLabel);
-        mainPanel.add(CustomerDeliveryNeededLabel);
+//        mainPanel.add(CustomerDeliveryNeededLabel);
         mainPanel.add(CustomerFirstNameLabel);
         mainPanel.add(CustomerLastNameLabel);
         mainPanel.add(CustomerPhoneLabel);
@@ -422,7 +426,7 @@ public class OrderGUI extends JFrame implements ActionListener {
         mainPanel.add(pizzaPepperoniToppingQuantitySelector);
         mainPanel.add(pizzaHamToppingQuantitySelector);
         mainPanel.add(pizzaQuantitySelector);
-        mainPanel.add(burgerSizeSelector);
+        mainPanel.add(burgerTypeSelector);
         mainPanel.add(burgerQuantitySelector);
         mainPanel.add(frenchFriesSizeSelector);
         mainPanel.add(frenchFriesQuantitySelector);
@@ -469,7 +473,7 @@ public class OrderGUI extends JFrame implements ActionListener {
         
         
         // Padding from side of the window
-        int basePadding1 = 10; 
+        int leftPadding10 = 10; 
         int leftPadding2 = 80;
         int leftPadding3 = 250;
         int leftPadding4 = 320;
@@ -482,17 +486,17 @@ public class OrderGUI extends JFrame implements ActionListener {
         int leftPadding600 = 600;
         
         // Order Console Panel
-        layout.putConstraint(SpringLayout.EAST,  consolePanel, -basePadding1, SpringLayout.EAST, mainPanel);
-        layout.putConstraint(SpringLayout.NORTH, consolePanel, basePadding1, SpringLayout.NORTH, mainPanel);
-        layout.putConstraint(SpringLayout.EAST,  orderConsoleTextArea, -basePadding1, SpringLayout.EAST, mainPanel);
+        layout.putConstraint(SpringLayout.EAST,  consolePanel, -leftPadding10, SpringLayout.EAST, mainPanel);
+        layout.putConstraint(SpringLayout.NORTH, consolePanel, leftPadding10, SpringLayout.NORTH, mainPanel);
+        layout.putConstraint(SpringLayout.EAST,  orderConsoleTextArea, -leftPadding10, SpringLayout.EAST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, orderConsoleTextArea, 5, SpringLayout.NORTH, mainPanel);
         
-        layout.putConstraint(SpringLayout.EAST,  actionRemoveItemButton, -basePadding1, SpringLayout.EAST, mainPanel);
-        layout.putConstraint(SpringLayout.NORTH, actionRemoveItemButton, basePadding1, SpringLayout.SOUTH, consolePanel);
-        layout.putConstraint(SpringLayout.EAST,  removeItemIndexTextField, -basePadding1, SpringLayout.WEST, actionRemoveItemButton);
-        layout.putConstraint(SpringLayout.NORTH, removeItemIndexTextField, basePadding1, SpringLayout.SOUTH, consolePanel);
-        layout.putConstraint(SpringLayout.EAST,  RemoveItemLabel, -basePadding1, SpringLayout.WEST, removeItemIndexTextField);
-        layout.putConstraint(SpringLayout.NORTH, RemoveItemLabel, basePadding1, SpringLayout.SOUTH, consolePanel);
+        layout.putConstraint(SpringLayout.EAST,  actionRemoveItemButton, -leftPadding10, SpringLayout.EAST, mainPanel);
+        layout.putConstraint(SpringLayout.NORTH, actionRemoveItemButton, leftPadding10, SpringLayout.SOUTH, consolePanel);
+        layout.putConstraint(SpringLayout.EAST,  removeItemIndexTextField, -leftPadding10, SpringLayout.WEST, actionRemoveItemButton);
+        layout.putConstraint(SpringLayout.NORTH, removeItemIndexTextField, leftPadding10, SpringLayout.SOUTH, consolePanel);
+        layout.putConstraint(SpringLayout.EAST,  RemoveItemLabel, -leftPadding10, SpringLayout.WEST, removeItemIndexTextField);
+        layout.putConstraint(SpringLayout.NORTH, RemoveItemLabel, leftPadding10, SpringLayout.SOUTH, consolePanel);
         
         // MENU Label
         layout.putConstraint(SpringLayout.WEST,  MenuLabel, leftPadding300, SpringLayout.WEST, mainPanel);
@@ -503,13 +507,13 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, PizzaLabel, 40, SpringLayout.NORTH, mainPanel);
         
         // Pizza Row2 Col1 - Size
-        layout.putConstraint(SpringLayout.WEST,  PizzaSizeLabel, basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  PizzaSizeLabel, leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, PizzaSizeLabel, 70, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  pizzaSizeSelector,  leftPadding100, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, pizzaSizeSelector,  70, SpringLayout.NORTH, mainPanel);
         
         // Pizza Row3 Col1 - Quantity
-        layout.putConstraint(SpringLayout.WEST,  PizzaQuantity, basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  PizzaQuantity, leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, PizzaQuantity, 100, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  pizzaQuantitySelector,  leftPadding100, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, pizzaQuantitySelector,  100, SpringLayout.NORTH, mainPanel);
@@ -519,27 +523,27 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, PizzaToppingsLabel, 140, SpringLayout.NORTH, mainPanel);
        
         // Pizza Row5 Col1 - Cheese Topping
-        layout.putConstraint(SpringLayout.WEST,  PizzaCheeseTopping, basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  PizzaCheeseTopping, leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, PizzaCheeseTopping, 170, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  pizzaCheeseToppingQuantitySelector,  leftPadding100, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, pizzaCheeseToppingQuantitySelector,  170, SpringLayout.NORTH, mainPanel);
         
         // Pizza Row6 Col1 - Pepperoi Topping
-        layout.putConstraint(SpringLayout.WEST,  PizzaPeperoniTopping, basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  PizzaPeperoniTopping, leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, PizzaPeperoniTopping, 200, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  pizzaPepperoniToppingQuantitySelector,  leftPadding100, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, pizzaPepperoniToppingQuantitySelector,  200, SpringLayout.NORTH, mainPanel);
        
         // Pizza Row7 Col1 - Ham Topping
-        layout.putConstraint(SpringLayout.WEST,  PizzaHamTopping, basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  PizzaHamTopping, leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, PizzaHamTopping, 230, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  pizzaHamToppingQuantitySelector,  leftPadding100, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, pizzaHamToppingQuantitySelector,  230, SpringLayout.NORTH, mainPanel);
         
         // Pizza Row8 Col1 - Add Pizza Button
-        layout.putConstraint(SpringLayout.WEST,  actionAddPizzaButton, basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  actionAddPizzaButton, leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, actionAddPizzaButton, 270, SpringLayout.NORTH, mainPanel);
-        layout.putConstraint(SpringLayout.WEST,  actionResetPizzaButton, basePadding1, SpringLayout.EAST, actionAddPizzaButton);
+        layout.putConstraint(SpringLayout.WEST,  actionResetPizzaButton, leftPadding10, SpringLayout.EAST, actionAddPizzaButton);
         layout.putConstraint(SpringLayout.NORTH, actionResetPizzaButton, 270, SpringLayout.NORTH, mainPanel);
         
         
@@ -551,41 +555,31 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.WEST,  BurgerLabel, leftPadding100, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, BurgerLabel, 330, SpringLayout.NORTH, mainPanel);
         
-        // Burger Row2 - Burger Size
-        layout.putConstraint(SpringLayout.WEST,  BurgerSizeLabel, basePadding1, SpringLayout.WEST, mainPanel);
-        layout.putConstraint(SpringLayout.NORTH, BurgerSizeLabel, 360, SpringLayout.NORTH, mainPanel);
-        layout.putConstraint(SpringLayout.WEST,  burgerSizeSelector, leftPadding100, SpringLayout.WEST, mainPanel);
-        layout.putConstraint(SpringLayout.NORTH, burgerSizeSelector, 360, SpringLayout.NORTH, mainPanel);
+        // Burger Row2 - Burger Menu
+        layout.putConstraint(SpringLayout.WEST,  BurgerPriceLabel, leftPadding10, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.NORTH, BurgerPriceLabel, 360, SpringLayout.NORTH, mainPanel);
         
-        // Burger Row3 - Burger Cheese
-        layout.putConstraint(SpringLayout.WEST,  BurgerCheeseLabel, basePadding1, SpringLayout.WEST, mainPanel);
-        layout.putConstraint(SpringLayout.NORTH, BurgerCheeseLabel, 390, SpringLayout.NORTH, mainPanel);
-//        layout.putConstraint(SpringLayout.WEST,  departureCityTextField,  leftPadding100, SpringLayout.WEST, mainPanel);
-//        layout.putConstraint(SpringLayout.NORTH, departureCityTextField,  390, SpringLayout.NORTH, mainPanel);
+        // Burger Row3 - Burger Type
+        layout.putConstraint(SpringLayout.WEST,  BurgerTypeLabel, leftPadding10, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.NORTH, BurgerTypeLabel, 390, SpringLayout.NORTH, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  burgerTypeSelector, leftPadding100, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.NORTH, burgerTypeSelector, 390, SpringLayout.NORTH, mainPanel);
        
-        // Burger Row4 - Burger Tomato
-        layout.putConstraint(SpringLayout.WEST,  BurderTomatoLabel, basePadding1, SpringLayout.WEST, mainPanel);
-        layout.putConstraint(SpringLayout.NORTH, BurderTomatoLabel, 420, SpringLayout.NORTH, mainPanel);
-//        layout.putConstraint(SpringLayout.WEST,  destinationCityTextField,  leftPadding100, SpringLayout.WEST, mainPanel);
-//        layout.putConstraint(SpringLayout.NORTH, destinationCityTextField,  420, SpringLayout.NORTH, mainPanel);
-        
-        // Burger Row5 - Burger Onion
-        layout.putConstraint(SpringLayout.WEST,  BurgerOnionLabel, basePadding1, SpringLayout.WEST, mainPanel);
-        layout.putConstraint(SpringLayout.NORTH, BurgerOnionLabel, 450, SpringLayout.NORTH, mainPanel);
-//        layout.putConstraint(SpringLayout.WEST,  destinationCityTextField,  leftPadding100, SpringLayout.WEST, mainPanel);
-//        layout.putConstraint(SpringLayout.NORTH, destinationCityTextField,  450, SpringLayout.NORTH, mainPanel);
+        // Burger Row4 - Burger Include Text
+        layout.putConstraint(SpringLayout.WEST,  BurderIncludeTextLabel, leftPadding10, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.NORTH, BurderIncludeTextLabel, 420, SpringLayout.NORTH, mainPanel);
        
-        // Burger Row6 - Burger Quantity
-        layout.putConstraint(SpringLayout.WEST,  BurgerQuantityLabel, basePadding1, SpringLayout.WEST, mainPanel);
-        layout.putConstraint(SpringLayout.NORTH, BurgerQuantityLabel, 480, SpringLayout.NORTH, mainPanel);
+        // Burger Row5 - Burger Quantity
+        layout.putConstraint(SpringLayout.WEST,  BurgerQuantityLabel, leftPadding10, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.NORTH, BurgerQuantityLabel, 450, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  burgerQuantitySelector, leftPadding100, SpringLayout.WEST, mainPanel);
-        layout.putConstraint(SpringLayout.NORTH, burgerQuantitySelector, 480, SpringLayout.NORTH, mainPanel);
+        layout.putConstraint(SpringLayout.NORTH, burgerQuantitySelector, 450, SpringLayout.NORTH, mainPanel);
        
-        // Burger Row7 - Buttons
-        layout.putConstraint(SpringLayout.WEST,  actionAddBurgerButton, basePadding1, SpringLayout.WEST, mainPanel);
-        layout.putConstraint(SpringLayout.NORTH, actionAddBurgerButton, 520, SpringLayout.NORTH, mainPanel);
-        layout.putConstraint(SpringLayout.WEST,  actionResetBurgerButton, basePadding1, SpringLayout.EAST, actionAddBurgerButton);
-        layout.putConstraint(SpringLayout.NORTH, actionResetBurgerButton, 520, SpringLayout.NORTH, mainPanel);
+        // Burger Row6 - Buttons
+        layout.putConstraint(SpringLayout.WEST,  actionAddBurgerButton, leftPadding10, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.NORTH, actionAddBurgerButton, 490, SpringLayout.NORTH, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  actionResetBurgerButton, leftPadding10, SpringLayout.EAST, actionAddBurgerButton);
+        layout.putConstraint(SpringLayout.NORTH, actionResetBurgerButton, 490, SpringLayout.NORTH, mainPanel);
         
         
         
@@ -594,13 +588,13 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, FrenchFriesLabel, 40, SpringLayout.NORTH, mainPanel);
         
         // French Fries Row2 - Quantity
-        layout.putConstraint(SpringLayout.WEST,  FrenchFriesSizeLabel, leftPadding400 + basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  FrenchFriesSizeLabel, leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, FrenchFriesSizeLabel, 70, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  frenchFriesSizeSelector,  leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, frenchFriesSizeSelector,  70, SpringLayout.NORTH, mainPanel);
         
         // French Fries Row3 - Quantity
-        layout.putConstraint(SpringLayout.WEST,  FrenchFriesQuantityLabel, leftPadding400 + basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  FrenchFriesQuantityLabel, leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, FrenchFriesQuantityLabel, 100, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  frenchFriesQuantitySelector,  leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, frenchFriesQuantitySelector,  100, SpringLayout.NORTH, mainPanel);
@@ -609,7 +603,7 @@ public class OrderGUI extends JFrame implements ActionListener {
         // French Fries Row4 - Buttons
         layout.putConstraint(SpringLayout.WEST,  actionAddFrenchFriesButton, leftPadding400, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, actionAddFrenchFriesButton, 140, SpringLayout.NORTH, mainPanel);
-        layout.putConstraint(SpringLayout.WEST,  actionResetFrenchFriesButton, basePadding1, SpringLayout.EAST, actionAddFrenchFriesButton);
+        layout.putConstraint(SpringLayout.WEST,  actionResetFrenchFriesButton, leftPadding10, SpringLayout.EAST, actionAddFrenchFriesButton);
         layout.putConstraint(SpringLayout.NORTH, actionResetFrenchFriesButton, 140, SpringLayout.NORTH, mainPanel);
         
 
@@ -620,13 +614,13 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, OnionsLabel, 200, SpringLayout.NORTH, mainPanel);
         
         // Onion Rings Row2 - Size
-        layout.putConstraint(SpringLayout.WEST,  OnionsSizeLabel,        leftPadding400 + basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  OnionsSizeLabel,        leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, OnionsSizeLabel,        230, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  onionRingsSizeSelector, leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, onionRingsSizeSelector, 230, SpringLayout.NORTH, mainPanel);
         
         // Onion Rings Row3 - Quantity
-        layout.putConstraint(SpringLayout.WEST,  OnionsQuantityLabel,         leftPadding400 + basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  OnionsQuantityLabel,         leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, OnionsQuantityLabel,         270, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  onionRingsQuantitySelector,  leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, onionRingsQuantitySelector,  270, SpringLayout.NORTH, mainPanel);
@@ -634,7 +628,7 @@ public class OrderGUI extends JFrame implements ActionListener {
         // Onion Rings Row4 - Buttons
         layout.putConstraint(SpringLayout.WEST,  actionAddOnionRingsButton, leftPadding400, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, actionAddOnionRingsButton, 310, SpringLayout.NORTH, mainPanel);
-        layout.putConstraint(SpringLayout.WEST,  actionResetOnionRingsButton, basePadding1, SpringLayout.EAST, actionAddOnionRingsButton);
+        layout.putConstraint(SpringLayout.WEST,  actionResetOnionRingsButton, leftPadding10, SpringLayout.EAST, actionAddOnionRingsButton);
         layout.putConstraint(SpringLayout.NORTH, actionResetOnionRingsButton, 310, SpringLayout.NORTH, mainPanel);
         
         
@@ -646,19 +640,19 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, DrinksLabel, 370, SpringLayout.NORTH, mainPanel);
         
         // Drink Row2 - Type
-        layout.putConstraint(SpringLayout.WEST,  DrinkTypeLabel,        leftPadding400 + basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  DrinkTypeLabel,        leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, DrinkTypeLabel,        400, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  drinkTypeSelector,     leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, drinkTypeSelector,     400, SpringLayout.NORTH, mainPanel);
         
         // Drink Row3 - Size
-        layout.putConstraint(SpringLayout.WEST,  DrinkSizeLabel,         leftPadding400 + basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  DrinkSizeLabel,         leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, DrinkSizeLabel,         430, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  drinkSizeSelector,      leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, drinkSizeSelector,      430, SpringLayout.NORTH, mainPanel);
         
         // Drink Row4 - Quantity
-        layout.putConstraint(SpringLayout.WEST,  DrinkQuantityLabel,     leftPadding400 + basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  DrinkQuantityLabel,     leftPadding400 + leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, DrinkQuantityLabel,     460, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  drinkQuantitySelector,  leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, drinkQuantitySelector,  460, SpringLayout.NORTH, mainPanel);
@@ -666,7 +660,7 @@ public class OrderGUI extends JFrame implements ActionListener {
         // Drink Row5 - Buttons
         layout.putConstraint(SpringLayout.WEST,  actionAddDrinkButton,   leftPadding400, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, actionAddDrinkButton,   500, SpringLayout.NORTH, mainPanel);
-        layout.putConstraint(SpringLayout.WEST,  actionResetDrinkButton, basePadding1, SpringLayout.EAST, actionAddDrinkButton);
+        layout.putConstraint(SpringLayout.WEST,  actionResetDrinkButton, leftPadding10, SpringLayout.EAST, actionAddDrinkButton);
         layout.putConstraint(SpringLayout.NORTH, actionResetDrinkButton, 500, SpringLayout.NORTH, mainPanel);
         
         
@@ -678,27 +672,27 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, DeliveryAddressLabel, 575, SpringLayout.NORTH, mainPanel);
         
         // Customer Row1 Col1 - Customer Phone Address
-        layout.putConstraint(SpringLayout.WEST,  CustomerPhoneLabel, basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  CustomerPhoneLabel, leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, CustomerPhoneLabel, 600, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  customerPhoneNumberTextField, leftPadding100, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, customerPhoneNumberTextField, 600, SpringLayout.NORTH, mainPanel);
         
         // Customer Row2 Col1 - Customer First Name
-        layout.putConstraint(SpringLayout.WEST,  CustomerFirstNameLabel, basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  CustomerFirstNameLabel, leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, CustomerFirstNameLabel, 630, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  customerFirstNameTextField,  leftPadding100, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, customerFirstNameTextField,  630, SpringLayout.NORTH, mainPanel);
        
         // Customer Row3 Col1 - Customer Last Name
-        layout.putConstraint(SpringLayout.WEST,  CustomerLastNameLabel, basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  CustomerLastNameLabel, leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, CustomerLastNameLabel, 660, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.WEST,  customerLastNameTextField,  leftPadding100, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, customerLastNameTextField,  660, SpringLayout.NORTH, mainPanel);
         
         // Customer Row4 Col1 - Customer Buttons
-        layout.putConstraint(SpringLayout.WEST,  actionAddCustomerButton, basePadding1, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  actionAddCustomerButton, leftPadding10, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, actionAddCustomerButton, 710, SpringLayout.NORTH, mainPanel);
-        layout.putConstraint(SpringLayout.WEST,  actionResetCustomerButton, basePadding1, SpringLayout.EAST, actionAddCustomerButton);
+        layout.putConstraint(SpringLayout.WEST,  actionResetCustomerButton, leftPadding10, SpringLayout.EAST, actionAddCustomerButton);
         layout.putConstraint(SpringLayout.NORTH, actionResetCustomerButton, 710, SpringLayout.NORTH, mainPanel);
         
         
@@ -732,19 +726,6 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.WEST,  customerZIPTextField,  leftPadding500, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, customerZIPTextField,  720, SpringLayout.NORTH, mainPanel);
         
-        
-//        JLabel CustomerLabel            = new JLabel("Customer");
-//        JLabel CustomerNeededLabel      = new JLabel("Delivery Needed");
-//        JLabel CustomerFirstNameLabel   = new JLabel("First Name");
-//        JLabel CustomerLastNameLabel    = new JLabel("Last Name");
-//        JLabel CustomerPhoneLabel       = new JLabel("Phone");
-//        JLabel CustomerAddressLabel     = new JLabel("Address");
-//        JLabel CustomerCityLabel        = new JLabel("City");
-//        JLabel CustomerStateLabel       = new JLabel("State");
-//        JLabel CustomerZIPLabel         = new JLabel("ZIP code");
-        
-        
-        
         add(mainPanel);
 	}
 	
@@ -762,6 +743,7 @@ public class OrderGUI extends JFrame implements ActionListener {
 	    
 	    } else if (actionCommand.equals(BUTTON_CAPTION_ADD_PIZZA)) {
 	    	
+	    	// Create pizza object to add it to order
 	    	String pizzaSize           = String.valueOf(pizzaSizeSelector.getSelectedItem()).toLowerCase();
 	    	int pizzaCheeseToppings    = Integer.parseInt(String.valueOf(pizzaCheeseToppingQuantitySelector.getSelectedItem()));
 	    	int pizzaPepperoniToppings = Integer.parseInt(String.valueOf(pizzaPepperoniToppingQuantitySelector.getSelectedItem()));
@@ -770,15 +752,25 @@ public class OrderGUI extends JFrame implements ActionListener {
 	    	
 	    	Pizza pizza = new Pizza(pizzaSize, pizzaCheeseToppings, pizzaPepperoniToppings, pizzaHamToppings);
 	    	
-	    	order.addOrderItem(pizza);
-	    	
 	    	// Add pizza to order
+	    	order.addOrderItem(pizza);
+
+	    	// Update order receipt
 	    	orderConsoleTextArea.setText(order.printOrder());
 		    
 	    } else if (actionCommand.equals(BUTTON_CAPTION_ADD_BURGER)) {
 	    	
+	    	// Create burger object to add it to order
+	    	String burgerType     = String.valueOf(burgerTypeSelector.getSelectedItem()).toLowerCase();
+	    	int    burgerQuantity = Integer.parseInt(String.valueOf(burgerQuantitySelector.getSelectedItem()));
+	    	
+	    	Burger burger = new Burger(burgerType, burgerQuantity);
+	    	
 	    	// Add burger to order
-	    	orderConsoleTextArea.setText(BUTTON_CAPTION_ADD_BURGER);
+	    	order.addOrderItem(burger);
+	    	
+	    	// Update order receipt
+	    	orderConsoleTextArea.setText(order.printOrder());
 	    	
 	    } else if (actionCommand.equals(BUTTON_CAPTION_ADD_FRENCH_FRIES)) {
 	    	
@@ -797,23 +789,22 @@ public class OrderGUI extends JFrame implements ActionListener {
     		
     	} else if (actionCommand.equals(BUTTON_CAPTION_ADD_CUSTOMER)) {
 	    	
-    		
-    		// Add Customer and Delivery Address
+    		// Add customer and update delivery address if needed
+    		// Create customer object and assign to order 
     		Customer customer = new Customer();
-    		
     		customer.setCustomerNumber(String.valueOf(CUSTOMER_NUMBER));
-    		CUSTOMER_NUMBER++;
-    		
     		customer.setFirstName(customerAddressTextField.getText());
     		customer.setLastName(customerLastNameTextField.getText());
     		customer.setPhone(customerPhoneNumberTextField.getText());
-    		
     		customer.setAddress(customerAddressTextField.getText());
     		customer.setCity(customerCityTextField.getText());
     		customer.setState(customerStateTextField.getText());
     		customer.setZip(customerZIPTextField.getText());
     		
     		order.setCustomer(customer);
+    		CUSTOMER_NUMBER++;
+    		
+    		// Check if delivery needed
     		if(customerDeliveryNeededJCheckBox.isSelected()) {
     			order.setDelivered(customerDeliveryNeededJCheckBox.isSelected());
     			order.setDeliveryAddress(customerAddressTextField.getText());
@@ -822,57 +813,7 @@ public class OrderGUI extends JFrame implements ActionListener {
     			order.setDeliveryAddress("");
     		}
     		
-    		customerDeliveryNeededJCheckBox.setSelected(false);
-    		
-    		orderConsoleTextArea.setText(order.printOrder());
-    		
-    	} else if (actionCommand.equals(BUTTON_CAPTION_RESET_PIZZA)) {
-	    	
-	    	// Reset pizza
-    		pizzaSizeSelector.setSelectedItem("Small");
-    		pizzaCheeseToppingQuantitySelector.setSelectedItem("0");
-    		pizzaPepperoniToppingQuantitySelector.setSelectedItem("0");
-    		pizzaHamToppingQuantitySelector.setSelectedItem("0");
-    		pizzaQuantitySelector.setSelectedItem("1");
-		    
-	    } else if (actionCommand.equals(BUTTON_CAPTION_RESET_BURGER)) {
-	    	
-	    	// Reset burger
-	    	burgerSizeSelector.setSelectedItem("Small");
-	    	burgerQuantitySelector.setSelectedItem("1");
-	    	
-	    } else if (actionCommand.equals(BUTTON_CAPTION_RESET_FRENCH_FRIES)) {
-	    	
-	    	// Reset French fries
-	    	frenchFriesSizeSelector.setSelectedItem("Small");
-	    	frenchFriesQuantitySelector.setSelectedItem("1");
-	    	
-	    } else if (actionCommand.equals(BUTTON_CAPTION_RESET_ONION_RINGS)) {
-	    	
-	    	// Reset onion rings
-	    	onionRingsSizeSelector.setSelectedItem("Small");
-	    	onionRingsQuantitySelector.setSelectedItem("1");
-	    	
-    	} else if (actionCommand.equals(BUTTON_CAPTION_RESET_DRINK)) {
-	    	
-	    	// Reset drinks
-    		drinkTypeSelector.setSelectedItem("Coke");
-    		drinkSizeSelector.setSelectedItem("Small");
-	    	drinkQuantitySelector.setSelectedItem("1");
-	    	
-		} else if (actionCommand.equals(BUTTON_CAPTION_RESET_CUSTOMER)) {
-	    	
-	    	// Reset drinks
-    		customerAddressTextField.setText("");
-    		customerCityTextField.setText("");
-    		customerStateTextField.setText("");
-    		customerZIPTextField.setText("");
-    		
-    		customerFirstNameTextField.setText("");
-    		customerLastNameTextField.setText("");
-    		customerPhoneNumberTextField.setText("");
-    		customerDeliveryNeededJCheckBox.setSelected(false);
-    		
+    		// update order receipt
     		orderConsoleTextArea.setText(order.printOrder());
     		
     	} else if (actionCommand.equals(BUTTON_REMOVE_ITEM)) {
@@ -882,10 +823,102 @@ public class OrderGUI extends JFrame implements ActionListener {
     		order.removeOrderItem(index-1);
     		orderConsoleTextArea.setText(order.printOrder());
     		
+		/* Reset Forms Actions */
+    		
+    	} else if (actionCommand.equals(BUTTON_CAPTION_RESET_PIZZA)) {
+	    	
+	    	// Reset pizza
+    		resetPizzaForm();
+		    
+	    } else if (actionCommand.equals(BUTTON_CAPTION_RESET_BURGER)) {
+	    	
+	    	// Reset burger
+	    	resetBurgerForm();
+	    	
+	    } else if (actionCommand.equals(BUTTON_CAPTION_RESET_FRENCH_FRIES)) {
+	    	
+	    	// Reset French fries
+	    	resetFrenchFriesForm();
+	    	
+	    } else if (actionCommand.equals(BUTTON_CAPTION_RESET_ONION_RINGS)) {
+	    	
+	    	// Reset onion rings
+	    	resetOnionRingsForm();
+	    	
+    	} else if (actionCommand.equals(BUTTON_CAPTION_RESET_DRINK)) {
+	    	
+	    	// Reset drinks
+    		resetDrinksForm();
+	    	
+		} else if (actionCommand.equals(BUTTON_CAPTION_RESET_CUSTOMER)) {
+	    	
+	    	// Reset customer
+    		resetCustomerForm();
+    		orderConsoleTextArea.setText(order.printOrder());
+    		
 	    } else {
 	    	
 	    	// Could not find action
 	    }
 	}
 
+	/**
+	 * Reset pizza form to default
+	 */
+	public void resetPizzaForm() {
+		pizzaSizeSelector.setSelectedItem("Small");
+		pizzaCheeseToppingQuantitySelector.setSelectedItem("0");
+		pizzaPepperoniToppingQuantitySelector.setSelectedItem("0");
+		pizzaHamToppingQuantitySelector.setSelectedItem("0");
+		pizzaQuantitySelector.setSelectedItem("1");
+	}
+	
+	/**
+	 * Reset burger form to default
+	 */
+	public void resetBurgerForm() {
+		burgerTypeSelector.setSelectedItem("Hamburger");
+    	burgerQuantitySelector.setSelectedItem("1");
+	}
+	
+	
+	/**
+	 * Reset French fries form to default
+	 */
+	public void resetFrenchFriesForm() {
+		frenchFriesSizeSelector.setSelectedItem("Small");
+    	frenchFriesQuantitySelector.setSelectedItem("1");
+	}
+
+	/**
+	 * Reset onion rings form to default
+	 */
+	public void resetOnionRingsForm() {
+		onionRingsSizeSelector.setSelectedItem("Small");
+    	onionRingsQuantitySelector.setSelectedItem("1");
+	}
+	
+	/**
+	 * Reset drinks form to default
+	 */
+	public void resetDrinksForm() {
+		drinkTypeSelector.setSelectedItem("Coke");
+		drinkSizeSelector.setSelectedItem("Small");
+    	drinkQuantitySelector.setSelectedItem("1");
+	}
+	
+	/**
+	 * Reset customer form to default
+	 */
+	public void resetCustomerForm() {
+		customerAddressTextField.setText("");
+		customerCityTextField.setText("");
+		customerStateTextField.setText("");
+		customerZIPTextField.setText("");
+		
+		customerFirstNameTextField.setText("");
+		customerLastNameTextField.setText("");
+		customerPhoneNumberTextField.setText("");
+		customerDeliveryNeededJCheckBox.setSelected(false);
+	}
 }

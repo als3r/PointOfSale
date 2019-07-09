@@ -18,29 +18,39 @@ package edu.century.group6;
  * @author Evelline Samson <cj5673li@my.century.edu> 
  * @author Alexandr Sergeyev <ns1418cz@my.century.edu>
  */
-public class Burger {
+public class Burger extends MenuItem {
 
   private String burgerType;
   private int bacon;
   private int pickel;
   private int tomato;
   private int onion;
-  private int lettus;
+  private int lettuce;
+  
+  public static final String[] TYPE_ARRAY = {
+	  "HamBurger", "CheeseBurger", "TurkeyBurger", "VeggieBurger"	  
+  };
   
   /**
-  * Default constractor initialized to null and 0
+  * Default constructor initialized to null and 0
   *
   */
   public Burger(){
     
     this.burgerType = "";
-    this.bacon = 1.85;
+    this.bacon = 0; //1.85;
     this.pickel = 0;
     this.tomato = 0;
     this.onion = 0;
-    this.lettus = 0;
+    this.lettuce = 0;
     setPrice(calcCost());
  }
+  
+  public Burger (String burgerType, int burgerQuantity){
+	    
+	    this.burgerType = burgerType;
+	    setPrice(calcCost());
+	 }
   
  public Burger (String burgerType, int bacon, int pickel, int tomato, int onion, int lettus){
     
@@ -49,7 +59,7 @@ public class Burger {
     this.pickel = pickel;
     this.tomato = tomato;
     this.onion = onion;
-    this.lettus = lettus;
+    this.lettuce = lettus;
     setPrice(calcCost());
  }
   
@@ -110,25 +120,16 @@ public class Burger {
 	{
 		this.onion = onion;
 	}
-       
-	public int getTomato()
-	{
-		return tomato;
-	}
-
-	public void setTomato(int tomato)
-	{
-		this.tomato = tomato;
-	}
+      
      
 	public int getLettus()
 	{
-		return lettus;
+		return lettuce;
 	}
 
 	public void setLettus(int lettus)
 	{
-		this.lettus = lettus;
+		this.lettuce = lettus;
 	}
   
   
@@ -145,17 +146,21 @@ public class Burger {
   
 public double calcCost()
 	{		
-		if(burgerType.equalsIgnoreCase("cheese"))
+		if(burgerType.equalsIgnoreCase("hamburger"))
 		{
-			return 4.99 + (bacon + pickel + tomato + onion + lattus)
+			return 4.99 + (bacon + pickel + tomato + onion + lettuce);
 		}
-		else if(pizzaSize.equalsIgnoreCase("turkey"))
+		else if(burgerType.equalsIgnoreCase("cheeseburger"))
 		{
-			return 5.99 + (bacon + pickel + tomato + onion + lattus);
+			return 5.99 + (bacon + pickel + tomato + onion + lettuce);
 		}
-		else if(pizzaSize.equalsIgnoreCase("veggie"))
+		else if(burgerType.equalsIgnoreCase("turkeyburger"))
 		{
-			return 6.99 + (bacon + pickel + tomato + onion + lattus);
+			return 5.99 + (bacon + pickel + tomato + onion + lettuce);
+		}
+		else if(burgerType.equalsIgnoreCase("veggieburger"))
+		{
+			return 6.99 + (bacon + pickel + tomato + onion + lettuce);
 		}
 		else
 		{
@@ -173,7 +178,7 @@ public double calcCost()
 		return "Burger: " + burgerType + "\n Bacon: " 
 				+ bacon + "\n Pickel: "
 				+ pickel + "\n Tomato: " + tomato + "\n Onions: " + onion 
-			        + "\n Lettus: " + lettus
+			        + "\n Lettus: " + lettuce
 				+ "\n Total Cost: $" + calcCost() + "\n";
 	}
 }

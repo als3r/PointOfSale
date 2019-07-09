@@ -18,7 +18,7 @@ package edu.century.group6;
  * @author Evelline Samson <cj5673li@my.century.edu> 
  * @author Alexandr Sergeyev <ns1418cz@my.century.edu>
  */
-public class SideItem extends orderItem{
+public class SideItem extends MenuItem{
    
    private String fries;
    private double coke;

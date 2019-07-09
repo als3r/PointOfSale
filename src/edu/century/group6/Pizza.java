@@ -18,7 +18,7 @@ package edu.century.group6;
  * @author Evelline Samson <cj5673li@my.century.edu> 
  * @author Alexandr Sergeyev <ns1418cz@my.century.edu>
  */
-public class Pizza extends OrderItem {
+public class Pizza extends MenuItem {
 
   private String pizzaSize;
   private int cheeseCount;
@@ -26,7 +26,7 @@ public class Pizza extends OrderItem {
   private int hamCount;
   
   /**
-  * Default constractor initialized to null and 0
+  * Default constructor initialized to null and 0
   *
   */
   public Pizza(){
@@ -38,7 +38,13 @@ public class Pizza extends OrderItem {
     setPrice(calcCost());
  }
   
- public Pizza (String pizzaSize, int cheeseCount, int pepperoniCount, int hamCount){
+ /**
+ * @param pizzaSize
+ * @param cheeseCount
+ * @param pepperoniCount
+ * @param hamCount
+ */
+public Pizza (String pizzaSize, int cheeseCount, int pepperoniCount, int hamCount){
     
     this.pizzaSize = pizzaSize;
     this.cheeseCount = cheeseCount;

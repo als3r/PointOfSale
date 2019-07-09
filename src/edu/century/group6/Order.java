@@ -52,7 +52,7 @@ public class Order {
 	/**
 	 * Stores order Items
 	 */
-	private OrderItem[] orderItems;
+	private MenuItem[] orderItems;
 	
 	/**
 	 * Number of items in the order
@@ -428,7 +428,7 @@ public class Order {
 	 * Construct an instance with default values
 	 */
 	Order(){
-		this.orderItems = new OrderItem[MAX_ORDER_ITEMS];
+		this.orderItems = new MenuItem[MAX_ORDER_ITEMS];
 		orderStatusReceived();	
 		calcOrderPrice();
 	}
@@ -443,7 +443,7 @@ public class Order {
 	 */
 	Order(String orderNumber){
 		this.orderNumber = orderNumber;
-		this.orderItems = new OrderItem[MAX_ORDER_ITEMS];
+		this.orderItems = new MenuItem[MAX_ORDER_ITEMS];
 		orderStatusReceived();	
 		calcOrderPrice();
 	}
@@ -460,7 +460,7 @@ public class Order {
 	Order(String orderNumber, boolean isDelivered){
 		setOrderNumber(orderNumber);
 		setDelivered(isDelivered);
-		this.orderItems = new OrderItem[MAX_ORDER_ITEMS];
+		this.orderItems = new MenuItem[MAX_ORDER_ITEMS];
 		orderStatusReceived();	
 		calcOrderPrice();
 	}
@@ -525,7 +525,7 @@ public class Order {
 	 * @param orderItem
 	 * @return this order
 	 */
-	public Order addOrderItem(OrderItem orderItem) {
+	public Order addOrderItem(MenuItem orderItem) {
 		for (int i = 0; i < orderItems.length; i++) {
 			if (orderItems[i] == null) {
 				orderItems[i] = orderItem;
@@ -544,7 +544,7 @@ public class Order {
 	 * @return this order
 	 */
 	public Order removeOrderItem(int index) {
-		if (orderItems[index] != null && orderItems[index] instanceof OrderItem) {
+		if (orderItems[index] != null && orderItems[index] instanceof MenuItem) {
 			orderItems[index] = null;
 			calcOrderPrice();
 		}
@@ -560,7 +560,7 @@ public class Order {
 	public double calcSubTotal() {
 		double subTotal = 0;
 		for (int i = 0; i < orderItems.length; i++) {
-			if (orderItems[i] != null && orderItems[i] instanceof OrderItem) {
+			if (orderItems[i] != null && orderItems[i] instanceof MenuItem) {
 				subTotal += orderItems[i].getPrice();
 			}
 		}
@@ -576,7 +576,7 @@ public class Order {
 	public int getNumItems() {
 		int numItems = 0;
 		for (int i = 0; i < orderItems.length; i++) {
-			if (orderItems[i] != null && orderItems[i] instanceof OrderItem) {
+			if (orderItems[i] != null && orderItems[i] instanceof MenuItem) {
 				numItems++;
 			}
 		}
@@ -625,7 +625,7 @@ public class Order {
 		message += "----------------------------------------" + "\n";
 		
 		for (int i = 0; i < orderItems.length; i++) {
-			if (orderItems[i] != null && orderItems[i] instanceof OrderItem) {
+			if (orderItems[i] != null && orderItems[i] instanceof MenuItem) {
 				if(! itemMessage.isEmpty()) {					
 					itemMessage += "----------------------------------------" + "\n";
 				}
