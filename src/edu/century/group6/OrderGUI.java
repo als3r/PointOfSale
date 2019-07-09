@@ -281,13 +281,13 @@ public class OrderGUI extends JFrame implements ActionListener {
         
         //define form labels
         JLabel MenuLabel                = new JLabel("MENU");
-        JLabel PizzaLabel               = new JLabel("PIZZA");
+        JLabel PizzaLabel               = new JLabel("PIZZA $10 Small, $12 Medium, $14 Large");
         
         JLabel PizzaSizeLabel           = new JLabel("Size");
         JLabel PizzaToppingsLabel       = new JLabel("PIZZA TOPPINGS");
-        JLabel PizzaCheeseTopping       = new JLabel("Cheese");
-        JLabel PizzaPeperoniTopping     = new JLabel("Peperoni");
-        JLabel PizzaHamTopping          = new JLabel("Ham");
+        JLabel PizzaCheeseTopping       = new JLabel("Cheese (+$2)");
+        JLabel PizzaPeperoniTopping     = new JLabel("Peperoni (+$2)");
+        JLabel PizzaHamTopping          = new JLabel("Ham (+$2)");
         JLabel PizzaQuantity            = new JLabel("Quantity");
         
         
@@ -473,6 +473,7 @@ public class OrderGUI extends JFrame implements ActionListener {
         int leftPadding2 = 80;
         int leftPadding3 = 250;
         int leftPadding4 = 320;
+        int leftPadding50 = 50;
         int leftPadding100 = 100;
         int leftPadding200 = 200;
         int leftPadding300 = 300;
@@ -498,7 +499,7 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, MenuLabel, 10, SpringLayout.NORTH, mainPanel);
         
         // Pizza Row1 Col1 - PIZZA
-        layout.putConstraint(SpringLayout.WEST,  PizzaLabel, leftPadding100, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.WEST,  PizzaLabel, leftPadding50, SpringLayout.WEST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, PizzaLabel, 40, SpringLayout.NORTH, mainPanel);
         
         // Pizza Row2 Col1 - Size
