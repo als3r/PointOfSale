@@ -877,7 +877,7 @@ public class OrderGUI extends JFrame implements ActionListener {
 	 * Reset burger form to default
 	 */
 	public void resetBurgerForm() {
-		burgerTypeSelector.setSelectedItem("Hamburger");
+		burgerTypeSelector.setSelectedItem("HamBurger");
     	burgerQuantitySelector.setSelectedItem("1");
 	}
 	
