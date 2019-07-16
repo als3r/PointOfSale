@@ -30,11 +30,6 @@ public class MenuItem {
 	double price;
 	
 	/**
-	 * Quantity 
-	 */
-	int quantity;
-	
-	/**
 	 * Price for 1 item
 	 */
 	double totalPrice;
@@ -50,21 +45,7 @@ public class MenuItem {
 	 */
 	public static final int DEFAULT_COOK_TIME = 5 * 60; 
 	
-	/**
-	 * Default quantity
-	 */
-	public static final int DEFAULT_QUANTITY = 1; 
 	
-	
-	/**
-	 * Default Constructor
-	 * @TODO need to add errors and input validation
-	 */
-	MenuItem(){
-		setName("Test");
-		setQuantity(DEFAULT_QUANTITY);
-		setCookTime(DEFAULT_COOK_TIME);
-	}
 	
 	/**
 	 * Construct instance of MenuItem 
@@ -73,19 +54,6 @@ public class MenuItem {
 	 */
 	MenuItem(String name){
 		setName(name);
-		setQuantity(DEFAULT_QUANTITY);
-		setCookTime(DEFAULT_COOK_TIME);
-	}
-	
-	/**
-	 * Construct instance of MenuItem 
-	 * with provided:
-	 * @param name
-	 * @param quantity
-	 */
-	MenuItem(String name, int quantity){
-		setName(name);
-		setQuantity(quantity);
 		setCookTime(DEFAULT_COOK_TIME);
 	}
 	
@@ -94,12 +62,10 @@ public class MenuItem {
 	 * with provided:
 	 * @param name
 	 * @param price
-	 * @param quantity
 	 * @param cookTime
 	 */
-	MenuItem(String name, int quantity, int cookTime){
+	MenuItem(String name, int cookTime){
 		setName(name);
-		setQuantity(quantity);
 		setCookTime(cookTime);
 	}
 	
@@ -145,24 +111,6 @@ public class MenuItem {
 
 
 	/**
-	 * Get item quantity
-	 * @return
-	 */
-	public int getQuantity() {
-		return quantity;
-	}
-
-
-	/**
-	 * Modify item quantity
-	 * @param quantity
-	 */
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-
-	/**
 	 * Get cook time in seconds
 	 * 
 	 * @return cookTime
@@ -179,31 +127,6 @@ public class MenuItem {
 	public void setCookTime(int cookTime) {
 		this.cookTime = cookTime;
 	}
-	
-	
-	/**
-	 * Get Total Price
-	 * @return
-	 */
-	public double getTotalPrice() {
-		return totalPrice;
-	}
-
-	/**
-	 * Modify Total Price
-	 * @param totalPrice
-	 */
-	public void setTotalPrice(double totalPrice) {
-		this.totalPrice = totalPrice;
-	}
-
-	/**
-	 * Calculate total price by multiplying quantity and unit price (price)
-	 * @return double total price
-	 */
-	public double calcTotalPrice() {
-		return price * quantity;
-	}
 
 
 	/**
@@ -213,10 +136,6 @@ public class MenuItem {
 	 */
 	@Override
 	public String toString() {
-		return name + ", quantity=" + quantity + ", cookTime=" + cookTime
-				+ "]";
-	}
-	
-	
-	
+		return name + "(cook time: " + cookTime+ ")";
+	}	
 }

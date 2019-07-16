@@ -151,12 +151,12 @@ public class OrderGUI extends JFrame implements ActionListener {
     
     
     /**
-     * JComboBox for french fries size
+     * JComboBox for French fries size
      */
     private JComboBox  frenchFriesSizeSelector = new JComboBox(SIZE_ARRAY);
     
     /**
-     * JComboBox for french fries quantity (0-20)
+     * JComboBox for French fries quantity (0-20)
      */
     private JComboBox  frenchFriesQuantitySelector = new JComboBox(QUANTITY_ARRAY);
     
