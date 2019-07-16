@@ -58,10 +58,6 @@ public class Drink extends MenuItem{
 	  "12oz", "16oz", "24oz"	  
 	};
 	
-	public Drink() {
-		// @TODO add input validation and error message if some fields are empty
-	}
-	
 	
 	/**
 	 * Recommended constructor
@@ -73,15 +69,14 @@ public class Drink extends MenuItem{
 	 * @param drinkSize
 	 * @param drinkQuantity
 	 */
-	public Drink(String drinkType, String drinkSize, int drinkQuantity) {
+	public Drink(String drinkType, String drinkSize) {
 		// using parent constructor
-		super(drinkType, drinkQuantity);
+		super(drinkType);
 		// set type and size
 		setDrinkType(drinkType);
 		setDrinkSize(drinkSize);
 		// set cost
 		setPrice(calcCost());
-		setTotalPrice(calcTotalPrice());
 	}
 
 
@@ -171,8 +166,7 @@ public class Drink extends MenuItem{
 	 */
 	@Override
 	public String toString() {
-		return "Drink: " + getName() + ". Size: " + getDrinkSize() + 
-				". Qty: " + getQuantity() + "\n" + 
-				String.format("$%.2f", getTotalPrice()) + "\n";
+		return "Drink: " + getName() + ". Size: " + getDrinkSize() + ". " 
+				+ String.format("$%.2f", getPrice()) + "\n";
 	}	
 }

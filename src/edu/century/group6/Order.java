@@ -1,9 +1,8 @@
 package edu.century.group6;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.text.NumberFormat;
+
 
 /**
  * PointOfSale
@@ -33,6 +32,13 @@ import java.text.NumberFormat;
  * @author Alexandr Sergeyev <ns1418cz@my.century.edu>
  */
 public class Order {
+	
+	
+	/**
+	 * 
+	 * Instance variables
+	 * 
+	 */
 
 	/**
 	 * Order Number
@@ -136,8 +142,8 @@ public class Order {
 	public static String orderDatePattern = "H:m:s MM/dd/yyyy";
 	
 	/**
-	 * Whether order delivered or not
-	 * Default: false
+	 * Whether customer required delivery
+	 * Default: false (no delivery for this order)
 	 */
 	private boolean isDelivered = false;
 	
@@ -157,88 +163,185 @@ public class Order {
 	private double total = 0;
 
 	
-
+	/**
+	 * 
+	 * Mutators and Accessors
+	 * 
+	 */
 	
+	/**
+	 * @return
+	 */
 	public String getOrderNumber() {
 		return orderNumber;
 	}
 
+	/**
+	 * @param orderNumber
+	 */
 	public void setOrderNumber(String orderNumber) {
 		this.orderNumber = orderNumber;
 	}
 	
+	/**
+	 * Get order comment
+	 * 
+	 * @return comment
+	 */
 	public String getComment() {
 		return comment;
 	}
 
+	/**
+	 * Modify order comment
+	 * 
+	 * @param comment
+	 */
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
+	/**
+	 * Get customer (Customer type)
+	 * 
+	 * @return customer Customer
+	 */
 	public Customer getCustomer() {
 		return customer;
 	}
 
+	/**
+	 * Modify customer of Customer type
+	 * 
+	 * @param customer Customer
+	 */
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
 
+	/**
+	 * Get employee (Employee type)
+	 * 
+	 * @return employee Employee
+	 */
 	public Employee getEmployee() {
 		return employee;
 	}
 
+	/**
+	 * Modify employee of Employee type
+	 * 
+	 * @param employee
+	 */
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
 
+	/**
+	 * Get Delivery Person of Employee type
+	 * 
+	 * @return delivery Employee
+	 */
 	public Employee getDelivery() {
 		return delivery;
 	}
 
+	/**
+	 * Modify delivery person of Employee type
+	 * 
+	 * @param delivery Employee
+	 */
 	public void setDelivery(Employee delivery) {
 		this.delivery = delivery;
 	}
 
+	/**
+	 * Get delivery local address
+	 * 
+	 * @return deliveryAddress
+	 */
 	public String getDeliveryAddress() {
 		return deliveryAddress;
 	}
 
+	/**
+	 * Modify delivery local address
+	 * 
+	 * @param deliveryAddress
+	 */
 	public void setDeliveryAddress(String deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
 	}
 	
+	/**
+	 * Get whether customer required delivery
+	 * 
+	 * @return isDelivered
+	 */
 	public boolean isDelivered() {
 		return isDelivered;
 	}
 
+	/**
+	 * Set whether customer required delivered
+	 * 
+	 * @param isDelivered
+	 */
 	public void setDelivered(boolean isDelivered) {
 		this.isDelivered = isDelivered;
 	}
 
+	/**
+	 * Get order sub total
+	 * 
+	 * @return subTotal
+	 */
 	public double getSubTotal() {
 		return subTotal;
 	}
 
+	/**
+	 * Modify order subtotal
+	 */
 	private void setSubTotal() {
 		this.subTotal = calcSubTotal();
 	}
 
+	/**
+	 * Get order tax amount
+	 * 
+	 * @return tax
+	 */
 	public double getTax() {
 		return tax;
 	}
 
+	/**
+	 * 
+	 */
 	private void setTax() {
 		tax = getSubTotal() * (TAX / 100);
 	}
 
+	/**
+	 * Get order total price
+	 * 
+	 * @return total
+	 */
 	public double getTotal() {
 		return total;
 	}
 
+	/**
+	 * Modify order total price
+	 */
 	private void setTotal() {
 		total = getSubTotal() * (1 + (TAX / 100));
 	}
 	
+	/**
+	 * Calculate order price including tax and sub total
+	 */
 	public void calcOrderPrice() {
 		setSubTotal();
 		setTax();
@@ -407,31 +510,32 @@ public class Order {
 		return message;
 	}
 
+	/**
+	 * Modify order total time
+	 */
 	public void setOrderTotalTime() {
 		long miliseconds = (getOrderCompletedTime().getTime() - getOrderReceivedTime().getTime());
 		this.orderTotalTime = miliseconds/1000;
 	}
 	
+	/**
+	 * Get order status
+	 * 
+	 * @return orderStatus
+	 */
 	public ORDER_STATUSES getOrderStatus() {
 		return orderStatus;
 	}
 
+	/**
+	 * Modify order status
+	 * 
+	 * @param orderStatus
+	 */
 	public void setOrderStatus(ORDER_STATUSES orderStatus) {
 		this.orderStatus = orderStatus;
 	}
 
-
-
-	/**
-	 * Default constructor for order
-	 * 
-	 * Construct an instance with default values
-	 */
-	Order(){
-		this.orderItems = new MenuItem[MAX_ORDER_ITEMS];
-		orderStatusReceived();	
-		calcOrderPrice();
-	}
 	
 	
 	/**

@@ -1,7 +1,5 @@
 package edu.century.group6;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * PointOfSale
  * 
@@ -21,13 +19,6 @@ import java.util.concurrent.TimeUnit;
 public class Driver {
 
 	public static void main(String[] args) {
-		
-//		Customer customer = new Customer();
-//		Employee employee = new Employee();
-//		System.out.println("test");
-//		System.out.println(customer.toString());
-//		System.out.println(employee.toString());
-		
 		
 		echo("***** PointOfSale tests *****");
 		echo(""); echo(""); echo("");

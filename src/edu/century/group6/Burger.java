@@ -14,158 +14,104 @@ package edu.century.group6;
  * Due:  Jule 16, 2019
  * 
  * Group 6
+ * 
  * @author Anan Gedefa <pv2824bf@my.century.edu>
- * @author Evelline Samson <cj5673li@my.century.edu> 
+ * @author Evelline Samson <cj5673li@my.century.edu>
  * @author Alexandr Sergeyev <ns1418cz@my.century.edu>
  */
 public class Burger extends MenuItem {
 
-  private String burgerType;
-  private int cheese;
-  private int tomato;
-  private int bacon;
-  private int onions;
-  private int pickel;
-  private int lettuce;
-  
-  /**
- * To store burger types
- */
-  public static final String[] TYPE_ARRAY = {
-	  "HamBurger", "CheeseBurger", "TurkeyBurger", "VeggieBurger"	  
-  };
-  
-  /**
-  * Default constructor initialized to null and 0
-  *
-  */
-  public Burger(){
-    
-    this.burgerType = "";
-    this.cheese = 0;
-    this.tomato = 0;
-    this.lettuce = 0;
+	private String burgerType;
+	private int cheese;
+	private int tomato;
+	private int bacon;
+	private int onions;
+	private int pickel;
+	private int lettuce;
 
-    setPrice(calcCost());
- }
-   
+	/**
+	 * To store burger types
+	 */
+	public static final String[] TYPE_ARRAY = { "HamBurger", "CheeseBurger", "TurkeyBurger", "VeggieBurger" };
 
- public Burger (String burgerType, int cheese, int tomato, int onion ){    
-    this.burgerType = burgerType;
-    this.bacon = cheese;
-    this.pickel = tomato;
-    this.tomato = onion;
-
-    setPrice(calcCost());
- }
- 
- 
- 	/**
-	 * Constructor
-	 * Create an instance of Burger
-	 * sets item price and calculate total price based on quantity
-	 * with provided:
+	/**
+	 * Constructor Create an instance of Burger sets item price and calculate total
+	 * price based on quantity with provided:
 	 * 
 	 * @param sideType
 	 * @param sideSize
 	 * @param sideQuantity
 	 */
-	public Burger(String burgerType, int sideQuantity) {
+	public Burger(String burgerType) {
 		// using parent constructor
-		super(burgerType, sideQuantity);
+		super(burgerType);
 		// set type and size
 		setBurgerType(burgerType);
 		// set cost
 		setPrice(calcCost());
-		setTotalPrice(calcTotalPrice());
 	}
-  
-  
-  /**
-  * mutator and accessor methods to get and set burger type
-  * and toppings
-  *
-  */
- 
-	public String getBurgerType()
-	{
+
+	/**
+	 * mutator and accessor methods to get and set burger type and toppings
+	 *
+	 */
+
+	public String getBurgerType() {
 		return burgerType;
 	}
 
-	public void setBurgerType(String burgerType)
-	{
+	public void setBurgerType(String burgerType) {
 		this.burgerType = burgerType;
 	}
 
-	public int getCheese()
-	{
+	public int getCheese() {
 		return cheese;
 	}
 
-	public void setCheese(int cheese)
-	{
+	public void setCheese(int cheese) {
 		this.cheese = cheese;
 	}
 
-	public int getTomato()
-	{
+	public int getTomato() {
 		return tomato;
 	}
 
-	public void setTomato(int tomato)
-	{
+	public void setTomato(int tomato) {
 		this.tomato = tomato;
 	}
 
-        public int getOnion()
-	{
+	public int getOnion() {
 		return onions;
 	}
 
-	public void setOnion(int onion)
-	{
+	public void setOnion(int onion) {
 		this.onions = onion;
 	}
-     
-	public int getLettus()
-	{
+
+	public int getLettus() {
 		return lettuce;
 	}
 
-	public void setLettus(int lettuce)
-	{
+	public void setLettus(int lettuce) {
 		this.lettuce = lettuce;
 	}
 
-  
-  
-  
-  /**
-  * price calculation
-  *
-  *
-  *
-  */
-public double calcCost()
-	{		
-		if(burgerType.equalsIgnoreCase("hamburger"))
-		{
+	/**
+	 * price calculation
+	 *
+	 *
+	 *
+	 */
+	public double calcCost() {
+		if (burgerType.equalsIgnoreCase("hamburger")) {
 			return 4.99 + (bacon + pickel + tomato + onions + lettuce);
-		}
-		else if(burgerType.equalsIgnoreCase("cheeseburger"))
-		{
+		} else if (burgerType.equalsIgnoreCase("cheeseburger")) {
 			return 5.99 + (bacon + pickel + tomato + onions + lettuce);
-		}
-		else if(burgerType.equalsIgnoreCase("turkeyburger"))
-		{
+		} else if (burgerType.equalsIgnoreCase("turkeyburger")) {
 			return 5.99 + (bacon + pickel + tomato + onions + lettuce);
-		}
-		else if(burgerType.equalsIgnoreCase("veggieburger"))
-		{
+		} else if (burgerType.equalsIgnoreCase("veggieburger")) {
 			return 6.99 + (bacon + pickel + tomato + onions + lettuce);
-		}
-		else
-		{
+		} else {
 			return 0.0;
 		}
 	}
@@ -176,21 +122,8 @@ public double calcCost()
 	 * @return the formatted string of reservation data
 	 */
 	@Override
-	public String toString()
-	{
-		return "Burger: " + getName() + ". Qty: " + getQuantity() + "\n" + 
-				String.format("$%.2f", getTotalPrice()) + "\n";
-	}
-  
-  /**
-  * @overide
-  *
-  */
-	public String toString2()
-	{
-	return "Burger: " + burgerType + "\n Cheese: " 
-		+ cheese + "\n Tomato: "
-		+ tomato + "\n Onions: " + onions
-		+ "\n Total Cost: $" + calcCost() + "\n";
+	public String toString() {
+		return "Burger: " + getName() + ". " + "\n" + String.format("$%.2f", getPrice())
+				+ "\n";
 	}
 }

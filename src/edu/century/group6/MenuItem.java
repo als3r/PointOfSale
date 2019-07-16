@@ -30,11 +30,6 @@ public class MenuItem {
 	double price;
 	
 	/**
-	 * Price for 1 item
-	 */
-	double totalPrice;
-	
-	/**
 	 * Minimum Cook time in seconds
 	 * Default 5 minutes = 5*60 = 300 seconds (DEFAULT_COOK_TIME)
 	 */

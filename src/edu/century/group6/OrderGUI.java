@@ -16,8 +16,6 @@ import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
-import java.text.ParsePosition;
-import java.util.Date;
 
 /**
  * PointOfSale
@@ -774,12 +772,14 @@ public class OrderGUI extends JFrame implements ActionListener {
 	    	int pizzaCheeseToppings    = Integer.parseInt(String.valueOf(pizzaCheeseToppingQuantitySelector.getSelectedItem()));
 	    	int pizzaPepperoniToppings = Integer.parseInt(String.valueOf(pizzaPepperoniToppingQuantitySelector.getSelectedItem()));
 	    	int pizzaHamToppings       = Integer.parseInt(String.valueOf(pizzaHamToppingQuantitySelector.getSelectedItem()));
-	    	int pizzaQuantity          = Integer.parseInt(String.valueOf(pizzaQuantitySelector.getSelectedItem()));
-	    	
-	    	Pizza pizza = new Pizza(pizzaSize, pizzaQuantity, pizzaCheeseToppings, pizzaPepperoniToppings, pizzaHamToppings);
-	    	
-	    	// Add pizza to order
-	    	order.addOrderItem(pizza);
+	    	Pizza pizza                = new Pizza(pizzaSize, pizzaCheeseToppings, pizzaPepperoniToppings, pizzaHamToppings);
+
+	    	// Add needed number of items
+	    	int quantity = Integer.parseInt(String.valueOf(pizzaQuantitySelector.getSelectedItem()));
+	    	for (int i = 1; i <= quantity; i++) {
+	    		// Add pizza to order
+		    	order.addOrderItem(pizza);
+			}
 
 	    	// Update order receipt
 	    	orderConsoleTextArea.setText(order.printOrder());
@@ -787,13 +787,15 @@ public class OrderGUI extends JFrame implements ActionListener {
 	    } else if (actionCommand.equals(BUTTON_CAPTION_ADD_BURGER)) {
 	    	
 	    	// Create burger object to add it to order
-	    	String burgerType     = String.valueOf(burgerTypeSelector.getSelectedItem());
-	    	int    burgerQuantity = Integer.parseInt(String.valueOf(burgerQuantitySelector.getSelectedItem()));
+	    	String burgerType = String.valueOf(burgerTypeSelector.getSelectedItem());	    	
+	    	Burger burger     = new Burger(burgerType);
 	    	
-	    	Burger burger = new Burger(burgerType, burgerQuantity);
-	    	
-	    	// Add burger to order
-	    	order.addOrderItem(burger);
+	    	// Add needed number of items
+	    	int quantity = Integer.parseInt(String.valueOf(burgerQuantitySelector.getSelectedItem()));
+	    	for (int i = 1; i <= quantity; i++) {
+	    		// Add burger to order
+		    	order.addOrderItem(burger);
+			}
 	    	
 	    	// Update order receipt
 	    	orderConsoleTextArea.setText(order.printOrder());
@@ -803,13 +805,15 @@ public class OrderGUI extends JFrame implements ActionListener {
 	    	// Add French fries to order
     		// Create French fries object to add it to order
 	    	String sideType     = "French Fries";
-	    	String sideSize     = String.valueOf(frenchFriesSizeSelector.getSelectedItem());
-	    	int    sideQuantity = Integer.parseInt(String.valueOf(frenchFriesQuantitySelector.getSelectedItem()));
+	    	String sideSize     = String.valueOf(frenchFriesSizeSelector.getSelectedItem());	    	
+	    	SideItem sideItem   = new SideItem(sideType, sideSize);
 	    	
-	    	SideItem sideItem = new SideItem(sideType, sideSize, sideQuantity);
-	    	
-	    	// Add French fries to order
-    		order.addOrderItem(sideItem);
+	    	// Add needed number of items
+	    	int quantity = Integer.parseInt(String.valueOf(frenchFriesQuantitySelector.getSelectedItem()));
+    		for (int i = 1; i <= quantity; i++) {
+    			// Add French fries to order
+        		order.addOrderItem(sideItem);
+			}
 	    	
 	    	// Update order receipt
 	    	orderConsoleTextArea.setText(order.printOrder());
@@ -819,13 +823,15 @@ public class OrderGUI extends JFrame implements ActionListener {
 	    	// Add onion rings to order
     		// Create onion rings object to add it to order
 	    	String sideType     = "Onion Rings";
-	    	String sideSize     = String.valueOf(onionRingsSizeSelector.getSelectedItem());
-	    	int    sideQuantity = Integer.parseInt(String.valueOf(onionRingsQuantitySelector.getSelectedItem()));
+	    	String sideSize     = String.valueOf(onionRingsSizeSelector.getSelectedItem());	    	
+	    	SideItem sideItem   = new SideItem(sideType, sideSize);
 	    	
-	    	SideItem sideItem = new SideItem(sideType, sideSize, sideQuantity);
-	    	
-	    	// Add onion rings to order
-    		order.addOrderItem(sideItem);
+	    	// Add needed number of items
+	    	int quantity = Integer.parseInt(String.valueOf(onionRingsQuantitySelector.getSelectedItem()));
+	    	for (int i = 1; i <= quantity; i++) {
+	    		// Add onion rings to order
+	    		order.addOrderItem(sideItem);
+			}
 	    	
 	    	// Update order receipt
 	    	orderConsoleTextArea.setText(order.printOrder());
@@ -836,12 +842,14 @@ public class OrderGUI extends JFrame implements ActionListener {
     		// Create drink object to add it to order
 	    	String drinkType     = String.valueOf(drinkTypeSelector.getSelectedItem());
 	    	String drinkSize     = String.valueOf(drinkSizeSelector.getSelectedItem());
-	    	int    drinkQuantity = Integer.parseInt(String.valueOf(drinkQuantitySelector.getSelectedItem()));
-	    	
-	    	Drink drink = new Drink(drinkType, drinkSize, drinkQuantity);
-	    	
-	    	// Add drink to order
-    		order.addOrderItem(drink);
+	    	Drink drink = new Drink(drinkType, drinkSize);
+
+	    	// Add needed number of items
+	    	int quantity = Integer.parseInt(String.valueOf(drinkQuantitySelector.getSelectedItem()));
+	    	for (int i = 1; i <= quantity; i++) {
+	    		// Add drink to order
+	    		order.addOrderItem(drink);
+			}
 	    	
 	    	// Update order receipt
 	    	orderConsoleTextArea.setText(order.printOrder());
