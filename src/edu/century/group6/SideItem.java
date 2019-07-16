@@ -153,7 +153,7 @@ public class SideItem extends MenuItem {
 	 */
 	@Override
 	public String toString() {
-		return "Side: " + getName() + ". Size: " + getSideSize() + "."
+		return "Side: " + getName() + ". Size: " + getSideSize() + ". "
 				+ String.format("$%.2f", getPrice()) + "\n";
 	}
 }

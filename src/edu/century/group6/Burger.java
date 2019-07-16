@@ -99,7 +99,6 @@ public class Burger extends MenuItem {
 	 */
 	@Override
 	public String toString() {
-		return "Burger: " + getName() + ". " + "\n" + String.format("$%.2f", getPrice())
-				+ "\n";
+		return "Burger: " + getName() + ". " + String.format("$%.2f", getPrice()) + "\n";
 	}
 }

@@ -185,8 +185,8 @@ public class Pizza extends MenuItem {
 	 */
 	@Override
 	public String toString() {
-		return "Pizza: " + getName() + ". " + "\n" + "Cheese toppings: " + cheeseCount + "\n"
-				+ "Pepperoni toppings: " + pepperoniCount + "\n" + "Ham toppings: " + hamCount + "\n"
-				+ String.format("$%.2f", getPrice()) + "\n";
+		return "Pizza: " + getName() + ". " + String.format("$%.2f", getPrice()) + "\n" + 
+				"Toppings. Cheese: " + cheeseCount + " "
+				+ "Pepperoni: " + pepperoniCount + " " + "Ham: " + hamCount + "\n";
 	}
 }
