@@ -8,14 +8,27 @@ import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * PointOfSale
@@ -80,12 +93,21 @@ public class OrderGUI extends JFrame implements ActionListener {
 	/**
 	 * To keep order number
 	 */
-	private static int ORDER_NUMBER = 1001;
+	private static int ORDER_NUMBER = 1000;
 	
 	/**
 	 * To keep customer number
 	 */
-	private static int CUSTOMER_NUMBER = 1001;
+	private static int CUSTOMER_NUMBER = 1000;
+	
+	
+	/**
+	 * Save order files path
+	 * Default system temp dir
+	 */
+	private static String ORDERS_SAVE_PATH = System.getProperty("java.io.tmpdir");
+	
+	
 	
 	
 	/**
@@ -253,7 +275,6 @@ public class OrderGUI extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         order = new Order(String.valueOf(ORDER_NUMBER));
-        ORDER_NUMBER++;
         
         // Create main panel
         JPanel mainPanel = new JPanel();
@@ -292,11 +313,9 @@ public class OrderGUI extends JFrame implements ActionListener {
         JLabel BurgerPriceLabel         = new JLabel("$4.99 Hamburger; $5.99 Cheeseburger, Turkey; $6.99 Veggie");
         JLabel BurgerTypeLabel          = new JLabel("Burger");
         JLabel BurderIncludeTextLabel   = new JLabel("Includes Tomato, Onion, Lettuce, Pickles");
-    	//        JLabel BurgerOnionLabel         = new JLabel("Onions");
         JLabel BurgerQuantityLabel      = new JLabel("Quantity");
         
         
-        //        JLabel SideItemLabel            = new JLabel("SIDES");
         JLabel FrenchFriesLabel         = new JLabel("FRENCH FRIES  $2.00 Small; $2.50 Medium; $3.20 Large");
         JLabel FrenchFriesSizeLabel     = new JLabel("Size");
         JLabel FrenchFriesQuantityLabel = new JLabel("Quantity");
@@ -314,7 +333,6 @@ public class OrderGUI extends JFrame implements ActionListener {
         
         JLabel CustomerLabel            = new JLabel("CUSTOMER");
         JLabel DeliveryAddressLabel     = new JLabel("DELIVERY ADDRESS");
-        //        JLabel CustomerDeliveryNeededLabel = new JLabel("Delivery?");
         JLabel CustomerFirstNameLabel   = new JLabel("First Name");
         JLabel CustomerLastNameLabel    = new JLabel("Last Name");
         JLabel CustomerPhoneLabel       = new JLabel("Phone");
@@ -746,6 +764,12 @@ public class OrderGUI extends JFrame implements ActionListener {
 	    
 	    if (actionCommand.equals(BUTTON_CAPTION_PLACE_ORDER)) {
 	    	
+	    	// Check if order is empty
+	    	if(order.getNumItems() == 0 ) {
+	    		alert("Please add something to the order!", "Order was not placed");
+	    		return;
+	    	}
+	    	
 	    	// Place an order
 	    	// show message that order was placed, reset all forms
 	    	orderConsoleTextArea.setText("Order was placed!");
@@ -754,6 +778,9 @@ public class OrderGUI extends JFrame implements ActionListener {
 	    	// show final receipt to customer
 	    	order.orderStatusReceived();
 	    	orderConsoleTextArea.setText(order.printOrder() + "\nThank you for your order!");
+	    	
+	    	// save order to text file
+	    	saveFile(order);
 	    	
 	    	// set current order to new empty order 
 	    	// for next customer
@@ -1003,4 +1030,54 @@ public class OrderGUI extends JFrame implements ActionListener {
 		resetDrinksForm();
 		resetCustomerForm();
 	}
+	
+	
+	/**
+     * Save order to file
+     */
+    public void saveFile(Order order) {
+    	
+    	// Define outputStream
+    	PrintWriter outputStream = null;
+    	
+    	String pattern = "yyyy-MM-dd_HH-mm-ss";
+    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    	String filename = ORDERS_SAVE_PATH + order.getOrderNumber() + "_" + simpleDateFormat.format(new Date()) + ".txt";
+    	
+    	// try to open file
+		try {
+			
+			outputStream = new PrintWriter(new FileOutputStream(filename));
+			
+		} catch (FileNotFoundException e) {
+			
+			alert("Error. Cannot open file: " + filename, "Fail");
+			System.out.println("Error. Cannot open file (" + filename + ")");
+			System.exit(0);
+		}
+		
+		// write to file
+		outputStream.println(order.toString());
+		
+		// close file
+		outputStream.close();
+		
+		// Display message to the user
+		String message = "";
+		message += "Thank you for your order!" + "\n\n";
+		message += "Order# " + order.getOrderNumber() + "\n\n";
+		message += "Order was saved to " + filename + ".";
+		alert(message, "Order was placed");
+    }
+	
+	/**
+     * Helper function to display messages
+     * 
+     * @param message (window message text)
+     * @param messageHeader (window header)
+     */
+    public void alert(String message, String messageHeader) {
+		JOptionPane optionPane = new JOptionPane();
+		optionPane.showMessageDialog(null, message, messageHeader, JOptionPane.INFORMATION_MESSAGE);
+    }
 }
