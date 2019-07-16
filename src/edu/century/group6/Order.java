@@ -2,6 +2,9 @@ package edu.century.group6;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -32,13 +35,7 @@ import java.util.Date;
  * @author Alexandr Sergeyev <ns1418cz@my.century.edu>
  */
 public class Order {
-	
-	
-	/**
-	 * 
-	 * Instance variables
-	 * 
-	 */
+
 
 	/**
 	 * Order Number
@@ -58,7 +55,7 @@ public class Order {
 	/**
 	 * Stores order Items
 	 */
-	private MenuItem[] orderItems;
+	private List<MenuItem> orderItems = new ArrayList<>();
 	
 	/**
 	 * Number of items in the order
@@ -547,7 +544,7 @@ public class Order {
 	 */
 	Order(String orderNumber){
 		this.orderNumber = orderNumber;
-		this.orderItems = new MenuItem[MAX_ORDER_ITEMS];
+		this.orderItems = new ArrayList<>(MAX_ORDER_ITEMS);
 		orderStatusReceived();	
 		calcOrderPrice();
 	}
@@ -564,7 +561,7 @@ public class Order {
 	Order(String orderNumber, boolean isDelivered){
 		setOrderNumber(orderNumber);
 		setDelivered(isDelivered);
-		this.orderItems = new MenuItem[MAX_ORDER_ITEMS];
+		this.orderItems = new ArrayList<>(MAX_ORDER_ITEMS);
 		orderStatusReceived();	
 		calcOrderPrice();
 	}
@@ -630,13 +627,8 @@ public class Order {
 	 * @return this order
 	 */
 	public Order addOrderItem(MenuItem orderItem) {
-		for (int i = 0; i < orderItems.length; i++) {
-			if (orderItems[i] == null) {
-				orderItems[i] = orderItem;
-				calcOrderPrice();
-				break;
-			}
-		}
+		orderItems.add(orderItem);
+		calcOrderPrice();
 		return this;
 	}
 	
@@ -648,16 +640,13 @@ public class Order {
 	 * @return this order
 	 */
 	public Order removeOrderItem(int index) {
-		
-		
-		
 		if ( 
 			index >= 0 && 
-			index < MAX_ORDER_ITEMS &&
-			orderItems[index] != null && 
-			orderItems[index] instanceof MenuItem
+			index < orderItems.size() &&
+			orderItems.get(index) != null && 
+			orderItems.get(index) instanceof MenuItem
 		) {
-			orderItems[index] = null;
+			orderItems.remove(index);
 			calcOrderPrice();
 		}
 		return this;
@@ -671,21 +660,21 @@ public class Order {
 	 * @return this order
 	 */
 	public Order removeAllOrderItems() {
-		this.orderItems = new MenuItem[MAX_ORDER_ITEMS];
+		this.orderItems = new ArrayList<>(MAX_ORDER_ITEMS);
 		return this;
 	}
 	
 	
 	/**
-	 * Calculate subtotal of all order items
+	 * Calculate sub total of all order items
 	 * 
 	 * @return subTotal
 	 */
 	public double calcSubTotal() {
 		double subTotal = 0;
-		for (int i = 0; i < orderItems.length; i++) {
-			if (orderItems[i] != null && orderItems[i] instanceof MenuItem) {
-				subTotal += orderItems[i].getPrice();
+		for (int i = 0; i < orderItems.size(); i++) {
+			if (orderItems.get(i) != null && orderItems.get(i) instanceof MenuItem) {
+				subTotal += orderItems.get(i).getPrice();
 			}
 		}
 		return subTotal;
@@ -699,8 +688,8 @@ public class Order {
 	 */
 	public int getNumItems() {
 		int numItems = 0;
-		for (int i = 0; i < orderItems.length; i++) {
-			if (orderItems[i] != null && orderItems[i] instanceof MenuItem) {
+		for (int i = 0; i < orderItems.size(); i++) {
+			if (orderItems.get(i) != null && orderItems.get(i) instanceof MenuItem) {
 				numItems++;
 			}
 		}
@@ -748,13 +737,13 @@ public class Order {
 		
 		message += "----------------------------------------" + "\n";
 		
-		for (int i = 0; i < orderItems.length; i++) {
-			if (orderItems[i] != null && orderItems[i] instanceof MenuItem) {
+		for (int i = 0; i < orderItems.size(); i++) {
+			if (orderItems.get(i) != null && orderItems.get(i) instanceof MenuItem) {
 				if(! itemMessage.isEmpty()) {					
 					itemMessage += "----------------------------------------" + "\n";
 				}
 				itemMessage += "Item #" + (i+1) + "\n";
-				itemMessage += orderItems[i].toString();
+				itemMessage += orderItems.get(i).toString();
 				
 			}
 		}
