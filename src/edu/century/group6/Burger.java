@@ -4,7 +4,7 @@ package edu.century.group6;
  * PointOfSale
  * 
  * Definition of pizza class
- * Stores information about pizza menu item
+ * Stores information about pizza menu item with prices
  * Extends OrderItem class
  * 
  * Class: CSCI 1082-90 - Object Oriented Programming
@@ -21,18 +21,24 @@ package edu.century.group6;
  */
 public class Burger extends MenuItem {
 
+	/**
+	 * Burger type (name)
+	 */
 	private String burgerType;
-	private int cheese;
-	private int tomato;
-	private int bacon;
-	private int onions;
-	private int pickel;
-	private int lettuce;
 
 	/**
 	 * To store burger types
 	 */
 	public static final String[] TYPE_ARRAY = { "HamBurger", "CheeseBurger", "TurkeyBurger", "VeggieBurger" };
+	
+	/**
+	 * Price list for burgers
+	 */
+	public static final double COST_HAMBURGER    = 4.99;
+	public static final double COST_CHEESEBURGER = 5.99;
+	public static final double COST_TURKEYBURGER = 5.99;
+	public static final double COST_VEGGIEBURGER = 6.99;
+	
 
 	/**
 	 * Constructor Create an instance of Burger sets item price and calculate total
@@ -52,67 +58,37 @@ public class Burger extends MenuItem {
 	}
 
 	/**
-	 * mutator and accessor methods to get and set burger type and toppings
-	 *
+	 * Get burger type (name)
+	 * 
+	 * @return burgerType
 	 */
-
 	public String getBurgerType() {
 		return burgerType;
 	}
 
+	/**
+	 * Modify burger type
+	 * 
+	 * @param burgerType
+	 */
 	public void setBurgerType(String burgerType) {
 		this.burgerType = burgerType;
 	}
 
-	public int getCheese() {
-		return cheese;
-	}
-
-	public void setCheese(int cheese) {
-		this.cheese = cheese;
-	}
-
-	public int getTomato() {
-		return tomato;
-	}
-
-	public void setTomato(int tomato) {
-		this.tomato = tomato;
-	}
-
-	public int getOnion() {
-		return onions;
-	}
-
-	public void setOnion(int onion) {
-		this.onions = onion;
-	}
-
-	public int getLettus() {
-		return lettuce;
-	}
-
-	public void setLettus(int lettuce) {
-		this.lettuce = lettuce;
-	}
-
 	/**
-	 * price calculation
-	 *
-	 *
-	 *
+	 * Price calculation for burgers
 	 */
 	public double calcCost() {
 		if (burgerType.equalsIgnoreCase("hamburger")) {
-			return 4.99 + (bacon + pickel + tomato + onions + lettuce);
+			return COST_HAMBURGER;
 		} else if (burgerType.equalsIgnoreCase("cheeseburger")) {
-			return 5.99 + (bacon + pickel + tomato + onions + lettuce);
+			return COST_CHEESEBURGER;
 		} else if (burgerType.equalsIgnoreCase("turkeyburger")) {
-			return 5.99 + (bacon + pickel + tomato + onions + lettuce);
+			return COST_TURKEYBURGER;
 		} else if (burgerType.equalsIgnoreCase("veggieburger")) {
-			return 6.99 + (bacon + pickel + tomato + onions + lettuce);
+			return COST_VEGGIEBURGER;
 		} else {
-			return 0.0;
+			return 1000000.0;
 		}
 	}
 

@@ -3,8 +3,9 @@ package edu.century.group6;
 /**
  * PointOfSale
  * 
- * Definition of pizza class Stores information about general side menu item and
- * drinks Extends OrderItem class
+ * Definition of side class 
+ * Stores information about general side menu item with prices
+ * Extends MenuItem class
  * 
  * Class: CSCI 1082-90 - Object Oriented Programming Instructor: Matthew Sanders
  * Assignment: Group Assignment Date: July 02, 2019 Due: Jule 16, 2019
@@ -28,7 +29,7 @@ public class SideItem extends MenuItem {
 	String sideSize;
 
 	/**
-	 * To store prices for drinks
+	 * To store prices for sides
 	 */
 	public static final double COST_FRENCH_FRIES = 2.00;
 	public static final double COST_ONION_RINGS = 3.00;
@@ -102,7 +103,7 @@ public class SideItem extends MenuItem {
 	}
 
 	/**
-	 * Calculate cost of the drink
+	 * Calculate cost of the side
 	 * 
 	 * @return price
 	 */

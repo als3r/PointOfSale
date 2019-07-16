@@ -27,32 +27,16 @@ public class Customer extends Person {
 	
 	
 	/**
-	 * Get customer identification number
-	 * 
-	 * @return customerNumber
-	 */
-	public String getCustomerNumber() {
-		return customerNumber;
-	}
-
-	
-	/**
-	 * Modify customer identification number
+	 * Constructor creates an instance of Customer
+	 * with provided:
 	 * 
 	 * @param customerNumber
 	 */
-	public void setCustomerNumber(String customerNumber) {
-		this.customerNumber = customerNumber;
-	}
-	
-	
-	/**
-	 * Default Constructor
-	 */
-	Customer(){
+	Customer(String customerNumber) {
 		super();
+		setCustomerNumber(customerNumber);
 	}
-
+	
 	
 	/**
 	 * Constructor creates an instance of Customer
@@ -69,6 +53,26 @@ public class Customer extends Person {
 	 */
 	Customer(String customerNumber, String firstName, String lastName, String address, String city, String state, String zip, String phone) {
 		super(firstName, lastName, address, city, state, zip, phone);
+		setCustomerNumber(customerNumber);
+	}
+	
+	
+	/**
+	 * Get customer identification number
+	 * 
+	 * @return customerNumber
+	 */
+	public String getCustomerNumber() {
+		return customerNumber;
+	}
+
+	
+	/**
+	 * Modify customer identification number
+	 * 
+	 * @param customerNumber
+	 */
+	public void setCustomerNumber(String customerNumber) {
 		this.customerNumber = customerNumber;
 	}
 	

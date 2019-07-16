@@ -4,7 +4,7 @@ package edu.century.group6;
  * PointOfSale
  * 
  * Definition of drink menu item class
- * Stores information about drink menu item
+ * Stores information about drink menu item with prices
  * 
  * Class: CSCI 1082-90 - Object Oriented Programming
  * Instructor: Matthew Sanders

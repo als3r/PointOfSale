@@ -180,6 +180,11 @@ public class Driver {
 	}
 	
 	
+	/**
+	 * Helper function to print some message in the system console
+	 * 
+	 * @param string
+	 */
 	public static void echo (String string) {
 		System.out.println(string);
 	}

@@ -16,21 +16,47 @@ package edu.century.group6;
  * @author Alexandr Sergeyev <ns1418cz@my.century.edu>
  */
 public class Pizza extends MenuItem {
-
-	private String pizzaSize;
-	private int cheeseCount;
-	private int pepperoniCount;
-	private int hamCount;
-
+	
 	/**
 	 * Array of quantity toppings
 	 */
-	public static final String[] QUANTITY_TOPPINGS_CHEESE = { "1", "2", "3", "4", "5" };
+	public static final String[] QUANTITY_TOPPINGS_CHEESE = { "1", "2", "3" };
 
 	/**
 	 * Array of quantity other toppings
 	 */
-	public static final String[] QUANTITY_TOPPINGS_OTHER = { "0", "1", "2", "3", "4", "5" };
+	public static final String[] QUANTITY_TOPPINGS_OTHER = { "0", "1", "2" };
+	
+	/**
+	 * Price list for pizza
+	 */
+	public static final double COST_SIZE_SMALL  = 10;
+	public static final double COST_SIZE_MEDIUM = 12;
+	public static final double COST_SIZE_LARGE  = 14;
+	
+	public static final double COST_TOPPING_CHEESE    = 2;
+	public static final double COST_TOPPING_PEPPERONI = 2;
+	public static final double COST_TOPPING_HAM       = 2;
+
+	/**
+	 * Size of the pizza
+	 */
+	private String pizzaSize;
+	
+	/**
+	 * Number of cheese toppings
+	 */
+	private int cheeseCount;
+	
+	/**
+	 * Number of pepperoni toppings
+	 */
+	private int pepperoniCount;
+	
+	/**
+	 * Number of ham toppings
+	 */
+	private int hamCount;
 
 
 	/**
@@ -54,59 +80,102 @@ public class Pizza extends MenuItem {
 	}
 
 	/**
-	 * mutator and accessor methods to get and set Pizza size and toppings
+	 * Mutator and accessor methods to get and set Pizza size and toppings
 	 *
 	 */
 
+	/**
+	 * Get pizza size
+	 * 
+	 * @return pizzaSize
+	 */
 	public String getPizzaSize() {
 		return pizzaSize;
 	}
 
+	/**
+	 * @param pizzaSize
+	 */
 	public void setPizzaSize(String pizzaSize) {
 		this.pizzaSize = pizzaSize;
 	}
 
+	/**
+	 * Get number of cheese toppings
+	 * 
+	 * @return
+	 */
 	public int getNumCheeseToppings() {
 		return cheeseCount;
 	}
 
+	/**
+	 * Modify number of cheese toppings
+	 * 
+	 * @param cheeseCount
+	 */
 	public void setNumCheeseToppings(int cheeseCount) {
 		this.cheeseCount = cheeseCount;
 	}
 
+	/**
+	 * Get number of pepperoni toppings
+	 * 
+	 * @return
+	 */
 	public int getNumPepperoniToppings() {
 		return pepperoniCount;
 	}
 
+	/**
+	 * Modify number of pepperoni toppings
+	 * 
+	 * @param pepperoniCount
+	 */
 	public void setNumPepperoniToppings(int pepperoniCount) {
 		this.pepperoniCount = pepperoniCount;
 	}
 
-	public int getNumHmaToppings() {
+	/**
+	 * Get number of ham toppings
+	 * 
+	 * @return
+	 */
+	public int getNumHamToppings() {
 		return hamCount;
 	}
 
-	public void setNumHmaToppings(int hamCount) {
+	/**
+	 * Modify number of ham toppings
+	 * 
+	 * @param hamCount
+	 */
+	public void setNumHamToppings(int hamCount) {
 		this.hamCount = hamCount;
 	}
 
 	/**
-	 * price calculation
-	 *
-	 *
-	 *
+	 * Price calculation
 	 */
-
 	public double calcCost() {
+		
+		double price = 0;
+		
+		// get base cost based on size
 		if (pizzaSize.equalsIgnoreCase("small")) {
-			return 10 + (cheeseCount + pepperoniCount + hamCount) * 2;
+			price = COST_SIZE_SMALL;
 		} else if (pizzaSize.equalsIgnoreCase("medium")) {
-			return 12 + (cheeseCount + pepperoniCount + hamCount) * 2;
+			price = COST_SIZE_MEDIUM;
 		} else if (pizzaSize.equalsIgnoreCase("large")) {
-			return 14 + (cheeseCount + pepperoniCount + hamCount) * 2;
-		} else {
-			return 0.0;
+			price = COST_SIZE_LARGE;
 		}
+		
+		// add price for pizza toppings
+		price += cheeseCount    * COST_TOPPING_CHEESE;
+		price += pepperoniCount * COST_TOPPING_PEPPERONI;
+		price += hamCount       * COST_TOPPING_HAM;
+		
+		return price;
 	}
 
 	/**

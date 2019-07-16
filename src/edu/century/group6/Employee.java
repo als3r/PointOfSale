@@ -27,30 +27,14 @@ public class Employee extends Person {
 	
 	
 	/**
-	 * Get employee identification number
+	 * Constructor creates an instance of Employee
+	 * with provided:
 	 * 
-	 * @return
+	 * @param customerNumber
 	 */
-	public String getEmployeeNumber() {
-		return employeeNumber;
-	}
-
-	
-	/**
-	 * Modify employee identification number
-	 * 
-	 * @param employeeNumber
-	 */
-	public void setEmployeeNumber(String employeeNumber) {
-		this.employeeNumber = employeeNumber;
-	}
-	
-	
-	/**
-	 * Default Constructor
-	 */
-	Employee(){
+	Employee(String employeeNumber) {
 		super();
+		setEmployeeNumber(employeeNumber);
 	}
 	
 	
@@ -70,6 +54,26 @@ public class Employee extends Person {
 	Employee(String employeeNumber, String firstName, String lastName, String address, String city, String state, String zip, String phone) {
 		super(firstName, lastName, address, city, state, zip, phone);
 		setEmployeeNumber(employeeNumber);
+	}
+	
+	
+	/**
+	 * Get employee identification number
+	 * 
+	 * @return
+	 */
+	public String getEmployeeNumber() {
+		return employeeNumber;
+	}
+
+	
+	/**
+	 * Modify employee identification number
+	 * 
+	 * @param employeeNumber
+	 */
+	public void setEmployeeNumber(String employeeNumber) {
+		this.employeeNumber = employeeNumber;
 	}
 	
 	

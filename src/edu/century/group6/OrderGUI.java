@@ -80,8 +80,12 @@ public class OrderGUI extends JFrame implements ActionListener {
 	/**
 	 * To keep order number
 	 */
-	private static int ORDER_NUMBER = 1;
-	private static int CUSTOMER_NUMBER = 1;
+	private static int ORDER_NUMBER = 1001;
+	
+	/**
+	 * To keep customer number
+	 */
+	private static int CUSTOMER_NUMBER = 1001;
 	
 	
 	/**
@@ -105,7 +109,7 @@ public class OrderGUI extends JFrame implements ActionListener {
 	 * Array of quantity
 	 */
 	public static final String[] QUANTITY_ARRAY = {
-		"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"
+		"1","2","3","4","5","6","7","8","9","10"
 	};
     
     
@@ -858,8 +862,7 @@ public class OrderGUI extends JFrame implements ActionListener {
 	    	
     		// Add customer and update delivery address if needed
     		// Create customer object and assign to order 
-    		Customer customer = new Customer();
-    		customer.setCustomerNumber(String.valueOf(CUSTOMER_NUMBER));
+    		Customer customer = new Customer(String.valueOf(CUSTOMER_NUMBER));
     		customer.setFirstName(customerFirstNameTextField.getText());
     		customer.setLastName(customerLastNameTextField.getText());
     		customer.setPhone(customerPhoneNumberTextField.getText());
