@@ -93,7 +93,7 @@ public class OrderGUI extends JFrame implements ActionListener {
 	/**
 	 * To keep order number
 	 */
-	private static int ORDER_NUMBER = 1000;
+	private static int ORDER_NUMBER = 100;
 	
 	/**
 	 * To keep customer number
