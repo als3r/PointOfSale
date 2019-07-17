@@ -121,7 +121,7 @@ public class Order {
 	 * Order Status
 	 * 
 	 */
-	private enum ORDER_STATUSES {
+	public enum ORDER_STATUSES {
 		ORDER_STATUS_RECEIEVED, 
 		ORDER_STATUS_PREPARED, 
 		ORDER_STATUS_DELIVERED, 
@@ -694,6 +694,11 @@ public class Order {
 			}
 		}
 		return numItems;
+	}
+	
+	
+	public List<MenuItem> getOrderItems() {
+		return orderItems;
 	}
 	
 	
