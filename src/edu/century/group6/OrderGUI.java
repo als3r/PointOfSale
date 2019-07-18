@@ -260,6 +260,8 @@ public class OrderGUI extends JFrame implements ActionListener {
 	public static final String BUTTON_CAPTION_PLACE_ORDER        = "Order";
 	public static final String BUTTON_CAPTION_CLEAR_ORDER_ITEMS  = "Clear Order";
 	
+	public static final String BUTTON_CAPTION_SEARCH_ORDER       = "Search Order";
+	
 	public static final String BUTTON_CAPTION_MENU_NAME          = "Demo Screens";
 	public static final String BUTTON_CAPTION_MENU_LOGIN         = "Login";
 	public static final String BUTTON_CAPTION_MENU_POS           = "Make An Order";
@@ -298,13 +300,21 @@ public class OrderGUI extends JFrame implements ActionListener {
 	
 	JPanel    loginMainPanel;
 	JPanel    orderMainPanel;
+	
 	JPanel    kitchenMainPanel;
 	JPanel    ordersKitchenPanel;
 	JPanel    deliveryMainPanel;
 	JPanel    ordersDeliveryPanel;
-	JPanel    salesMainPanel;
+	
 	JPanel    employeesMainPanel;
 	JPanel    customersMainPanel;
+	JPanel    ordersMainPanel;
+	JPanel    ordersContentPanel;
+	JPanel    salesMainPanel;
+	
+	
+	JTextArea ordersContentTextArea;
+	JTextField ordersContentSearchTextField;
 	
 	
 	JLabel SalesStatsSectionLabel               = new JLabel("STATS");
@@ -413,13 +423,11 @@ public class OrderGUI extends JFrame implements ActionListener {
         menuItem3.addActionListener(this);
         menu.add(menuItem3);
         
-        menuItem4 = new JMenuItem(BUTTON_CAPTION_MENU_SALES);
-        menuItem4.addActionListener(this);
-        menu.add(menuItem4);
         
-//        menuItem5 = new JMenuItem(BUTTON_CAPTION_MENU_ORDERS);
-//        menuItem5.addActionListener(this);
-//        menu.add(menuItem5);
+        
+        menuItem5 = new JMenuItem(BUTTON_CAPTION_MENU_ORDERS);
+        menuItem5.addActionListener(this);
+        menu.add(menuItem5);
         
         menuItem6 = new JMenuItem(BUTTON_CAPTION_MENU_CUSTOMERS);
         menuItem6.addActionListener(this);
@@ -428,6 +436,10 @@ public class OrderGUI extends JFrame implements ActionListener {
         menuItem7 = new JMenuItem(BUTTON_CAPTION_MENU_EMPLOYEES);
         menuItem7.addActionListener(this);
         menu.add(menuItem7);
+        
+        menuItem9 = new JMenuItem(BUTTON_CAPTION_MENU_SALES);
+        menuItem9.addActionListener(this);
+        menu.add(menuItem9);
         
         menuItem10 = new JMenuItem(BUTTON_CAPTION_MENU_EXIT);
         menuItem10.addActionListener(this);
@@ -977,6 +989,67 @@ public class OrderGUI extends JFrame implements ActionListener {
         mainPanel.add(deliveryMainPanel);
         // End Delivery screen   
         
+        
+        
+        
+        
+        // Start Delivery Screen
+        ordersMainPanel = new JPanel ();
+        ordersMainPanel.setBorder( new TitledBorder ( new EtchedBorder (), "Orders" ) );
+        ordersMainPanel.setLayout(layout);
+        layout.putConstraint(SpringLayout.WEST,  ordersMainPanel, 0, SpringLayout.WEST, mainPanel);
+        layout.putConstraint(SpringLayout.EAST,  ordersMainPanel, 0, SpringLayout.EAST, mainPanel);
+        layout.putConstraint(SpringLayout.NORTH, ordersMainPanel, 0, SpringLayout.NORTH, mainPanel);
+        layout.putConstraint(SpringLayout.SOUTH, ordersMainPanel, 0, SpringLayout.SOUTH, mainPanel);
+        
+        
+        
+        
+        
+        ordersContentPanel = new JPanel ();
+        ordersContentPanel.setLayout(layout);
+        
+        layout.putConstraint(SpringLayout.WEST,  ordersContentPanel, 0, SpringLayout.WEST, ordersMainPanel);
+        layout.putConstraint(SpringLayout.EAST,  ordersContentPanel, 0, SpringLayout.EAST, ordersMainPanel);
+        layout.putConstraint(SpringLayout.NORTH, ordersContentPanel, 0, SpringLayout.NORTH, ordersMainPanel);
+        layout.putConstraint(SpringLayout.SOUTH, ordersContentPanel, 0, SpringLayout.SOUTH, ordersMainPanel);
+        
+        JLabel ordersContentSearchOrderLabel = new JLabel("ORDER NUMBER");
+        ordersContentSearchOrderLabel.setFont(FONT_16);
+        
+        ordersContentSearchTextField = new JTextField(NUMBER_OF_CHAR_INPUT_20);
+        ordersContentSearchTextField.setFont(FONT_18);
+        
+        JButton ordersContentSearchButton = new JButton(BUTTON_CAPTION_SEARCH_ORDER);
+        ordersContentSearchButton.addActionListener(this);
+        
+        ordersContentTextArea = new JTextArea(30, 30);
+        ordersContentTextArea.setFont(new Font("monospaced", Font.PLAIN, 18));
+        
+        JScrollPane ordersContentScrollPanel = new JScrollPane(ordersContentTextArea);
+        scrollPanel.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
+        
+        
+        layout.putConstraint(SpringLayout.WEST,  ordersContentSearchOrderLabel, 0, SpringLayout.WEST, ordersContentPanel);
+        layout.putConstraint(SpringLayout.NORTH, ordersContentSearchOrderLabel, 10, SpringLayout.NORTH, ordersContentPanel);
+        layout.putConstraint(SpringLayout.WEST,  ordersContentSearchTextField, 20, SpringLayout.EAST, ordersContentSearchOrderLabel);
+        layout.putConstraint(SpringLayout.NORTH, ordersContentSearchTextField, 10, SpringLayout.NORTH, ordersContentPanel);
+        layout.putConstraint(SpringLayout.WEST,  ordersContentSearchButton, 20, SpringLayout.EAST, ordersContentSearchTextField);
+        layout.putConstraint(SpringLayout.NORTH, ordersContentSearchButton, 10, SpringLayout.NORTH, ordersContentPanel);
+        
+        layout.putConstraint(SpringLayout.WEST,  ordersContentScrollPanel, 0, SpringLayout.WEST, ordersContentPanel);
+        layout.putConstraint(SpringLayout.EAST,  ordersContentScrollPanel, 0, SpringLayout.EAST, ordersContentPanel);
+        layout.putConstraint(SpringLayout.NORTH, ordersContentScrollPanel, 40, SpringLayout.NORTH, ordersContentPanel);
+        layout.putConstraint(SpringLayout.SOUTH, ordersContentScrollPanel, 0, SpringLayout.SOUTH, ordersContentPanel);
+        
+        
+        ordersContentPanel.add(ordersContentSearchOrderLabel);
+        ordersContentPanel.add(ordersContentSearchTextField);
+        ordersContentPanel.add(ordersContentSearchButton);
+        ordersMainPanel.add(ordersContentScrollPanel);
+        ordersMainPanel.add(ordersContentPanel);
+        mainPanel.add(ordersMainPanel);
+        // End Delivery screen
         
         
         
@@ -1679,6 +1752,44 @@ public class OrderGUI extends JFrame implements ActionListener {
 				ordersDeliveryPanel.add(deliveryOrderScrollpanel);
 			}
 			
+		} else if (actionCommand.equals(BUTTON_CAPTION_SEARCH_ORDER)) {
+			
+	    	// Search Order By Order Number and display receipt on ORDERS screen
+
+    		String orderNumber = ordersContentSearchTextField.getText();
+    		
+    		boolean orderFound = false;
+    		
+    		for( int i = 0; i < orders.size(); i++ ) {
+    			if(orders.get(i).getOrderNumber().equalsIgnoreCase(orderNumber)) {
+    				ordersContentTextArea.setText(orders.get(i).fullDescription());
+    				orderFound = true;
+    				break;
+    			}
+    		}
+    		
+    		if(! orderFound) {
+    			ordersContentTextArea.setText("Cannot find any orders.");
+    		}
+			
+			
+		} else if(actionCommand.equals(BUTTON_CAPTION_MENU_ORDERS)){
+			
+			// Orders Screen
+			hideAllPanels();
+			ordersMainPanel.setVisible(true);
+			
+			if(orders.size() > 0) {
+				
+				String lastOrderNumber = orders.get(orders.size() - 1).getOrderNumber();
+				
+				ordersContentSearchTextField.setText(lastOrderNumber);
+				ordersContentTextArea.setText(orders.get(orders.size() - 1).fullDescription());
+				
+			} else {				
+				ordersContentTextArea.setText("Cannot find any orders.");
+			}
+			
 		} else if(actionCommand.equals(BUTTON_CAPTION_MENU_SALES)) {
 			
 			// Sales Orders Screen
@@ -1774,8 +1885,8 @@ public class OrderGUI extends JFrame implements ActionListener {
 			averageCheck               = (numberOrdersReceived > 0) ? totalSales / numberOrdersReceived : 0;
 			
 			SalesNumberOfOrdersValue.setText(String.valueOf(numberOrders));
-		    SalesNumberOfCustomersValue.setText(String.valueOf(numberOfEmployees));
-		    SalesNumberOfEmployeesValue.setText(String.valueOf(numberOfCustomers));
+		    SalesNumberOfCustomersValue.setText(String.valueOf(numberOfCustomers));
+		    SalesNumberOfEmployeesValue.setText(String.valueOf(numberOfEmployees));
 		    AverageOrderTimeValue.setText(String.format("%.2fs", averageOrderTime));
 		    AverageOrderCheckValue.setText(String.format("$%.2f", averageCheck));
 		    
@@ -2001,9 +2112,10 @@ public class OrderGUI extends JFrame implements ActionListener {
 		orderMainPanel.setVisible(false);
 		kitchenMainPanel.setVisible(false);
 		deliveryMainPanel.setVisible(false);
-		salesMainPanel.setVisible(false);
 		customersMainPanel.setVisible(false);
 		employeesMainPanel.setVisible(false);
+		ordersMainPanel.setVisible(false);
+		salesMainPanel.setVisible(false);
 	}
 	
 	/**

@@ -755,6 +755,69 @@ public class Order {
 	
 	
 	/**
+	 * Full Description
+	 * 
+	 * @return the formatted string of order
+	 */
+	public String fullDescription() {
+		String message = "";
+		String itemMessage = "";
+		String customerMessage = "";
+		
+		message += "========================================" + "\n";
+		message += "Order Number# " + getOrderNumber() + "\n";
+		if(getOrderReceivedTime() != null) {			
+			message += "Time Receieved: " + getOrderReceivedTimeFormatted() + "\n";
+		}
+		if(getOrderCookTime() != null) {			
+			message += "Time Cooked: " + getOrderCookTimeFormatted() + "\n";
+		}
+		if(getOrderDeliveryTime() != null) {			
+			message += "Time Delivered: " + getOrderDeliveryTimeFormatted() + "\n";
+		}
+		if(getOrderCompletedTime() != null) {			
+			message += "Time Completed: " + getOrderCompletedTimeFormatted() + "\n";
+		}
+		
+		if(getCustomer() != null && getCustomer() instanceof Customer) {
+			customerMessage += "Customer#: " + getCustomer().getCustomerNumber() + "\n";
+			customerMessage += "Name: " + getCustomer().getFirstName() + " " + getCustomer().getLastName() + "\n";
+		}
+		message += customerMessage;
+		
+		if(isDelivered) {
+			message += "Delivery requested" + "\n";
+			message += "Address: " + getDeliveryAddress() + "\n";
+		}
+		
+		
+		message += "Items: " + getNumItems() + "\n";
+		
+		message += "----------------------------------------" + "\n";
+		
+		for (int i = 0; i < orderItems.size(); i++) {
+			if (orderItems.get(i) != null && orderItems.get(i) instanceof MenuItem) {
+				if(! itemMessage.isEmpty()) {					
+					itemMessage += "----------------------------------------" + "\n";
+				}
+				itemMessage += "Item #" + (i+1) + "\n";
+				itemMessage += orderItems.get(i).toString();
+				
+			}
+		}
+		if(! itemMessage.isEmpty()) {
+			message += itemMessage;
+			message += "----------------------------------------" + "\n";
+		}
+		message += String.format("%-20s $%.2f%n", "SubTotal:", getSubTotal());
+		message += String.format("%-20s $%.2f%n", "Tax ("+String.format("%.1f", TAX)+"%):"     , getTax()); 
+		message += String.format("%-20s $%.2f%n", "Total:"   , getTotal());
+		message += "========================================" + "\n";
+		return message;
+	}
+	
+	
+	/**
 	 * Overriding method definition in order to be more verbose in output
 	 * 
 	 * @return the formatted string of order
