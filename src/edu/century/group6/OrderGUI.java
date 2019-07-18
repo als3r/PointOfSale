@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTable; 
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
@@ -267,6 +268,7 @@ public class OrderGUI extends JFrame implements ActionListener {
 	public static final String BUTTON_CAPTION_MENU_SALES         = "Sales";
 	public static final String BUTTON_CAPTION_MENU_CUSTOMERS     = "Customers";
 	public static final String BUTTON_CAPTION_MENU_EMPLOYEES     = "Employees";
+	public static final String BUTTON_CAPTION_MENU_ORDERS        = "Orders";
 	public static final String BUTTON_CAPTION_MENU_EXIT          = "Exit";
 	
 	public static final Dimension BUTTON_SIZE_250_30  = new Dimension(250, 30);
@@ -335,6 +337,14 @@ public class OrderGUI extends JFrame implements ActionListener {
     JLabel SalesTotalTaxValue                   = new JLabel("$0.00");
     JLabel SalesTotalSalesValue                 = new JLabel("$0.00");
     
+    
+    JPanel customersTablePanel = new JPanel ();
+    JPanel customersSearchPanel = new JPanel ();
+    JPanel customersFormPanel = new JPanel ();
+    JPanel employeesTablePanel = new JPanel ();
+    JPanel employeesSearchPanel = new JPanel ();
+    JPanel employeesFormPanel = new JPanel ();
+    
 	
 	/**
 	 * Stores order Items
@@ -362,6 +372,8 @@ public class OrderGUI extends JFrame implements ActionListener {
 		super(PROGRAM_NAME);
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        setDefaultData();
         
         order = new Order(String.valueOf(ORDER_NUMBER));
 
@@ -405,13 +417,17 @@ public class OrderGUI extends JFrame implements ActionListener {
         menuItem4.addActionListener(this);
         menu.add(menuItem4);
         
-//        menuItem5 = new JMenuItem(BUTTON_CAPTION_MENU_EMPLOYEES);
+//        menuItem5 = new JMenuItem(BUTTON_CAPTION_MENU_ORDERS);
 //        menuItem5.addActionListener(this);
 //        menu.add(menuItem5);
-//        
-//        menuItem6 = new JMenuItem(BUTTON_CAPTION_MENU_CUSTOMERS);
-//        menuItem6.addActionListener(this);
-//        menu.add(menuItem6);
+        
+        menuItem6 = new JMenuItem(BUTTON_CAPTION_MENU_CUSTOMERS);
+        menuItem6.addActionListener(this);
+        menu.add(menuItem6);
+        
+        menuItem7 = new JMenuItem(BUTTON_CAPTION_MENU_EMPLOYEES);
+        menuItem7.addActionListener(this);
+        menu.add(menuItem7);
         
         menuItem10 = new JMenuItem(BUTTON_CAPTION_MENU_EXIT);
         menuItem10.addActionListener(this);
@@ -1255,7 +1271,10 @@ public class OrderGUI extends JFrame implements ActionListener {
         salesMainPanel.add(SalesTotalSalesValue);
         
         mainPanel.add(salesMainPanel);
-        // End Sales/Statistics screen        
+        // End Sales/Statistics screen   
+        
+        
+        
         
         // Start Customers Screen
         customersMainPanel = new JPanel ();
@@ -1266,8 +1285,15 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, customersMainPanel, 0, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.SOUTH, customersMainPanel, 0, SpringLayout.SOUTH, mainPanel);
         
+              
+        customersMainPanel.add(customersSearchPanel);
+        customersMainPanel.add(customersFormPanel);
+        customersMainPanel.add(customersTablePanel);
         mainPanel.add(customersMainPanel);
         // End Customers screen    
+        
+        
+        
         
         // Start Employees Screen
         employeesMainPanel = new JPanel ();
@@ -1277,6 +1303,15 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.EAST,  employeesMainPanel, 0, SpringLayout.EAST, mainPanel);
         layout.putConstraint(SpringLayout.NORTH, employeesMainPanel, 0, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.SOUTH, employeesMainPanel, 0, SpringLayout.SOUTH, mainPanel);
+        
+        layout.putConstraint(SpringLayout.WEST,  employeesTablePanel, 0, SpringLayout.WEST, employeesMainPanel);
+        layout.putConstraint(SpringLayout.NORTH,  employeesTablePanel, 10, SpringLayout.NORTH, employeesMainPanel);
+        
+        
+        
+        employeesMainPanel.add(employeesSearchPanel);
+        employeesMainPanel.add(employeesFormPanel);
+        employeesMainPanel.add(employeesTablePanel);
         
         mainPanel.add(employeesMainPanel);
         // End Employees screen    
@@ -1435,6 +1470,7 @@ public class OrderGUI extends JFrame implements ActionListener {
     		customer.setZip(customerZIPTextField.getText());
     		
     		order.setCustomer(customer);
+    		customers.add(customer);
     		CUSTOMER_NUMBER++;
     		
     		// Check if delivery needed
@@ -1772,11 +1808,108 @@ public class OrderGUI extends JFrame implements ActionListener {
 			employeesMainPanel.setVisible(true);	
 			
 			
+			
+			
+			
+			// Column Names 
+	        String[] employeeColumnNames = { "Employee Number", "Phone", "First Name", "Last Name",
+	        		"Address", "City", "State", "ZIP code"}; 
+			
+	        // Data to be displayed in the JTable 
+			String[][] employeeTableData = new String[employees.size()][8]; 
+			
+			for(int i = 0; i < employees.size(); i++) {
+				employeeTableData[i][0] = employees.get(i).getEmployeeNumber();
+				employeeTableData[i][1] = employees.get(i).getPhone();
+				employeeTableData[i][2] = employees.get(i).getFirstName();
+				employeeTableData[i][3] = employees.get(i).getLastName();
+				employeeTableData[i][4] = employees.get(i).getAddress();
+				employeeTableData[i][5] = employees.get(i).getCity();
+				employeeTableData[i][6] = employees.get(i).getState();
+				employeeTableData[i][7] = employees.get(i).getZip();
+			}
+			
+			
+	  
+	        
+	  
+	        // Initializing the JTable 
+	        JTable table = new JTable(employeeTableData, employeeColumnNames); 
+	        table.setRowHeight(40);
+	        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+			table.getColumnModel().getColumn(0).setPreferredWidth(100);
+			table.getColumnModel().getColumn(1).setPreferredWidth(150);
+			table.getColumnModel().getColumn(2).setPreferredWidth(150);
+			table.getColumnModel().getColumn(3).setPreferredWidth(150);
+			table.getColumnModel().getColumn(4).setPreferredWidth(300);
+			table.getColumnModel().getColumn(5).setPreferredWidth(150);
+			table.getColumnModel().getColumn(6).setPreferredWidth(150);
+			table.getColumnModel().getColumn(7).setPreferredWidth(150);
+	        
+	        JScrollPane scrollPane = new JScrollPane(table);
+	        scrollPane.setPreferredSize(new Dimension(1320, 500));
+	        
+	        employeesTablePanel.add(scrollPane);
+			
+			
 		} else if(actionCommand.equals(BUTTON_CAPTION_MENU_CUSTOMERS)) {
 			
 			// Customers Screen
 			hideAllPanels();
 			customersMainPanel.setVisible(true);
+			
+			customersTablePanel.removeAll();
+			
+			
+			// Column Names 
+	        String[] columnNames = { "Customer Number", "Phone", "First Name", "Last Name",
+	        		"Address", "City", "State", "ZIP code"}; 
+	        
+	        String[][] tableData;
+			
+	        if(customers.size() > 0) {
+	        	// Data to be displayed in the JTable 
+				tableData = new String[customers.size()][8]; 
+				
+				for(int i = 0; i < customers.size(); i++) {
+					tableData[i][0] = customers.get(i).getCustomerNumber();
+					tableData[i][1] = customers.get(i).getPhone();
+					tableData[i][2] = customers.get(i).getFirstName();
+					tableData[i][3] = customers.get(i).getLastName();
+					tableData[i][4] = customers.get(i).getAddress();
+					tableData[i][5] = customers.get(i).getCity();
+					tableData[i][6] = customers.get(i).getState();
+					tableData[i][7] = customers.get(i).getZip();
+				}
+	        } else {
+	        	tableData = new String[1][8]; 
+	        	tableData[0][0] = "";
+	        	tableData[0][1] = "";
+	        	tableData[0][2] = "";
+	        	tableData[0][3] = "";
+	        	tableData[0][4] = "";
+	        	tableData[0][5] = "";
+	        	tableData[0][6] = "";
+	        	tableData[0][7] = "";
+	        }
+	        
+	        // Initializing the JTable 
+	        JTable table = new JTable(tableData, columnNames); 
+	        table.setRowHeight(40);
+	        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+			table.getColumnModel().getColumn(0).setPreferredWidth(100);
+			table.getColumnModel().getColumn(1).setPreferredWidth(150);
+			table.getColumnModel().getColumn(2).setPreferredWidth(150);
+			table.getColumnModel().getColumn(3).setPreferredWidth(150);
+			table.getColumnModel().getColumn(4).setPreferredWidth(300);
+			table.getColumnModel().getColumn(5).setPreferredWidth(150);
+			table.getColumnModel().getColumn(6).setPreferredWidth(150);
+			table.getColumnModel().getColumn(7).setPreferredWidth(150);
+	        
+	        JScrollPane scrollPane = new JScrollPane(table);
+	        scrollPane.setPreferredSize(new Dimension(1320, 500));
+	        
+	        customersTablePanel.add(scrollPane);
 			
 		} else if(actionCommand.equals(BUTTON_CAPTION_MENU_EXIT)) {
 			
@@ -1909,6 +2042,46 @@ public class OrderGUI extends JFrame implements ActionListener {
 		message += "Order# " + order.getOrderNumber() + "\n\n";
 		message += "Order was saved to " + filename + ".";
 		alert(message, "Order was placed");
+    }
+    
+    
+    public void setDefaultData() {
+    	Employee employye1 = new Employee(
+    			"1000",
+    			"John",
+    			"Smith",
+    			"172 East 6th St E",
+    			"St Paul",
+    			"MN",
+    			"55101",
+    			"6511231234"
+		);
+    	
+    	Employee employye2 = new Employee(
+    			"1001",
+    			"John",
+    			"Smith",
+    			"400 Spring St,",
+    			"St Paul",
+    			"MN",
+    			"55102",
+    			"6512231237"
+		);
+    	
+    	Employee employye3 = new Employee(
+    			"1002",
+    			"John",
+    			"Smith",
+    			"422 W Superior",
+    			"St Paul",
+    			"MN",
+    			"55102",
+    			"6515557779"
+		);
+    	
+    	employees.add(employye1);
+    	employees.add(employye2);
+    	employees.add(employye3);
     }
 	
 	/**

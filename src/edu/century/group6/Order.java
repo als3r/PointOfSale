@@ -728,7 +728,7 @@ public class Order {
 		if(getCustomer() != null && getCustomer() instanceof Customer) {
 			customerMessage += "Customer#: " + getCustomer().getCustomerNumber() + "\n";
 			customerMessage += "Name: " + getCustomer().getFirstName() + " " + getCustomer().getLastName() + "\n";
-			customerMessage += "Phone: " + getCustomer().getFirstName() + " " + getCustomer().getLastName() + "\n";
+			customerMessage += "Phone: " + getCustomer().getPhone() + "\n";
 		}
 		message += customerMessage;
 		
