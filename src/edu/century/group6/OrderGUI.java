@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
@@ -18,22 +19,18 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
+import java.awt.Container;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileInputStream;
-import java.util.Scanner;
-import java.io.File;
 import java.io.PrintWriter;
+
 import java.awt.event.ActionEvent;
 import java.awt.Font;
-
-
-import java.io.FileNotFoundException;
-
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.nio.file.Files;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -272,6 +269,14 @@ public class OrderGUI extends JFrame implements ActionListener {
 	public static final String BUTTON_CAPTION_MENU_EMPLOYEES     = "Employees";
 	public static final String BUTTON_CAPTION_MENU_EXIT          = "Exit";
 	
+	public static final Dimension BUTTON_SIZE_250_30  = new Dimension(250, 30);
+	public static final Dimension BUTTON_SIZE_200_300 = new Dimension(200, 300);
+	public static final Dimension BUTTON_SIZE_250_300 = new Dimension(250, 300);
+	public static final Dimension BUTTON_SIZE_250_400 = new Dimension(250, 400);
+	public static final Dimension BUTTON_SIZE_220_400 = new Dimension(200, 400);
+	
+	public static final Color COLOR_REGULAR_ORDERS  = new Color(255,204,102);
+	public static final Color COLOR_DELIVERY_ORDERS = new Color(153,204,255);
 	
 	public static final Font FONT_12 = new Font("SansSerif", Font.PLAIN, 12);
 	public static final Font FONT_14 = new Font("SansSerif", Font.PLAIN, 14);
@@ -292,7 +297,9 @@ public class OrderGUI extends JFrame implements ActionListener {
 	JPanel    loginMainPanel;
 	JPanel    orderMainPanel;
 	JPanel    kitchenMainPanel;
+	JPanel    ordersKitchenPanel;
 	JPanel    deliveryMainPanel;
+	JPanel    ordersDeliveryPanel;
 	JPanel    salesMainPanel;
 	JPanel    employeesMainPanel;
 	JPanel    customersMainPanel;
@@ -303,9 +310,11 @@ public class OrderGUI extends JFrame implements ActionListener {
     JLabel SalesNumberOfCustomersValue          = new JLabel("0");
     JLabel SalesNumberOfEmployeesValue          = new JLabel("0");
     JLabel SalesNumberOfOrdersValue             = new JLabel("0");
+    JLabel AverageOrderTimeValue                = new JLabel("0");
+    JLabel AverageOrderCheckValue               = new JLabel("0");
     
-    JLabel SalesNumberOrdersReceivedOrdersValue = new JLabel("0");
-    JLabel SalesNumberOrdersPreparedOrdersValue = new JLabel("0");
+    JLabel SalesNumberOrdersReceivedValue       = new JLabel("0");
+    JLabel SalesNumberOrdersInProgressValue     = new JLabel("0");
     JLabel SalesNumberOrdersForDeliveryValue    = new JLabel("0" );
     JLabel SalesNumberOrdersDeliveredValue      = new JLabel("0");
     JLabel SalesNumberOrdersCompletedValue      = new JLabel("0");
@@ -315,6 +324,13 @@ public class OrderGUI extends JFrame implements ActionListener {
     JLabel SalesFrenchFriesValue                = new JLabel("$0.00");
     JLabel SalesOnionRingsValue                 = new JLabel("$0.00");
     JLabel SalesDrinksValue                     = new JLabel("$0.00");
+    
+    JLabel SalesPizzaValuePercent               = new JLabel("0.0%");
+    JLabel SalesBurgerValuePercent              = new JLabel("0.0%");
+    JLabel SalesFrenchFriesValuePercent         = new JLabel("0.0%");
+    JLabel SalesOnionRingsValuePercent          = new JLabel("0.0%");
+    JLabel SalesDrinksValuePercent              = new JLabel("0.0%");
+    
     JLabel SalesTotalSubTotalValue              = new JLabel("$0.00");
     JLabel SalesTotalTaxValue                   = new JLabel("$0.00");
     JLabel SalesTotalSalesValue                 = new JLabel("$0.00");
@@ -351,6 +367,7 @@ public class OrderGUI extends JFrame implements ActionListener {
 
         // Create spring layout
         SpringLayout layout = new SpringLayout();
+        FlowLayout flowLayout = new FlowLayout();
         
         // Create main panel
         mainPanel = new JPanel();
@@ -376,13 +393,13 @@ public class OrderGUI extends JFrame implements ActionListener {
         menuItem1.addActionListener(this);
         menu.add(menuItem1);
         
-//        menuItem2 = new JMenuItem(BUTTON_CAPTION_MENU_KITCHEN);
-//        menuItem2.addActionListener(this);
-//        menu.add(menuItem2);
-//        
-//        menuItem3 = new JMenuItem(BUTTON_CAPTION_MENU_DELIVERY);
-//        menuItem3.addActionListener(this);
-//        menu.add(menuItem3);
+        menuItem2 = new JMenuItem(BUTTON_CAPTION_MENU_KITCHEN);
+        menuItem2.addActionListener(this);
+        menu.add(menuItem2);
+        
+        menuItem3 = new JMenuItem(BUTTON_CAPTION_MENU_DELIVERY);
+        menuItem3.addActionListener(this);
+        menu.add(menuItem3);
         
         menuItem4 = new JMenuItem(BUTTON_CAPTION_MENU_SALES);
         menuItem4.addActionListener(this);
@@ -620,7 +637,9 @@ public class OrderGUI extends JFrame implements ActionListener {
         int leftPadding100 = 100;
         int leftPadding150 = 150;
         int leftPadding200 = 200;
+        int leftPadding250 = 250;
         int leftPadding300 = 300;
+        int leftPadding350 = 350;
         int leftPadding400 = 400;
         int leftPadding500 = 500;
         int leftPadding600 = 600;
@@ -916,6 +935,10 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.SOUTH, kitchenMainPanel, 0, SpringLayout.SOUTH, mainPanel);
         
         
+        ordersKitchenPanel = new JPanel ();
+		ordersKitchenPanel.setLayout(flowLayout);
+		
+		kitchenMainPanel.add(ordersKitchenPanel);
         mainPanel.add(kitchenMainPanel);
         // End Kitchen screen   
         
@@ -931,6 +954,10 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, deliveryMainPanel, 0, SpringLayout.NORTH, mainPanel);
         layout.putConstraint(SpringLayout.SOUTH, deliveryMainPanel, 0, SpringLayout.SOUTH, mainPanel);
         
+        ordersDeliveryPanel = new JPanel ();
+        ordersDeliveryPanel.setLayout(flowLayout);
+        
+        deliveryMainPanel.add(ordersDeliveryPanel);
         mainPanel.add(deliveryMainPanel);
         // End Delivery screen   
         
@@ -950,11 +977,13 @@ public class OrderGUI extends JFrame implements ActionListener {
         JLabel SalesNumberOfCustomersLabel          = new JLabel("CUSTOMERS: ");
         JLabel SalesNumberOfEmployeesLabel          = new JLabel("EMPLOYEES: ");
         JLabel SalesNumberOfOrdersLabel             = new JLabel("ORDERS: ");
+        JLabel AverageOrderTimeLabel                = new JLabel("AVERAGE TIME: ");
+        JLabel AverageOrderCheckLabel               = new JLabel("AVERAGE CHECK: ");
         
         JLabel SalesOrdersLabel                     = new JLabel("ORDERS");
         JLabel SalesNumberOrdersReceivedOrdersLabel = new JLabel("RECEIVED: ");
         JLabel SalesNumberOrdersPreparedOrdersLabel = new JLabel("IN PROGRESS: ");
-        JLabel SalesNumberOrdersForDeliveryLabel    = new JLabel("PREPARED:" );
+        JLabel SalesNumberOrdersForDeliveryLabel    = new JLabel("DELIVERY NEEDED:" );
         JLabel SalesNumberOrdersDeliveredLabel      = new JLabel("DELIVERED: ");
         JLabel SalesNumberOrdersCompletedLabel      = new JLabel("COMPLETED: ");
         
@@ -970,27 +999,29 @@ public class OrderGUI extends JFrame implements ActionListener {
         
         SalesBusinessLabel.setFont(FONT_24);
         
-        SalesStatsSectionLabel.setFont(FONT_18);
-        SalesNumberOfCustomersLabel.setFont(FONT_16);
-        SalesNumberOfEmployeesLabel.setFont(FONT_16);
-        SalesNumberOfOrdersLabel.setFont(FONT_16);
+        SalesStatsSectionLabel.setFont(FONT_20);
+        SalesNumberOfCustomersLabel.setFont(FONT_18);
+        SalesNumberOfEmployeesLabel.setFont(FONT_18);
+        SalesNumberOfOrdersLabel.setFont(FONT_18);
+        AverageOrderTimeLabel.setFont(FONT_18);
+        AverageOrderCheckLabel.setFont(FONT_18);
         
-        SalesOrdersLabel.setFont(FONT_18);
-        SalesNumberOrdersReceivedOrdersLabel.setFont(FONT_16);
-        SalesNumberOrdersPreparedOrdersLabel.setFont(FONT_16);
-        SalesNumberOrdersForDeliveryLabel.setFont(FONT_16);
-        SalesNumberOrdersDeliveredLabel.setFont(FONT_16);
-        SalesNumberOrdersCompletedLabel.setFont(FONT_16);
+        SalesOrdersLabel.setFont(FONT_20);
+        SalesNumberOrdersReceivedOrdersLabel.setFont(FONT_18);
+        SalesNumberOrdersPreparedOrdersLabel.setFont(FONT_18);
+        SalesNumberOrdersForDeliveryLabel.setFont(FONT_18);
+        SalesNumberOrdersDeliveredLabel.setFont(FONT_18);
+        SalesNumberOrdersCompletedLabel.setFont(FONT_18);
         
-        SalesSalesSectionLabel.setFont(FONT_18);
-        SalesPizzaLabel.setFont(FONT_16);
-        SalesBurgerLabel.setFont(FONT_16);
-        SalesFrenchFriesLabel.setFont(FONT_16);
-        SalesOnionRingsLabel.setFont(FONT_16);
-        SalesDrinksLabel.setFont(FONT_16);
-        SalesTotalSubTotalLabel.setFont(FONT_16);
-        SalesTotalTaxLabel.setFont(FONT_16);
-        SalesTotalSalesLabel.setFont(FONT_16);
+        SalesSalesSectionLabel.setFont(FONT_20);
+        SalesPizzaLabel.setFont(FONT_18);
+        SalesBurgerLabel.setFont(FONT_18);
+        SalesFrenchFriesLabel.setFont(FONT_18);
+        SalesOnionRingsLabel.setFont(FONT_18);
+        SalesDrinksLabel.setFont(FONT_18);
+        SalesTotalSubTotalLabel.setFont(FONT_18);
+        SalesTotalTaxLabel.setFont(FONT_18);
+        SalesTotalSalesLabel.setFont(FONT_18);
         
         
         layout.putConstraint(SpringLayout.WEST,  salesMainPanel, 0, SpringLayout.WEST, mainPanel);
@@ -1005,8 +1036,8 @@ public class OrderGUI extends JFrame implements ActionListener {
         
 
         // SALES - STATS SECTION
-        layout.putConstraint(SpringLayout.WEST,  SalesStatsSectionLabel, leftPadding700 + leftPadding150, SpringLayout.WEST, salesMainPanel);
-        layout.putConstraint(SpringLayout.NORTH, SalesStatsSectionLabel, 2*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesStatsSectionLabel, leftPadding800, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.NORTH, SalesStatsSectionLabel, 2*topPadding40, SpringLayout.NORTH, salesMainPanel);
         
         // SALES - STATS - CUSTOMERS
         layout.putConstraint(SpringLayout.WEST,  SalesNumberOfCustomersLabel, leftPadding700, SpringLayout.WEST, salesMainPanel);
@@ -1025,96 +1056,120 @@ public class OrderGUI extends JFrame implements ActionListener {
         layout.putConstraint(SpringLayout.NORTH, SalesNumberOfOrdersLabel, 5*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
         layout.putConstraint(SpringLayout.WEST,  SalesNumberOfOrdersValue, leftPadding900, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesNumberOfOrdersValue, 5*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
+        
+        // SALES - STATS - AVERAGE ORDER CHECK
+        layout.putConstraint(SpringLayout.WEST,  AverageOrderCheckLabel, leftPadding700, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.NORTH, AverageOrderCheckLabel, 6*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  AverageOrderCheckValue, leftPadding900, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.NORTH, AverageOrderCheckValue, 6*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
+        
+        // SALES - STATS - AVERAGE ORDER TIME
+        layout.putConstraint(SpringLayout.WEST,  AverageOrderTimeLabel, leftPadding700, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.NORTH, AverageOrderTimeLabel, 7*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  AverageOrderTimeValue, leftPadding900, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.NORTH, AverageOrderTimeValue, 7*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
+        
+        
        
         
        
         // SALES - ORDERS SECTION
-        layout.putConstraint(SpringLayout.WEST,  SalesOrdersLabel, leftPadding100, SpringLayout.WEST, salesMainPanel);
-        layout.putConstraint(SpringLayout.NORTH, SalesOrdersLabel, 2*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesOrdersLabel, leftPadding150, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.NORTH, SalesOrdersLabel, 2*topPadding40, SpringLayout.NORTH, salesMainPanel);
         
         // SALES - ORDERS
         layout.putConstraint(SpringLayout.WEST,  SalesNumberOrdersReceivedOrdersLabel, leftPadding50, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesNumberOrdersReceivedOrdersLabel, 3*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
-        layout.putConstraint(SpringLayout.WEST,  SalesNumberOrdersReceivedOrdersValue, leftPadding200, SpringLayout.WEST, salesMainPanel);
-        layout.putConstraint(SpringLayout.NORTH, SalesNumberOrdersReceivedOrdersValue, 3*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesNumberOrdersReceivedValue, leftPadding250, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.NORTH, SalesNumberOrdersReceivedValue, 3*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
        
         // SALES - ORDERS
         layout.putConstraint(SpringLayout.WEST,  SalesNumberOrdersPreparedOrdersLabel, leftPadding50, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesNumberOrdersPreparedOrdersLabel, 4*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
-        layout.putConstraint(SpringLayout.WEST,  SalesNumberOrdersPreparedOrdersValue, leftPadding200, SpringLayout.WEST, salesMainPanel);
-        layout.putConstraint(SpringLayout.NORTH, SalesNumberOrdersPreparedOrdersValue, 4*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesNumberOrdersInProgressValue, leftPadding250, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.NORTH, SalesNumberOrdersInProgressValue, 4*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
         
         // SALES - ORDERS
         layout.putConstraint(SpringLayout.WEST,  SalesNumberOrdersForDeliveryLabel, leftPadding50, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesNumberOrdersForDeliveryLabel, 5*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
-        layout.putConstraint(SpringLayout.WEST,  SalesNumberOrdersForDeliveryValue, leftPadding200, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesNumberOrdersForDeliveryValue, leftPadding250, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesNumberOrdersForDeliveryValue, 5*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
         
         // SALES - ORDERS
         layout.putConstraint(SpringLayout.WEST,  SalesNumberOrdersDeliveredLabel, leftPadding50, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesNumberOrdersDeliveredLabel, 6*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
-        layout.putConstraint(SpringLayout.WEST,  SalesNumberOrdersDeliveredValue, leftPadding200, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesNumberOrdersDeliveredValue, leftPadding250, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesNumberOrdersDeliveredValue, 6*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
         
         // SALES - ORDERS
         layout.putConstraint(SpringLayout.WEST,  SalesNumberOrdersCompletedLabel, leftPadding50, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesNumberOrdersCompletedLabel, 7*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
-        layout.putConstraint(SpringLayout.WEST,  SalesNumberOrdersCompletedValue, leftPadding200, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesNumberOrdersCompletedValue, leftPadding250, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesNumberOrdersCompletedValue, 7*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
         
         
 
         
         // SALES - SALES SECTION
-        layout.putConstraint(SpringLayout.WEST,  SalesSalesSectionLabel, leftPadding100, SpringLayout.WEST, salesMainPanel);
-        layout.putConstraint(SpringLayout.NORTH, SalesSalesSectionLabel, 9*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesSalesSectionLabel, leftPadding200, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.NORTH, SalesSalesSectionLabel, 9*topPadding40, SpringLayout.NORTH, salesMainPanel);
         
         // SALES - SALES - PIZZA
         layout.putConstraint(SpringLayout.WEST,  SalesPizzaLabel, leftPadding50, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesPizzaLabel, 10*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
-        layout.putConstraint(SpringLayout.WEST,  SalesPizzaValue, leftPadding200, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesPizzaValue, leftPadding250, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesPizzaValue, 10*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesPizzaValuePercent, leftPadding350, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.NORTH, SalesPizzaValuePercent, 10*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
         
         // SALES - SALES - BURGER
         layout.putConstraint(SpringLayout.WEST,  SalesBurgerLabel, leftPadding50, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesBurgerLabel, 11*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
-        layout.putConstraint(SpringLayout.WEST,  SalesBurgerValue, leftPadding200, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesBurgerValue, leftPadding250, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesBurgerValue, 11*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesBurgerValuePercent, leftPadding350, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.NORTH, SalesBurgerValuePercent, 11*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
         
         // SALES - SALES - FRENCH FRIES
         layout.putConstraint(SpringLayout.WEST,  SalesFrenchFriesLabel, leftPadding50, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesFrenchFriesLabel, 12*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
-        layout.putConstraint(SpringLayout.WEST,  SalesFrenchFriesValue, leftPadding200, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesFrenchFriesValue, leftPadding250, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesFrenchFriesValue, 12*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesFrenchFriesValuePercent, leftPadding350, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.NORTH, SalesFrenchFriesValuePercent, 12*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
         
         // SALES - SALES - ONION RINGS
         layout.putConstraint(SpringLayout.WEST,  SalesOnionRingsLabel, leftPadding50, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesOnionRingsLabel, 13*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
-        layout.putConstraint(SpringLayout.WEST,  SalesOnionRingsValue, leftPadding200, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesOnionRingsValue, leftPadding250, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesOnionRingsValue, 13*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesOnionRingsValuePercent, leftPadding350, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.NORTH, SalesOnionRingsValuePercent, 13*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
         
         // SALES - SALES - DRINKS
         layout.putConstraint(SpringLayout.WEST,  SalesDrinksLabel, leftPadding50, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesDrinksLabel, 14*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
-        layout.putConstraint(SpringLayout.WEST,  SalesDrinksValue, leftPadding200, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesDrinksValue, leftPadding250, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesDrinksValue, 14*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesDrinksValuePercent, leftPadding350, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.NORTH, SalesDrinksValuePercent, 14*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
         
         // SALES - SALES - TOTAL SUBTOTAL
         layout.putConstraint(SpringLayout.WEST,  SalesTotalSubTotalLabel, leftPadding50, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesTotalSubTotalLabel, 16*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
-        layout.putConstraint(SpringLayout.WEST,  SalesTotalSubTotalValue, leftPadding200, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesTotalSubTotalValue, leftPadding250, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesTotalSubTotalValue, 16*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
         
         // SALES - SALES - TOTAL TAX
         layout.putConstraint(SpringLayout.WEST,  SalesTotalTaxLabel, leftPadding50, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesTotalTaxLabel, 17*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
-        layout.putConstraint(SpringLayout.WEST,  SalesTotalTaxValue, leftPadding200, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesTotalTaxValue, leftPadding250, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesTotalTaxValue, 17*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
         
         // SALES - SALES - TOTAL SALES
         layout.putConstraint(SpringLayout.WEST,  SalesTotalSalesLabel, leftPadding50, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesTotalSalesLabel, 18*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
-        layout.putConstraint(SpringLayout.WEST,  SalesTotalSalesValue, leftPadding200, SpringLayout.WEST, salesMainPanel);
+        layout.putConstraint(SpringLayout.WEST,  SalesTotalSalesValue, leftPadding250, SpringLayout.WEST, salesMainPanel);
         layout.putConstraint(SpringLayout.NORTH, SalesTotalSalesValue, 18*topPadding40 + topPadding10, SpringLayout.NORTH, salesMainPanel);
         
         
@@ -1122,6 +1177,8 @@ public class OrderGUI extends JFrame implements ActionListener {
         salesMainPanel.add(SalesStatsSectionLabel);
         salesMainPanel.add(SalesNumberOfCustomersLabel);
         salesMainPanel.add(SalesNumberOfEmployeesLabel);
+        salesMainPanel.add(AverageOrderTimeLabel);
+        salesMainPanel.add(AverageOrderCheckLabel);
         salesMainPanel.add(SalesNumberOfOrdersLabel);
         salesMainPanel.add(SalesOrdersLabel);
         salesMainPanel.add(SalesNumberOrdersReceivedOrdersLabel);
@@ -1140,32 +1197,43 @@ public class OrderGUI extends JFrame implements ActionListener {
         salesMainPanel.add(SalesTotalTaxLabel);
         salesMainPanel.add(SalesTotalSalesLabel);
         
-        SalesNumberOfCustomersValue.setFont(FONT_16);
-	    SalesNumberOfEmployeesValue.setFont(FONT_16);
-	    SalesNumberOfOrdersValue.setFont(FONT_16);
+        SalesNumberOfCustomersValue.setFont(FONT_18);
+	    SalesNumberOfEmployeesValue.setFont(FONT_18);
+	    SalesNumberOfOrdersValue.setFont(FONT_18);
+	    AverageOrderTimeValue.setFont(FONT_18);
+	    AverageOrderCheckValue.setFont(FONT_18);
 	    
-	    SalesNumberOrdersReceivedOrdersValue.setFont(FONT_16);
-	    SalesNumberOrdersPreparedOrdersValue.setFont(FONT_16);
-	    SalesNumberOrdersForDeliveryValue.setFont(FONT_16);
-	    SalesNumberOrdersDeliveredValue.setFont(FONT_16);
-	    SalesNumberOrdersCompletedValue.setFont(FONT_16);
+	    SalesNumberOrdersReceivedValue.setFont(FONT_18);
+	    SalesNumberOrdersInProgressValue.setFont(FONT_18);
+	    SalesNumberOrdersForDeliveryValue.setFont(FONT_18);
+	    SalesNumberOrdersDeliveredValue.setFont(FONT_18);
+	    SalesNumberOrdersCompletedValue.setFont(FONT_18);
 	    
-	    SalesPizzaValue.setFont(FONT_16);
-	    SalesBurgerValue.setFont(FONT_16);
-	    SalesFrenchFriesValue.setFont(FONT_16);
-	    SalesOnionRingsValue.setFont(FONT_16);
-	    SalesDrinksValue.setFont(FONT_16);
-	    SalesTotalSubTotalValue.setFont(FONT_16);
-	    SalesTotalTaxValue.setFont(FONT_16);
-	    SalesTotalSalesValue.setFont(FONT_16);
+	    SalesPizzaValue.setFont(FONT_18);
+	    SalesBurgerValue.setFont(FONT_18);
+	    SalesFrenchFriesValue.setFont(FONT_18);
+	    SalesOnionRingsValue.setFont(FONT_18);
+	    SalesDrinksValue.setFont(FONT_18);
+	    
+	    SalesPizzaValuePercent.setFont(FONT_18);
+	    SalesBurgerValuePercent.setFont(FONT_18);
+	    SalesFrenchFriesValuePercent.setFont(FONT_18);
+	    SalesOnionRingsValuePercent.setFont(FONT_18);
+	    SalesDrinksValuePercent.setFont(FONT_18);
+	    
+	    SalesTotalSubTotalValue.setFont(FONT_18);
+	    SalesTotalTaxValue.setFont(FONT_18);
+	    SalesTotalSalesValue.setFont(FONT_18);
         
         
         salesMainPanel.add(SalesNumberOfCustomersValue);
         salesMainPanel.add(SalesNumberOfEmployeesValue);
         salesMainPanel.add(SalesNumberOfOrdersValue);
+        salesMainPanel.add(AverageOrderTimeValue);
+        salesMainPanel.add(AverageOrderCheckValue);
 	    
-        salesMainPanel.add(SalesNumberOrdersReceivedOrdersValue);
-        salesMainPanel.add(SalesNumberOrdersPreparedOrdersValue);
+        salesMainPanel.add(SalesNumberOrdersReceivedValue);
+        salesMainPanel.add(SalesNumberOrdersInProgressValue);
         salesMainPanel.add(SalesNumberOrdersForDeliveryValue);
         salesMainPanel.add(SalesNumberOrdersDeliveredValue);
         salesMainPanel.add(SalesNumberOrdersCompletedValue);
@@ -1175,6 +1243,13 @@ public class OrderGUI extends JFrame implements ActionListener {
         salesMainPanel.add(SalesFrenchFriesValue);
         salesMainPanel.add(SalesOnionRingsValue);
         salesMainPanel.add(SalesDrinksValue);
+        
+        salesMainPanel.add(SalesPizzaValuePercent);
+        salesMainPanel.add(SalesBurgerValuePercent);
+        salesMainPanel.add(SalesFrenchFriesValuePercent);
+        salesMainPanel.add(SalesOnionRingsValuePercent);
+        salesMainPanel.add(SalesDrinksValuePercent);
+        
         salesMainPanel.add(SalesTotalSubTotalValue);
         salesMainPanel.add(SalesTotalTaxValue);
         salesMainPanel.add(SalesTotalSalesValue);
@@ -1437,14 +1512,136 @@ public class OrderGUI extends JFrame implements ActionListener {
 			// Kitchen Orders Screen
 			hideAllPanels();
 			kitchenMainPanel.setVisible(true);
+			ordersKitchenPanel.removeAll();
 			
+			for(Order o : orders) {
+				
+				if(o.getOrderStatus() != Order.ORDER_STATUSES.ORDER_STATUS_RECEIEVED) {
+					continue;
+				}
+				
+				JPanel kitchenOrderPanel = new JPanel();
+				BoxLayout boxlayout = new BoxLayout(kitchenOrderPanel, BoxLayout.Y_AXIS);
+				kitchenOrderPanel.setLayout(boxlayout);
+				kitchenOrderPanel.setAutoscrolls(true);
+				kitchenOrderPanel.setBackground(o.isDelivered() ? COLOR_DELIVERY_ORDERS : COLOR_REGULAR_ORDERS);
+				
+				JLabel kitchenOrderLabel = new JLabel("<html>" + o.toKitchenString().replaceAll("\\n", "<br>") + "</html>"); 
+				kitchenOrderLabel.setFont(FONT_16);
+			
+				String buttonText = "";
+				buttonText += "Complete Order# " + o.getOrderNumber();
+				JButton kitchenOrderButton = new JButton();
+				kitchenOrderButton.setText(buttonText);
+				kitchenOrderButton.setPreferredSize(BUTTON_SIZE_250_30);
+				
+				kitchenOrderButton.addActionListener(new ActionListener() {
+				    public void actionPerformed(ActionEvent e)
+				    {
+				    	String buttonText = e.getActionCommand();
+				    	String currentOrderNumber = buttonText.replace("Complete Order# ", "");
+				          
+				        for(Order o : orders) {
+				        	if(o.getOrderNumber().equalsIgnoreCase(currentOrderNumber)) {
+				        		if(o.isDelivered()) {
+				        			// move to delivery
+				        			o.orderStatusCooked();
+				        		} else {
+				        			// complete order if not delivered
+				        			o.orderStatusCompleted();
+				        		}
+				        		
+				        		// remove panel and button
+				        		JButton button = (JButton) e.getSource();
+				        		Container parentPanel = button.getParent();
+				        		Container parentPanel2 = parentPanel.getParent();
+				        		Container parentPanel3 = parentPanel2.getParent();
+				        		ordersKitchenPanel.remove(parentPanel3);
+						        ordersKitchenPanel.validate();
+						        ordersKitchenPanel.repaint();  
+						        kitchenMainPanel.validate();
+						        kitchenMainPanel.repaint();
+				        	}
+				        }
+				    }
+				});
+				kitchenOrderPanel.add(kitchenOrderButton);
+				kitchenOrderPanel.add(kitchenOrderLabel);
+				
+				JScrollPane kitchenOrderScrollpanel = new JScrollPane(kitchenOrderPanel,
+						   ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,  
+						   ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				kitchenOrderScrollpanel.setPreferredSize(BUTTON_SIZE_250_400);
+				
+				ordersKitchenPanel.add(kitchenOrderScrollpanel);
+			}
+	
 			
 		} else if(actionCommand.equals(BUTTON_CAPTION_MENU_DELIVERY)) {
 			
 			// Delivery Orders Screen
 			hideAllPanels();
 			deliveryMainPanel.setVisible(true);
+			ordersDeliveryPanel.removeAll();
 			
+			for(Order o : orders) {
+				
+				if(o.getOrderStatus() != Order.ORDER_STATUSES.ORDER_STATUS_PREPARED || ! o.isDelivered()) {
+					continue;
+				}
+				
+				JPanel deliveryOrderPanel = new JPanel();
+				BoxLayout boxlayout = new BoxLayout(deliveryOrderPanel, BoxLayout.Y_AXIS);
+				deliveryOrderPanel.setLayout(boxlayout);
+				deliveryOrderPanel.setAutoscrolls(true);
+				deliveryOrderPanel.setBackground(o.isDelivered() ? COLOR_DELIVERY_ORDERS : COLOR_REGULAR_ORDERS);
+				
+				JLabel deliveryOrderLabel = new JLabel("<html>" + o.toString().replaceAll("\\n", "<br>") + "</html>"); 
+				deliveryOrderLabel.setFont(FONT_16);
+			
+				String buttonText = "";
+				buttonText += "Mark Delivered Order# " + o.getOrderNumber();
+				JButton deliveryOrderButton = new JButton();
+				deliveryOrderButton.setText(buttonText);
+				deliveryOrderButton.setPreferredSize(BUTTON_SIZE_250_30);
+				
+				deliveryOrderButton.addActionListener(new ActionListener() {
+				    public void actionPerformed(ActionEvent e)
+				    {
+				    	String buttonText = e.getActionCommand();
+				    	String currentOrderNumber = buttonText.replace("Mark Delivered Order# ", "");
+				          
+				        for(Order o : orders) {
+				        	if(o.getOrderNumber().equalsIgnoreCase(currentOrderNumber)) {
+				        		if(o.isDelivered()) {
+				        			o.orderStatusDelivered();
+				        			o.orderStatusCompleted();
+				        		}
+				        		
+				        		// remove panel and button
+				        		JButton button = (JButton) e.getSource();
+				        		Container parentPanel  = button.getParent();
+				        		Container parentPanel2 = parentPanel.getParent();
+				        		Container parentPanel3 = parentPanel2.getParent();
+				        		ordersDeliveryPanel.remove(parentPanel3);
+				        		ordersDeliveryPanel.validate();
+				        		ordersDeliveryPanel.repaint();  
+						        deliveryMainPanel.validate();
+						        deliveryMainPanel.repaint();
+				        	}
+				        }
+				    }
+				});
+				deliveryOrderPanel.add(deliveryOrderButton);
+				deliveryOrderPanel.add(deliveryOrderLabel);
+				
+				JScrollPane deliveryOrderScrollpanel = new JScrollPane(deliveryOrderPanel,
+						   ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,  
+						   ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				deliveryOrderScrollpanel.setPreferredSize(BUTTON_SIZE_250_400);
+				
+				ordersDeliveryPanel.add(deliveryOrderScrollpanel);
+			}
 			
 		} else if(actionCommand.equals(BUTTON_CAPTION_MENU_SALES)) {
 			
@@ -1456,11 +1653,16 @@ public class OrderGUI extends JFrame implements ActionListener {
 			int    numberOfCustomers       = customers.size();
 			int    numberOfEmployees       = employees.size();
 			
-			int    numberOrdersReceived    = 0;
-			int    numberOrdersPrepared    = 0;
+			int    numberOrdersReceived    = orders.size();
+			int    numberOrdersInProgress    = 0;
 			int    numberOrdersForDelivery = 0;
 			int    numberOrdersDelivered   = 0;
 			int    numberOrdersCompleted   = 0;
+			
+			
+			double averageOrderTimeSum     = 0.0;		
+			double averageOrderTime        = 0.0;		
+			double averageCheck            = 0.0;		
 			
 			
 			double totalSalesPizza = 0.0;
@@ -1468,6 +1670,13 @@ public class OrderGUI extends JFrame implements ActionListener {
 			double totalSalesFrenchFries = 0.0;
 			double totalSalesOnionRings = 0.0;
 			double totalSalesDrinks = 0.0;
+			
+			double totalSalesPizzaShare = 0.0;
+			double totalSalesBurgerShare = 0.0;
+			double totalSalesFrenchFriesShare = 0.0;
+			double totalSalesOnionRingsShare = 0.0;
+			double totalSalesDrinksShare = 0.0;			
+			
 			double subTotalSales = 0.0;
 			double taxSales = 0.0;
 			double totalSales = 0.0;
@@ -1498,17 +1707,18 @@ public class OrderGUI extends JFrame implements ActionListener {
 					}
 				}
 				
-				if(o.getOrderStatus().equals(Order.ORDER_STATUSES.ORDER_STATUS_RECEIEVED) ) {
-					numberOrdersReceived ++;
+				if(o.isDelivered()) {
+					numberOrdersForDelivery++;
 				}
-				if(o.getOrderStatus().equals(Order.ORDER_STATUSES.ORDER_STATUS_PREPARED) ) {
-					numberOrdersPrepared ++;
-				}
-				if(o.getOrderStatus().equals(Order.ORDER_STATUSES.ORDER_STATUS_DELIVERED) ) {
-					numberOrdersDelivered ++;
+				if(o.getOrderStatus().equals(Order.ORDER_STATUSES.ORDER_STATUS_PREPARED) || o.getOrderStatus().equals(Order.ORDER_STATUSES.ORDER_STATUS_RECEIEVED)) {
+					numberOrdersInProgress ++;
 				}
 				if(o.getOrderStatus().equals(Order.ORDER_STATUSES.ORDER_STATUS_COMPLETED) ) {
 					numberOrdersCompleted ++;
+					averageOrderTimeSum += o.getOrderTotalTimeSeconds();
+				}
+				if(o.isDelivered() && o.getOrderStatus().equals(Order.ORDER_STATUSES.ORDER_STATUS_COMPLETED) ) {
+					numberOrdersDelivered ++;
 				}
 				
 				System.out.println();
@@ -1519,21 +1729,38 @@ public class OrderGUI extends JFrame implements ActionListener {
 				totalSales += o.getTotal();
 			}
 			
+			totalSalesPizzaShare       = (subTotalSales > 0) ? totalSalesPizza       / subTotalSales * 100 : 0;
+			totalSalesBurgerShare      = (subTotalSales > 0) ? totalSalesBurger      / subTotalSales * 100 : 0;
+			totalSalesFrenchFriesShare = (subTotalSales > 0) ? totalSalesFrenchFries / subTotalSales * 100 : 0;
+			totalSalesOnionRingsShare  = (subTotalSales > 0) ? totalSalesOnionRings  / subTotalSales * 100 : 0;
+			totalSalesDrinksShare      = (subTotalSales > 0) ? totalSalesDrinks      / subTotalSales * 100 : 0;		
+			averageOrderTime           = (numberOrdersCompleted > 0) ? averageOrderTimeSum / numberOrdersCompleted : 0;
+			averageCheck               = (numberOrdersReceived > 0) ? totalSales / numberOrdersReceived : 0;
+			
 			SalesNumberOfOrdersValue.setText(String.valueOf(numberOrders));
 		    SalesNumberOfCustomersValue.setText(String.valueOf(numberOfEmployees));
 		    SalesNumberOfEmployeesValue.setText(String.valueOf(numberOfCustomers));
+		    AverageOrderTimeValue.setText(String.format("%.2fs", averageOrderTime));
+		    AverageOrderCheckValue.setText(String.format("$%.2f", averageCheck));
 		    
-		    SalesNumberOrdersReceivedOrdersValue.setText(String.valueOf(numberOrdersReceived));
-		    SalesNumberOrdersPreparedOrdersValue.setText(String.valueOf(numberOrdersPrepared));
+		    SalesNumberOrdersReceivedValue.setText(String.valueOf(numberOrdersReceived));
+		    SalesNumberOrdersInProgressValue.setText(String.valueOf(numberOrdersInProgress));
 		    SalesNumberOrdersForDeliveryValue.setText(String.valueOf(numberOrdersForDelivery));
 		    SalesNumberOrdersDeliveredValue.setText(String.valueOf(numberOrdersDelivered));
 		    SalesNumberOrdersCompletedValue.setText(String.valueOf(numberOrdersCompleted));
 		    
-		    SalesPizzaValue.setText("$" + String.format("%.2f", totalSalesPizza));
-		    SalesBurgerValue.setText("$" + String.format("%.2f", totalSalesBurger));
-		    SalesFrenchFriesValue.setText("$" + String.format("%.2f", totalSalesFrenchFries));
-		    SalesOnionRingsValue.setText("$" + String.format("%.2f", totalSalesOnionRings));
-		    SalesDrinksValue.setText("$" + String.format("%.2f", totalSalesDrinks));
+		    SalesPizzaValuePercent.setText(String.format("%.2f%%", totalSalesPizzaShare));
+	        SalesBurgerValuePercent.setText(String.format("%.2f%%", totalSalesBurgerShare));
+	        SalesFrenchFriesValuePercent.setText(String.format("%.2f%%", totalSalesFrenchFriesShare));
+	        SalesOnionRingsValuePercent.setText(String.format("%.2f%%", totalSalesOnionRingsShare));
+	        SalesDrinksValuePercent.setText(String.format("%.2f%%", totalSalesDrinksShare));
+		    
+		    SalesPizzaValue.setText(String.format("$%.2f", totalSalesPizza));
+		    SalesBurgerValue.setText(String.format("$%.2f", totalSalesBurger));
+		    SalesFrenchFriesValue.setText(String.format("$%.2f", totalSalesFrenchFries));
+		    SalesOnionRingsValue.setText(String.format("$%.2f", totalSalesOnionRings));
+		    SalesDrinksValue.setText(String.format("$%.2f", totalSalesDrinks));
+		    
 		    SalesTotalSubTotalValue.setText("$" + String.format("%.2f", subTotalSales));
 		    SalesTotalTaxValue.setText("$" + String.format("%.2f", taxSales));
 		    SalesTotalSalesValue.setText("$" + String.format("%.2f", totalSales));

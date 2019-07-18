@@ -177,11 +177,22 @@ public class Pizza extends MenuItem {
 		
 		return price;
 	}
+	
+	/**
+	 * Description for kitchen
+	 * 
+	 * @return the formatted string of description
+	 */
+	public String toKitchenString() {
+		return "Pizza: " + getName() + ". Toppings:" + "\n" + 
+				"Cheese: " + cheeseCount + " "
+				+ "Pepperoni: " + pepperoniCount + " " + "Ham: " + hamCount + "\n";
+	}
 
 	/**
 	 * Overriding method definition in order to be more verbose in output
 	 * 
-	 * @return the formatted string of reservation data
+	 * @return the formatted string of pizza data
 	 */
 	@Override
 	public String toString() {

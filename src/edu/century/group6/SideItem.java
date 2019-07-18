@@ -145,6 +145,15 @@ public class SideItem extends MenuItem {
 		}
 		return price;
 	}
+	
+	/**
+	 * Description for kitchen
+	 * 
+	 * @return the formatted string of reservation data
+	 */
+	public String toKitchenString() {
+		return "Side: " + getName() + ". Size: " + getSideSize() + ".\n";
+	}
 
 	/**
 	 * Overriding method definition in order to be more verbose in output

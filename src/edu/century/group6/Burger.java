@@ -91,11 +91,20 @@ public class Burger extends MenuItem {
 			return 1000000.0;
 		}
 	}
+	
+	/**
+	 * Description for kitchen
+	 * 
+	 * @return the formatted string of description
+	 */
+	public String toKitchenString() {
+		return "Burger: " + getName() + ".\n";
+	}
 
 	/**
 	 * Overriding method definition in order to be more verbose in output
 	 * 
-	 * @return the formatted string of reservation data
+	 * @return the formatted string of burger description
 	 */
 	@Override
 	public String toString() {

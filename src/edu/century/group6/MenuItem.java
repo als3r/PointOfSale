@@ -122,12 +122,21 @@ public class MenuItem {
 	public void setCookTime(int cookTime) {
 		this.cookTime = cookTime;
 	}
+	
+	/**
+	 * Get description for kitchen
+	 * 
+	 * @return name
+	 */
+	public String toKitchenString() {
+		return name;
+	}
 
 
 	/**
 	 * Overriding method definition in order to be more verbose in output
 	 * 
-	 * @return the formatted string of reservation data
+	 * @return the formatted string of menu item
 	 */
 	@Override
 	public String toString() {

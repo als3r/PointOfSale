@@ -155,6 +155,16 @@ public class Drink extends MenuItem{
 		return price;
 	}
 	
+	
+	/**
+	 * Description for kitchen
+	 * 
+	 * @return the formatted string of reservation data
+	 */
+	public String toKitchenString() {
+		return "Side: " + getName() + ". Size: " + getDrinkSize() + ".\n";
+	}
+	
 
 
 	/**

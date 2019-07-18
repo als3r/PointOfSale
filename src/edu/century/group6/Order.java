@@ -712,10 +712,52 @@ public class Order {
 	}
 	
 	
+	
+	/**
+	 * Description For Kitchen
+	 * 
+	 * @return the formatted string of reservation data
+	 */
+	public String toKitchenString() {
+		String message = "";
+		String itemMessage = "";
+		String customerMessage = "";
+		
+		message += "Order Number# " + getOrderNumber() + "\n";
+		message += "Date: " + getOrderReceivedTimeFormatted() + "\n";
+		if(getCustomer() != null && getCustomer() instanceof Customer) {
+			customerMessage += "Customer#: " + getCustomer().getCustomerNumber() + "\n";
+			customerMessage += "Name: " + getCustomer().getFirstName() + " " + getCustomer().getLastName() + "\n";
+			customerMessage += "Phone: " + getCustomer().getFirstName() + " " + getCustomer().getLastName() + "\n";
+		}
+		message += customerMessage;
+		
+		message += "Items: " + getNumItems() + "\n";
+		
+		message += "----------------------------------------" + "\n";
+		
+		for (int i = 0; i < orderItems.size(); i++) {
+			if (orderItems.get(i) != null && orderItems.get(i) instanceof MenuItem) {
+				if(! itemMessage.isEmpty()) {					
+					itemMessage += "----------------------------------------" + "\n";
+				}
+				itemMessage += "#" + (i+1) + "\n";
+				itemMessage += orderItems.get(i).toKitchenString();
+				
+			}
+		}
+		if(! itemMessage.isEmpty()) {
+			message += itemMessage;
+			message += "----------------------------------------" + "\n";
+		}
+		return message;
+	}
+	
+	
 	/**
 	 * Overriding method definition in order to be more verbose in output
 	 * 
-	 * @return the formatted string of reservation data
+	 * @return the formatted string of order
 	 */
 	@Override
 	public String toString() {
